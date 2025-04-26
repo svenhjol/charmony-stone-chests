@@ -1,0 +1,8 @@
+{
+  "template": {
+    "textures": {
+      "particle": "minecraft:block/stone"
+    }
+  },
+  "variants": "chest_material"
+}

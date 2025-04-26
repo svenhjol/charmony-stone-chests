@@ -1,0 +1,9 @@
+{
+  "template": {
+    "parent": "minecraft:item/template_chest",
+    "textures": {
+      "particle": "minecraft:block/stone"
+    }
+  },
+  "variants": "chest_material"
+}

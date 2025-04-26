@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "description": "Stone Chests resources",
+    "pack_format": ${pack_version}
+  }
+}

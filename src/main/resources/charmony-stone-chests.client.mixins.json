@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "svenhjol.charmony.stone_chests.client.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "${refmap_file}",
+  "plugin": "svenhjol.charmony.stone_chests.client.mixins.ClientMixinConfig",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+  ],
+  "client": [
+    "SheetsMixin"
+  ]
+}

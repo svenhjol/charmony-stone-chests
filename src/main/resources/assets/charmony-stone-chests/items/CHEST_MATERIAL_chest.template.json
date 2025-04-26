@@ -1,0 +1,13 @@
+{
+  "template": {
+    "model": {
+      "type": "minecraft:special",
+      "base": "charmony-stone-chests:item/CHEST_MATERIAL_chest",
+      "model": {
+        "type": "minecraft:chest",
+        "texture": "charmony-stone-chests:CHEST_MATERIAL"
+      }
+    }
+  },
+  "variants": "chest_material"
+}

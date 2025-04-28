@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import svenhjol.charmony.api.StoneChestPuzzleMenuData;
+import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.helpers.WorldHelper;
 
@@ -194,7 +194,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         var data = new SimpleContainerData(1);
         data.set(0, material.getId());
 
-        var providers = new ArrayList<>(feature().registers.puzzleProviders);
+        var providers = new ArrayList<>(feature().registers.lockProviders);
         if (providers.isEmpty()) {
             // No providers, just unlock the chest.
             unlock();
@@ -208,7 +208,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
             Collections.shuffle(providers, random);
             var provider = providers.getFirst();
 
-            var menuData = new StoneChestPuzzleMenuData();
+            var menuData = new StoneChestLockMenuData();
             menuData.syncId = syncId;
             menuData.playerInventory = inventory;
             menuData.level = serverLevel;
@@ -216,7 +216,12 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
             menuData.data = data;
             menuData.seed = seed;
 
-            return provider.getMenuProvider(menuData);
+            var menu = provider.getMenuProvider(menuData);
+            if (menu.isPresent()) {
+                return menu.get();
+            } else {
+                unlock();
+            }
         }
 
         return new UnlockedMenu(syncId, inventory, this, data);

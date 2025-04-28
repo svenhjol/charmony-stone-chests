@@ -8,21 +8,25 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import svenhjol.charmony.api.Api;
-import svenhjol.charmony.api.StoneChestPuzzleMenuData;
-import svenhjol.charmony.api.StoneChestPuzzleProvider;
+import svenhjol.charmony.api.StoneChestItemPuzzleInputProvider;
+import svenhjol.charmony.api.StoneChestLockMenuData;
+import svenhjol.charmony.api.StoneChestLockProvider;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.helpers.TagHelper;
 
 import java.util.*;
 
-public class PuzzleProviders extends Setup<StoneChests> implements StoneChestPuzzleProvider {
-    public PuzzleProviders(StoneChests feature) {
+public class LockProviders extends Setup<StoneChests> implements StoneChestLockProvider, StoneChestItemPuzzleInputProvider {
+    public LockProviders(StoneChests feature) {
         super(feature);
         Api.registerProvider(this);
     }
 
+    /**
+     * Provider for the "Item Puzzle" lock menu.
+     */
     @Override
-    public AbstractContainerMenu getMenuProvider(StoneChestPuzzleMenuData menuData) {
+    public Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData) {
         var random = new Random(menuData.seed);
         var serverLevel = menuData.level;
         var syncId = menuData.syncId;
@@ -30,21 +34,29 @@ public class PuzzleProviders extends Setup<StoneChests> implements StoneChestPuz
         var data = menuData.data;
         var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
 
-        var tags = Map.of(
-            Tags.PUZZLE_MATERIALS, 2,
-            Tags.PUZZLE_SHERDS, 4
-        );
-        var keys = new ArrayList<>(tags.keySet());
+        Map<TagKey<Item>, Integer> inputs = new HashMap<>();
+
+        for (var itemPuzzleInputs : feature().registers.itemPuzzleInputs) {
+            inputs.putAll(itemPuzzleInputs.getItemTagsAndAmounts());
+        }
+
+        if (inputs.isEmpty()) {
+            return Optional.empty();
+        }
+
+        var keys = new ArrayList<>(inputs.keySet());
         Map<TagKey<Item>, List<Item>> cached = new WeakHashMap<>();
 
         List<ItemStack> puzzle = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
             var key = keys.get(random.nextInt(keys.size()));
-            var max = tags.get(key);
+            var max = inputs.get(key);
 
             if (!cached.containsKey(key)) {
                 cached.put(key, new ArrayList<>(TagHelper.getValues(serverLevel.registryAccess().lookupOrThrow(Registries.ITEM), key)));
+            } else {
+                feature().log().debug("Using cached item list for " + key);
             }
 
             var items = new ArrayList<>(cached.get(key));
@@ -52,6 +64,17 @@ public class PuzzleProviders extends Setup<StoneChests> implements StoneChestPuz
             puzzle.add(new ItemStack(items.getFirst(), random.nextInt(max) + 1));
         }
 
-        return new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(6), data, puzzle, access);
+        return Optional.of(new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(6), data, puzzle, access));
+    }
+
+    /**
+     * Add some default item and amount requirements to the item puzzle.
+     */
+    @Override
+    public Map<TagKey<Item>, Integer> getItemTagsAndAmounts() {
+        return Map.of(
+            Tags.PUZZLE_MATERIALS, 2,
+            Tags.PUZZLE_SHERDS, 4
+        );
     }
 }

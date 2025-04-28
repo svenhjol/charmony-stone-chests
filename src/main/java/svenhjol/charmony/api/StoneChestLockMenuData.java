@@ -5,7 +5,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 
-public class StoneChestPuzzleMenuData {
+/**
+ * Data holder passed to the lock provider.
+ * Populated by the stone chest block entity.
+ */
+public class StoneChestLockMenuData {
     public int syncId;
     public Inventory playerInventory;
     public ServerLevel level;

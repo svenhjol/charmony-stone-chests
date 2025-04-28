@@ -3,17 +3,14 @@ package svenhjol.charmony.stone_chests.common.features.stone_chests;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,8 +19,8 @@ import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import svenhjol.charmony.api.StoneChestPuzzleMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
-import svenhjol.charmony.core.helpers.TagHelper;
 import svenhjol.charmony.core.helpers.WorldHelper;
 
 import java.util.ArrayList;
@@ -197,19 +194,32 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         var data = new SimpleContainerData(1);
         data.set(0, material.getId());
 
+        var providers = new ArrayList<>(feature().registers.puzzleProviders);
+        if (providers.isEmpty()) {
+            // No providers, just unlock the chest.
+            unlock();
+        }
+
         if (isLocked()) {
             // Generate a seed based on this position.
             var seed = WorldHelper.seedFromBlockPos(pos);
             var random = new Random(seed);
 
-            var values = new ArrayList<>(TagHelper.getValues(serverLevel.registryAccess().lookupOrThrow(Registries.ITEM), Tags.PUZZLE_REQUIREMENTS));
-            Collections.shuffle(values, random);
-            var requires = values.subList(0, 3).stream().map(i -> new ItemStack(i, random.nextInt(2) + 1)).toList();
+            Collections.shuffle(providers, random);
+            var provider = providers.getFirst();
 
-            return new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(6), data, requires, ContainerLevelAccess.create(serverLevel, pos));
-        } else {
-            return new UnlockedMenu(syncId, inventory, this, data);
+            var menuData = new StoneChestPuzzleMenuData();
+            menuData.syncId = syncId;
+            menuData.playerInventory = inventory;
+            menuData.level = serverLevel;
+            menuData.pos = pos;
+            menuData.data = data;
+            menuData.seed = seed;
+
+            return provider.getMenuProvider(menuData);
         }
+
+        return new UnlockedMenu(syncId, inventory, this, data);
     }
 
     public StoneChestMaterial getMaterial() {
@@ -223,5 +233,9 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     public void unlock() {
         this.locked = false;
         setChanged();
+    }
+
+    private StoneChests feature() {
+        return StoneChests.feature();
     }
 }

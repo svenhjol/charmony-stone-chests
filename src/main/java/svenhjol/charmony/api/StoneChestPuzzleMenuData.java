@@ -1,0 +1,15 @@
+package svenhjol.charmony.api;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerData;
+
+public class StoneChestPuzzleMenuData {
+    public int syncId;
+    public Inventory playerInventory;
+    public ServerLevel level;
+    public BlockPos pos;
+    public ContainerData data;
+    public long seed;
+}

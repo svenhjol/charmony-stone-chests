@@ -107,11 +107,12 @@ public class ItemPuzzleMenu extends ContainerMenu {
 
             if (level instanceof ServerLevel serverLevel && serverLevel.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
                 if (valid == 3) {
-                    // Success
+                    // Success - consume the items
                     container.clearContent();
                     chest.unlock();
                     player.openMenu(chest);
                 } else {
+                    // Fail - return the items to the player
                     player.containerMenu.removed(player);
                     serverLevel.destroyBlock(pos, true);
                 }

@@ -6,6 +6,10 @@ import net.minecraft.world.item.Item;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 
 public final class Tags {
-    public static final TagKey<Item> PUZZLE_REQUIREMENTS = TagKey.create(Registries.ITEM,
-        StoneChestsMod.id("puzzle_requirements"));
+    public static final TagKey<Item> PUZZLE_MATERIALS = TagKey.create(Registries.ITEM,
+        StoneChestsMod.id("puzzle/materials"));
+
+    public static final TagKey<Item> PUZZLE_SHERDS = TagKey.create(Registries.ITEM,
+        StoneChestsMod.id("puzzle/sherds"));
+
 }

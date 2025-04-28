@@ -4,12 +4,16 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import svenhjol.charmony.api.StoneChestPuzzleProvider;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
+import svenhjol.charmony.core.Api;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.common.CommonRegistry;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock.ChestBlockItem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -17,6 +21,8 @@ public class Registers extends Setup<StoneChests> {
     public static final String CHEST_ID = "stone_chest";
     public static final String UNLOCKED_ID = "unlocked_stone_chest";
     public static final String ITEM_PUZZLE_ID = "item_puzzle_stone_chest";
+
+    public final List<StoneChestPuzzleProvider> puzzleProviders = new ArrayList<>();
 
     public final Map<StoneChestMaterial, Supplier<ChestBlock>> chestBlocks = new HashMap<>();
     public final Map<StoneChestMaterial, Supplier<ChestBlockItem>> chestBlockItems = new HashMap<>();
@@ -50,5 +56,12 @@ public class Registers extends Setup<StoneChests> {
 
         unlockedMenu = registry.menuType(UNLOCKED_ID, () -> new MenuType<>(UnlockedMenu::new, FeatureFlags.VANILLA_SET));
         itemPuzzleMenu = registry.menuType(ITEM_PUZZLE_ID, () -> new MenuType<>(ItemPuzzleMenu::new, FeatureFlags.VANILLA_SET));
+    }
+
+    @Override
+    public Runnable boot() {
+        return () -> {
+            Api.consume(StoneChestPuzzleProvider.class, puzzleProviders::add);
+        };
     }
 }

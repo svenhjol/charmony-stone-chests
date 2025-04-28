@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 244144999,
+    "separation": 8,
+    "spacing": 12
+  },
+  "structures": [
+    {
+      "structure": "charmony-stone-chests:buried_stone_chest_in_stone_layer",
+      "weight": 1
+    }
+  ]
+}

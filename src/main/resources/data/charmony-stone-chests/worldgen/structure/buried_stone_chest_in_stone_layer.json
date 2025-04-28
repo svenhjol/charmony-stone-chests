@@ -1,0 +1,7 @@
+{
+  "type": "charmony-stone-chests:buried_stone_chest",
+  "biomes": "#charmony-stone-chests:has_structure/buried_stone_chest_in_stone_layer",
+  "spawn_overrides": {},
+  "buried_stone_chest_definition": "in_stone_layer",
+  "step": "underground_decoration"
+}

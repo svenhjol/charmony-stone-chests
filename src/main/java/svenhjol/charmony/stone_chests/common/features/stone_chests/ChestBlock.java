@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -34,12 +33,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+import svenhjol.charmony.api.materials.StoneChestMaterial;
 
 import java.util.function.Supplier;
 
 public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements SimpleWaterloggedBlock {
     public static final MapCodec<ChestBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-        ChestMaterial.CODEC.fieldOf("material").forGetter(ChestBlock::getMaterial),
+        StoneChestMaterial.CODEC.fieldOf("material").forGetter(ChestBlock::getMaterial),
         propertiesCodec()
     ).apply(instance, ChestBlock::new));
 
@@ -48,17 +48,17 @@ public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements 
 
     private static final VoxelShape SHAPE = Block.column(14.0, 0.0, 14.0);
 
-    private final ChestMaterial material;
+    private final StoneChestMaterial material;
 
-    public ChestBlock(ResourceKey<Block> key, ChestMaterial material) {
+    public ChestBlock(ResourceKey<Block> key, StoneChestMaterial material) {
         this(material, Properties.of()
-            .mapColor(MapColor.COLOR_PURPLE)
-            .strength(2.5f, 600.0f)
+            .mapColor(MapColor.COLOR_GRAY)
+            .strength(4.5f, 1200.0f)
             .lightLevel(state -> 0)
             .setId(key));
     }
 
-    public ChestBlock(ChestMaterial material, Properties properties) {
+    public ChestBlock(StoneChestMaterial material, Properties properties) {
         super(properties, () -> StoneChests.feature().registers.chestBlockEntity.get());
         registerDefaultState(stateDefinition.any()
             .setValue(FACING, Direction.NORTH)
@@ -145,22 +145,17 @@ public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements 
     }
 
     @Override
-    protected @Nullable MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-        // TODO: dynamic menu gen
-        return null;
-    }
-
-    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        var provider = getMenuProvider(state, level, pos);
-        if (provider != null) {
-            player.openMenu(provider);
+        if (level instanceof ServerLevel serverLevel) {
+            if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
+                player.openMenu(chest);
+            }
         }
 
         return InteractionResult.SUCCESS;
     }
 
-    public ChestMaterial getMaterial() {
+    public StoneChestMaterial getMaterial() {
         return this.material;
     }
 

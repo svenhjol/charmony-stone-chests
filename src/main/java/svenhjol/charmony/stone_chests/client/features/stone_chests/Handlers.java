@@ -7,19 +7,19 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestMaterial;
+import svenhjol.charmony.api.materials.StoneChestMaterial;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class Handlers extends Setup<StoneChests> {
-    public static final Map<ChestMaterial, Material> CHEST_MATERIALS = new HashMap<>();
+    public static final Map<StoneChestMaterial, Material> CHEST_MATERIALS = new HashMap<>();
 
     public Handlers(StoneChests feature) {
         super(feature);
 
-        for (var coreMaterial : ChestMaterial.values()) {
+        for (var coreMaterial : StoneChestMaterial.values()) {
             var name = coreMaterial.getSerializedName();
             var mapper = new MaterialMapper(Sheets.CHEST_SHEET, "entity/chest");
             var sheetMaterial = mapper.apply(StoneChestsMod.id(name));

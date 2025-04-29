@@ -1,21 +1,23 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chests;
+package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
+import svenhjol.charmony.core.helpers.TagHelper;
+import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ItemPuzzleMenu extends ContainerMenu {
     private final Container container;
@@ -31,7 +33,7 @@ public class ItemPuzzleMenu extends ContainerMenu {
     }
 
     public ItemPuzzleMenu(int syncId, Inventory playerInventory, Container container, ContainerData data, List<ItemStack> items, ContainerLevelAccess access) {
-        super(StoneChests.feature().registers.itemPuzzleMenu.get(), syncId, playerInventory, container);
+        super(feature().registers.itemPuzzleMenu.get(), syncId, playerInventory, container);
         this.container = container;
         this.data = data;
         this.access = access;
@@ -41,9 +43,9 @@ public class ItemPuzzleMenu extends ContainerMenu {
             throw new RuntimeException("Must supply exactly three items to the puzzle menu");
         }
 
-        this.addSlot(new PuzzleSlot(container, 0, 26, 27)).set(items.get(0));
-        this.addSlot(new PuzzleSlot(container, 1, 80, 27)).set(items.get(1));
-        this.addSlot(new PuzzleSlot(container, 2, 134, 27)).set(items.get(2));
+        this.addSlot(new ItemPuzzleSlot(container, 0, 26, 27)).set(items.get(0));
+        this.addSlot(new ItemPuzzleSlot(container, 1, 80, 27)).set(items.get(1));
+        this.addSlot(new ItemPuzzleSlot(container, 2, 134, 27)).set(items.get(2));
 
         this.addSlot(new Slot(container, 3, 26, 47));
         this.addSlot(new Slot(container, 4, 80, 47));
@@ -51,6 +53,42 @@ public class ItemPuzzleMenu extends ContainerMenu {
 
         this.addStandardInventorySlots(playerInventory, 8, 113);
         this.addDataSlots(data);
+    }
+
+    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemPuzzleRequirement> requirements) {
+        var random = new Random(menuData.seed);
+        var serverLevel = menuData.level;
+        var syncId = menuData.syncId;
+        var inventory = menuData.playerInventory;
+        var data = menuData.data;
+        var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
+
+        if (requirements.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Map<TagKey<Item>, List<Item>> cached = new WeakHashMap<>();
+
+        List<ItemStack> puzzle = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            var requirement = requirements.get(random.nextInt(requirements.size()));
+
+            var item = requirement.item();
+            var count = requirement.minCount() + random.nextInt(requirement.maxCount() - requirement.minCount());
+
+            if (!cached.containsKey(item)) {
+                cached.put(item, new ArrayList<>(TagHelper.getValues(serverLevel.registryAccess().lookupOrThrow(Registries.ITEM), item)));
+            } else {
+                feature().log().debug("Using cached item list for " + item);
+            }
+
+            var items = new ArrayList<>(cached.get(item));
+            Collections.shuffle(items, random);
+            puzzle.add(new ItemStack(items.getFirst(), count));
+        }
+
+        return Optional.of(new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(6), data, puzzle, access));
     }
 
     @Override
@@ -141,5 +179,9 @@ public class ItemPuzzleMenu extends ContainerMenu {
     public StoneChestMaterial getMaterial() {
         var id = this.data.get(0);
         return StoneChestMaterial.byId(id);
+    }
+
+    private static StoneChestPuzzles feature() {
+        return StoneChestPuzzles.feature();
     }
 }

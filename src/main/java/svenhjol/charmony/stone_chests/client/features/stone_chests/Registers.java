@@ -13,6 +13,5 @@ public class Registers extends Setup<StoneChests> {
 
         registry.blockEntityRenderer(common.registers.chestBlockEntity, () -> ChestRenderer::new);
         registry.menuScreen(common.registers.unlockedMenu, () -> UnlockedScreen::new);
-        registry.menuScreen(common.registers.itemPuzzleMenu, () -> ItemPuzzleScreen::new);
     }
 }

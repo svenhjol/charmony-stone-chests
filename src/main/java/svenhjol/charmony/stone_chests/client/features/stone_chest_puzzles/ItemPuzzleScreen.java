@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.client.features.stone_chests;
+package svenhjol.charmony.stone_chests.client.features.stone_chest_puzzles;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import svenhjol.charmony.core.helpers.ColorHelper;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.ItemPuzzleMenu;
+import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.ItemPuzzleMenu;
 
 public class ItemPuzzleScreen extends AbstractContainerScreen<ItemPuzzleMenu> {
     public static final ResourceLocation BACKGROUND = StoneChestsMod.id("textures/gui/container/item_puzzle.png");

@@ -1,12 +1,12 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chests;
+package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class PuzzleSlot extends Slot {
-    public PuzzleSlot(Container container, int i, int j, int k) {
+public class ItemPuzzleSlot extends Slot {
+    public ItemPuzzleSlot(Container container, int i, int j, int k) {
         super(container, i, j, k);
     }
 

@@ -59,7 +59,7 @@ public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements 
     }
 
     public ChestBlock(StoneChestMaterial material, Properties properties) {
-        super(properties, () -> StoneChests.feature().registers.chestBlockEntity.get());
+        super(properties, () -> feature().registers.chestBlockEntity.get());
         registerDefaultState(stateDefinition.any()
             .setValue(FACING, Direction.NORTH)
             .setValue(WATERLOGGED, false));
@@ -81,7 +81,7 @@ public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements 
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
         return level.isClientSide ? createTickerHelper(
             blockEntityType,
-            StoneChests.feature().registers.chestBlockEntity.get(),
+            feature().registers.chestBlockEntity.get(),
             ChestBlockEntity::lidAnimateTick) : null;
     }
 
@@ -159,7 +159,7 @@ public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements 
         return this.material;
     }
 
-    private StoneChests feature() {
+    private static StoneChests feature() {
         return StoneChests.feature();
     }
 

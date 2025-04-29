@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chests;
+package svenhjol.charmony.stone_chests.common.features.buried_stone_chests;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
@@ -10,11 +10,13 @@ import svenhjol.charmony.api.BuriedStoneChestDefinition;
 import svenhjol.charmony.api.BuriedStoneChestDefinitionProvider;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
+import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.puzzles.SherdPuzzleMenuProvider;
+import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
 
 import java.util.List;
 
-public class BuriedChestProviders extends Setup<StoneChests> implements BuriedStoneChestDefinitionProvider {
-    public BuriedChestProviders(StoneChests feature) {
+public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneChestDefinitionProvider {
+    public Providers(BuriedStoneChests feature) {
         super(feature);
         Api.registerProvider(this);
     }
@@ -36,6 +38,11 @@ public class BuriedChestProviders extends Setup<StoneChests> implements BuriedSt
                 @Override
                 public Pair<Integer, Integer> depth() {
                     return Pair.of(10, 40);
+                }
+
+                @Override
+                public List<String> lockMenus() {
+                    return List.of(SherdPuzzleMenuProvider.ID);
                 }
 
                 @Override

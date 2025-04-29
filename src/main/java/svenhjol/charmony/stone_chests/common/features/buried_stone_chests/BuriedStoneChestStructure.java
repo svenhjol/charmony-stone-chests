@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chests;
+package svenhjol.charmony.stone_chests.common.features.buried_stone_chests;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public class BuriedStoneChestStructure extends Structure {
     public static final MapCodec<BuriedStoneChestStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            BuriedStoneChestStructure.settingsCodec(instance),
-            StoneChests.feature().registers.buriedChestCodec.fieldOf(Registers.DEFINITION_ID)
-                .forGetter(structure -> structure.definition))
+        BuriedStoneChestStructure.settingsCodec(instance),
+        feature().registers.buriedChestCodec.fieldOf(Registers.DEFINITION_ID)
+            .forGetter(structure -> structure.definition))
         .apply(instance, BuriedStoneChestStructure::new));
 
     private final BuriedStoneChestDefinition definition;
@@ -32,7 +32,7 @@ public class BuriedStoneChestStructure extends Structure {
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         var opt = findStart(context);
         if (opt.isEmpty()) {
-            StoneChests.feature().log().warn("Could not find start position for buried stone chest");
+            feature().log().warn("Could not find start position for buried stone chest");
             return Optional.empty();
         }
 
@@ -68,6 +68,10 @@ public class BuriedStoneChestStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return StoneChests.feature().registers.structureType.get();
+        return feature().registers.structureType.get();
+    }
+
+    private static BuriedStoneChests feature() {
+        return BuriedStoneChests.feature();
     }
 }

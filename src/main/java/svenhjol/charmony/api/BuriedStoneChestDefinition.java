@@ -15,7 +15,19 @@ public interface BuriedStoneChestDefinition extends StringRepresentable {
 
     Pair<Integer, Integer> depth();
 
+    /**
+     * Loot tables to use for the chest contents.
+     * If more than one is specified, one is randomly chosen from the list.
+     */
     List<ResourceKey<LootTable>> lootTables();
+
+    /**
+     * IDs of the lock menus to use.
+     * If empty the lock menu will not be used and the chest will not be locked.
+     */
+    default List<String> lockMenus() {
+        return List.of();
+    }
 
     default String getSerializedName() {
         return name();

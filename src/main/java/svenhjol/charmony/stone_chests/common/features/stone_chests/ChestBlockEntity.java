@@ -19,17 +19,13 @@ import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
-import svenhjol.charmony.core.helpers.WorldHelper;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.StoneChestPuzzles;
 
 public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
     public static final String MATERIAL_TAG = "material";
     public static final String LOCKED_TAG = "locked";
+    public static final String LOCK_MENU_TAG = "lock_menu";
     public static final int ROWS = 3;
     public static final int COLUMNS = 9;
     public static final int SLOTS = ROWS * COLUMNS;
@@ -39,13 +35,15 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     private StoneChestMaterial material;
     private NonNullList<ItemStack> items;
     private boolean locked;
+    private String lockMenu;
 
     public ChestBlockEntity(BlockPos pos, BlockState state) {
         super(StoneChests.feature().registers.chestBlockEntity.get(), pos, state);
         var block = (ChestBlock)state.getBlock();
         this.material = block.getMaterial();
         this.items = NonNullList.withSize(SLOTS, ItemStack.EMPTY);
-        this.locked = true;
+        this.locked = false;
+        this.lockMenu = "";
 
         this.openersCounter = new ContainerOpenersCounter() {
             @Override
@@ -58,7 +56,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
                     StoneChests.feature().registers.chestOpenSound.get(),
                     SoundSource.BLOCKS,
                     0.5f,
-                    level.random.nextFloat() * 0.1F + 0.9F
+                    level.random.nextFloat() * 0.1f + 0.9f
                 );
             }
 
@@ -72,7 +70,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
                     StoneChests.feature().registers.chestCloseSound.get(),
                     SoundSource.BLOCKS,
                     0.5f,
-                    level.random.nextFloat() * 0.1F + 0.9F
+                    level.random.nextFloat() * 0.1f + 0.9f
                 );
             }
 
@@ -98,6 +96,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         super.saveAdditional(tag, provider);
         tag.putInt(MATERIAL_TAG, material.getId());
         tag.putBoolean(LOCKED_TAG, locked);
+        tag.putString(LOCK_MENU_TAG, lockMenu);
 
         if (!this.trySaveLootTable(tag)) {
             ContainerHelper.saveAllItems(tag, this.items, provider);
@@ -109,6 +108,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         super.loadAdditional(tag, provider);
         this.locked = tag.getBooleanOr(LOCKED_TAG, false);
         this.material = StoneChestMaterial.byId(tag.getIntOr(MATERIAL_TAG, 0));
+        this.lockMenu = tag.getStringOr(LOCK_MENU_TAG, "");
 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
@@ -188,47 +188,28 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         if (!(level instanceof ServerLevel serverLevel)) {
             throw new RuntimeException("Can't even");
         }
-        var pos = getBlockPos();
 
         // Set the material ID for the chest.
         var data = new SimpleContainerData(1);
         data.set(0, material.getId());
 
-        var providers = new ArrayList<>(feature().registers.lockProviders);
-        if (providers.isEmpty()) {
-            // No providers, just unlock the chest.
-            unlock();
-        }
-
-        if (isLocked()) {
-            // Generate a seed based on this position.
-            var seed = WorldHelper.seedFromBlockPos(pos);
-            var random = new Random(seed);
-
-            Collections.shuffle(providers, random);
-            var provider = providers.getFirst();
-
-            var menuData = new StoneChestLockMenuData();
-            menuData.syncId = syncId;
-            menuData.playerInventory = inventory;
-            menuData.level = serverLevel;
-            menuData.pos = pos;
-            menuData.data = data;
-            menuData.seed = seed;
-
-            var menu = provider.getMenuProvider(menuData);
-            if (menu.isPresent()) {
-                return menu.get();
-            } else {
-                unlock();
+        if (isLocked() && puzzles().enabled()) {
+            var opt = puzzles().handlers.getMenuProvider(serverLevel, this, syncId, inventory, data);
+            if (opt.isPresent()) {
+                return opt.get();
             }
         }
 
+        unlock();
         return new UnlockedMenu(syncId, inventory, this, data);
     }
 
     public StoneChestMaterial getMaterial() {
         return material;
+    }
+
+    public String lockMenu() {
+        return lockMenu;
     }
 
     public boolean isLocked() {
@@ -240,7 +221,12 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         setChanged();
     }
 
-    private StoneChests feature() {
-        return StoneChests.feature();
+    public void lock(String lockMenu) {
+        this.locked = true;
+        this.lockMenu = lockMenu;
+    }
+
+    private StoneChestPuzzles puzzles() {
+        return StoneChestPuzzles.feature();
     }
 }

@@ -9,14 +9,10 @@ import svenhjol.charmony.core.enums.Side;
     TODO""")
 public final class StoneChests extends SidedFeature {
     public final Registers registers;
-    public final LockProviders puzzleProviders;
-    public final BuriedChestProviders buriedChestProviders;
 
     public StoneChests(Mod mod) {
         super(mod);
         registers = new Registers(this);
-        puzzleProviders = new LockProviders(this);
-        buriedChestProviders = new BuriedChestProviders(this);
     }
 
     public static StoneChests feature() {

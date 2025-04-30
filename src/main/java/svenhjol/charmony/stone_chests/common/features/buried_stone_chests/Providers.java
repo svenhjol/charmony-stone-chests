@@ -26,44 +26,83 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
     @Override
     public List<BuriedStoneChestDefinition> getBuriedStoneChestDefinitions() {
         return List.of(
-            new BuriedStoneChestDefinition() {
-                @Override
-                public String name() {
-                    return "in_stone_layer";
-                }
-
-                @Override
-                public Block block() {
-                    return StoneChests.feature().registers.chestBlocks.get(StoneChestMaterial.STONE).get();
-                }
-
-                @Override
-                public Pair<Integer, Integer> depth() {
-                    return Pair.of(10, 40);
-                }
-
-                @Override
-                public List<String> lockMenus() {
-                    return List.of(
-                        SherdPuzzleMenuProvider.ID,
-                        GemPuzzleMenuProvider.ID
-                    );
-                }
-
-                @Override
-                public List<BreakBehavior> breakBehaviors() {
-                    return List.of(
-                        BreakBehavior.SPAWN_OVERWORLD_MONSTER
-                    );
-                }
-
-                @Override
-                public List<ResourceKey<LootTable>> lootTables() {
-                    return List.of(
-                        BuiltInLootTables.SIMPLE_DUNGEON
-                    );
-                }
-            }
+            inStoneLayer(),
+            inDeepslateLayer()
         );
+    }
+
+    protected BuriedStoneChestDefinition inStoneLayer() {
+        return new BuriedStoneChestDefinition() {
+            @Override
+            public String name() {
+                return "in_stone_layer";
+            }
+
+            @Override
+            public Block block() {
+                return StoneChests.feature().registers.chestBlocks.get(StoneChestMaterial.STONE).get();
+            }
+
+            @Override
+            public Pair<Integer, Integer> depth() {
+                return Pair.of(10, 40);
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
+                    SherdPuzzleMenuProvider.ID,
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+
+            @Override
+            public List<BreakBehavior> breakBehaviors() {
+                return List.of(
+                    BreakBehavior.SPAWN_OVERWORLD_MONSTER
+                );
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.SIMPLE_DUNGEON
+                );
+            }
+        };
+    }
+
+    protected BuriedStoneChestDefinition inDeepslateLayer() {
+        return new BuriedStoneChestDefinition() {
+            @Override
+            public String name() {
+                return "in_deepslate_layer";
+            }
+
+            @Override
+            public Block block() {
+                return StoneChests.feature().registers.chestBlocks.get(StoneChestMaterial.DEEPSLATE).get();
+            }
+
+            @Override
+            public Pair<Integer, Integer> depth() {
+                return Pair.of(-50, -10);
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.ANCIENT_CITY // Testing
+                );
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
+                    SherdPuzzleMenuProvider.ID,
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+        };
     }
 }

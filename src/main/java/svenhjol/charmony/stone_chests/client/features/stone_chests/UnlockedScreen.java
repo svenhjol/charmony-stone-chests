@@ -20,6 +20,12 @@ public class UnlockedScreen extends AbstractContainerScreen<UnlockedMenu> {
     }
 
     @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float ticks) {
+        super.render(guiGraphics, mouseX, mouseY, ticks);
+        renderTooltip(guiGraphics, mouseX, mouseY);
+    }
+
+    @Override
     protected void renderBg(GuiGraphics guiGraphics, float ticks, int mouseX, int mouseY) {
         var x = (width - imageWidth) / 2;
         var y = (height - imageHeight) / 2;

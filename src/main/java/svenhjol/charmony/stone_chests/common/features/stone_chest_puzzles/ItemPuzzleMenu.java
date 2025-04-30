@@ -148,10 +148,12 @@ public class ItemPuzzleMenu extends ContainerMenu {
                     // Success - consume the items
                     container.clearContent();
 
+                    // Get the stored "unlocked" loot table from the chest and set it as the primary loot table.
+                    // When the chest is next opened the loot will be generated.
                     var unlockedLootTable = chest.getUnlockedLootTable();
                     chest.setLootTable(unlockedLootTable);
-                    chest.setChanged();
                     chest.unlock();
+
                     player.openMenu(chest);
                 } else {
                     // Fail - return the items to the player

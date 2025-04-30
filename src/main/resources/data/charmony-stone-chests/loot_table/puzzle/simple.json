@@ -33,7 +33,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:gunpowder",
+          "name": "minecraft:stick",
           "weight": 10
         },
         {
@@ -49,7 +49,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:rotten_flesh",
+          "name": "minecraft:paper",
           "weight": 10
         },
         {

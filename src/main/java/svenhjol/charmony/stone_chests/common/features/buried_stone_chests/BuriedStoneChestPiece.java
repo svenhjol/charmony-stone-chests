@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.material.Fluids;
 import svenhjol.charmony.api.BuriedStoneChestDefinition;
 import svenhjol.charmony.core.base.Log;
+import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.Tags;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
@@ -135,7 +136,11 @@ public class BuriedStoneChestPiece extends StructurePiece {
                 // Add a random lock menu to the chest.
                 Util.shuffle(menus, random);
                 chest.lock(menus.getFirst());
+
+                // Add a loot table for when the chest is successfully unlocked, and a simple loot table
+                // for when the player breaks the locked chest or gets the puzzle wrong.
                 chest.setUnlockedLootTable(lootTable);
+                chest.setLootTable(Tags.SIMPLE_LOOT);
             }
 
             if (!breakBehaviors.isEmpty()) {

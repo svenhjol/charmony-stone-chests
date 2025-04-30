@@ -9,13 +9,14 @@ import java.util.Optional;
  */
 public interface StoneChestLockMenuProvider {
     /**
+     * ID of the custom menu.
+     * This will be used as a map key for this provider.
+     */
+    String getMenuProviderId();
+
+    /**
      * Custom menu to open when the chest is interacted with by the player.
      * Return an empty optional if something goes wrong in the processing of the custom menu.
      */
     Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData);
-
-    /**
-     * ID of the custom menu.
-     */
-    String getMenuProviderId();
 }

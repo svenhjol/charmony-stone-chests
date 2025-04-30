@@ -58,12 +58,15 @@ public class BuriedStoneChestPiece extends StructurePiece {
             return;
         }
 
-        var range = 8;
+        var fallbackYOffset = definition.fallbackYOffset();
+        var minYOffset = fallbackYOffset.getFirst();
+        var maxYOffset = fallbackYOffset.getSecond();
+        var xzOffset = definition.fallbackXZOffset();
 
         // Check for air spaces for the chest.
-        for (var y = -10; y < 20; y++) {
-            for (var x = -range; x < range; x++) {
-                for (var z = -range; z < range; z++) {
+        for (var y = minYOffset; y < maxYOffset; y++) {
+            for (var x = -xzOffset; x < xzOffset; x++) {
+                for (var z = -xzOffset; z < xzOffset; z++) {
                     var tryPos = offsetPos.offset(x, y, z);
                     var tryState = level.getBlockState(tryPos);
                     var tryStateBelow = level.getBlockState(tryPos.below());
@@ -81,13 +84,15 @@ public class BuriedStoneChestPiece extends StructurePiece {
             }
         }
 
-        // Force the chest into solid blocks.
-        for (var y = -10; y < 20; y++) {
-            var tryPos = offsetPos.offset(0, y, 0);
-            if (stateBelow.isSolidRender()) {
-                this.boundingBox = new BoundingBox(tryPos);
-                this.createChest(level, this.boundingBox, random, tryPos, false);
-                return;
+        if (definition.canBeFullyBuried()) {
+            // Force the chest into solid blocks.
+            for (var y = 0; y < maxYOffset; y++) {
+                var tryPos = offsetPos.offset(0, y, 0);
+                if (stateBelow.isSolidRender()) {
+                    this.boundingBox = new BoundingBox(tryPos);
+                    this.createChest(level, this.boundingBox, random, tryPos, false);
+                    return;
+                }
             }
         }
 

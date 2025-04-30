@@ -6,8 +6,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 
 /**
- * Data holder passed to the lock provider.
- * Populated by the stone chest block entity.
+ * Data holder passed to the lock menu provider.
+ * Populated by the stone chest block entity when the player first tries to open a chest.
  */
 public class StoneChestLockMenuData {
     public int syncId;

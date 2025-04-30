@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
+import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.BreakBehavior;
 
 import java.util.List;
 
@@ -27,10 +28,18 @@ public interface BuriedStoneChestDefinition extends StringRepresentable {
     Pair<Integer, Integer> depth();
 
     /**
-     * Loot tables to use for the chest contents.
+     * Loot tables to use for the chest contents when unlocked.
      * If more than one is specified, one is randomly chosen from the list.
      */
     List<ResourceKey<LootTable>> lootTables();
+
+    /**
+     * Behavior when the chest is broken.
+     * If more than one is specified, one is randomly chosen from the list.
+     */
+    default List<BreakBehavior> breakBehaviors() {
+        return List.of(BreakBehavior.NOTHING);
+    }
 
     /**
      * IDs of the lock menus to use.

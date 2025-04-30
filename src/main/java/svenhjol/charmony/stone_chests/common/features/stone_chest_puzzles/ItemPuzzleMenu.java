@@ -147,6 +147,10 @@ public class ItemPuzzleMenu extends ContainerMenu {
                 if (valid == 3) {
                     // Success - consume the items
                     container.clearContent();
+
+                    var unlockedLootTable = chest.getUnlockedLootTable();
+                    chest.setLootTable(unlockedLootTable);
+                    chest.setChanged();
                     chest.unlock();
                     player.openMenu(chest);
                 } else {
@@ -169,6 +173,15 @@ public class ItemPuzzleMenu extends ContainerMenu {
             }
             clearContainer(player, returnContainer);
         });
+    }
+
+    @Override
+    protected void clearContainer(Player player, Container container) {
+        if (container instanceof ChestBlockEntity chest && chest.isLocked()) {
+            chest.setLootTable(Tags.NO_LOOT);
+            feature().handlers.doBreakBehavior(player, player.level(), chest.getBlockPos(), chest);
+        }
+        super.clearContainer(player, container);
     }
 
     @Override

@@ -1,9 +1,12 @@
 package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.Level;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.helpers.WorldHelper;
@@ -49,5 +52,25 @@ public class Handlers extends Setup<StoneChestPuzzles> {
         }
 
         return Optional.empty();
+    }
+
+    public void doBreakBehavior(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
+        switch (chest.getBreakBehavior()) {
+            case SPAWN_OVERWORLD_MONSTER -> spawnOverworldMonster(level, pos);
+            case SMALL_EXPLOSION -> smallExplosion(level, pos);
+            case BAD_EFFECT -> badEffect(player, level, pos);
+        }
+    }
+
+    private void spawnOverworldMonster(Level level, BlockPos pos) {
+        feature().log().debug("TODO: spawnOverworldMonster");
+    }
+
+    private void smallExplosion(Level level, BlockPos pos) {
+        feature().log().debug("TODO: smallExplosion");
+    }
+
+    private void badEffect(Player player, Level level, BlockPos pos) {
+        feature().log().debug("TODO: badEffect");
     }
 }

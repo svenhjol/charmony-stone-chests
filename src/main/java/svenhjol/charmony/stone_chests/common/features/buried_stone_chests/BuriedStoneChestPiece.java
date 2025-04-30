@@ -109,6 +109,7 @@ public class BuriedStoneChestPiece extends StructurePiece {
         var block = definition.block();
         var lootTables = new ArrayList<>(definition.lootTables());
         var menus = new ArrayList<>(definition.lockMenus());
+        var breakBehaviors = new ArrayList<>(definition.breakBehaviors());
 
         if (lootTables.isEmpty()) {
             log().debug("No loot tables for buried stone chest");
@@ -130,12 +131,22 @@ public class BuriedStoneChestPiece extends StructurePiece {
 
         level.setBlock(pos, state, 2);
         if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-            chest.setLootTable(lootTable, random.nextLong());
-
-            // Lock the chest with a random lock menu.
             if (!menus.isEmpty()) {
+                // Add a random lock menu to the chest.
                 Util.shuffle(menus, random);
                 chest.lock(menus.getFirst());
+                chest.setUnlockedLootTable(lootTable);
+            }
+
+            if (!breakBehaviors.isEmpty()) {
+                // Add a random break behavior to the chest.
+                Util.shuffle(breakBehaviors, random);
+                chest.setBreakBehavior(breakBehaviors.getFirst());
+            }
+
+            if (!chest.isLocked()) {
+                chest.setLootTable(lootTable, random.nextLong());
+                chest.setChanged();
             }
         }
 

@@ -10,6 +10,8 @@ import svenhjol.charmony.api.BuriedStoneChestDefinition;
 import svenhjol.charmony.api.BuriedStoneChestDefinitionProvider;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
+import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.BreakBehavior;
+import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.puzzles.GemPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.puzzles.SherdPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
 
@@ -42,7 +44,17 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
 
                 @Override
                 public List<String> lockMenus() {
-                    return List.of(SherdPuzzleMenuProvider.ID);
+                    return List.of(
+                        SherdPuzzleMenuProvider.ID,
+                        GemPuzzleMenuProvider.ID
+                    );
+                }
+
+                @Override
+                public List<BreakBehavior> breakBehaviors() {
+                    return List.of(
+                        BreakBehavior.SPAWN_OVERWORLD_MONSTER
+                    );
                 }
 
                 @Override

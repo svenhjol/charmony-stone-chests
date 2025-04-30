@@ -3,8 +3,11 @@ package svenhjol.charmony.stone_chests.common.features.stone_chests;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.ContainerHelper;
@@ -19,13 +22,18 @@ import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
+import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.BreakBehavior;
 import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.StoneChestPuzzles;
 
 public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
     public static final String MATERIAL_TAG = "material";
     public static final String LOCKED_TAG = "locked";
     public static final String LOCK_MENU_TAG = "lock_menu";
+    public static final String UNLOCKED_LOOT_TABLE_TAG = "unlocked_loot_table";
+    public static final String BREAK_BEHAVIOR_TAG = "broken_behaviour";
+
     public static final int ROWS = 3;
     public static final int COLUMNS = 9;
     public static final int SLOTS = ROWS * COLUMNS;
@@ -36,6 +44,8 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     private NonNullList<ItemStack> items;
     private boolean locked;
     private String lockMenu;
+    private String unlockedLootTable;
+    private BreakBehavior breakBehavior;
 
     public ChestBlockEntity(BlockPos pos, BlockState state) {
         super(StoneChests.feature().registers.chestBlockEntity.get(), pos, state);
@@ -44,6 +54,8 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.items = NonNullList.withSize(SLOTS, ItemStack.EMPTY);
         this.locked = false;
         this.lockMenu = "";
+        this.unlockedLootTable = "";
+        this.breakBehavior = BreakBehavior.NOTHING;
 
         this.openersCounter = new ContainerOpenersCounter() {
             @Override
@@ -97,6 +109,11 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         tag.putInt(MATERIAL_TAG, material.getId());
         tag.putBoolean(LOCKED_TAG, locked);
         tag.putString(LOCK_MENU_TAG, lockMenu);
+        tag.putString(UNLOCKED_LOOT_TABLE_TAG, unlockedLootTable);
+
+        if (breakBehavior != null) {
+            tag.putString(BREAK_BEHAVIOR_TAG, breakBehavior.getSerializedName());
+        }
 
         if (!this.trySaveLootTable(tag)) {
             ContainerHelper.saveAllItems(tag, this.items, provider);
@@ -109,6 +126,9 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.locked = tag.getBooleanOr(LOCKED_TAG, false);
         this.material = StoneChestMaterial.byId(tag.getIntOr(MATERIAL_TAG, 0));
         this.lockMenu = tag.getStringOr(LOCK_MENU_TAG, "");
+        this.unlockedLootTable = tag.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
+
+        tag.getString(LOCK_MENU_TAG).ifPresent(str -> this.breakBehavior = BreakBehavior.getOrDefault(str));
 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
@@ -134,11 +154,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     @Override
     public boolean triggerEvent(int i, int j) {
         if (i == 1) {
-            var ttt = j > 0 && j != 255;
-            this.chestLidController.shouldBeOpen(ttt);
-            if (j == 255) {
-                StoneChests.feature().log().warn("j == 255!");
-            }
+            this.chestLidController.shouldBeOpen(j > 0 && j != 255);
             return true;
         } else {
             return super.triggerEvent(i, j);
@@ -212,6 +228,10 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         return lockMenu;
     }
 
+    public BreakBehavior getBreakBehavior() {
+        return breakBehavior;
+    }
+
     public boolean isLocked() {
         return locked;
     }
@@ -224,6 +244,21 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     public void lock(String lockMenu) {
         this.locked = true;
         this.lockMenu = lockMenu;
+        setChanged();
+    }
+
+    public void setUnlockedLootTable(ResourceKey<LootTable> lootTable) {
+        this.unlockedLootTable = lootTable.location().toString();
+        this.setChanged();
+    }
+
+    public ResourceKey<LootTable> getUnlockedLootTable() {
+        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(unlockedLootTable));
+    }
+
+    public void setBreakBehavior(BreakBehavior breakBehavior) {
+        this.breakBehavior = breakBehavior;
+        setChanged();
     }
 
     private StoneChestPuzzles puzzles() {

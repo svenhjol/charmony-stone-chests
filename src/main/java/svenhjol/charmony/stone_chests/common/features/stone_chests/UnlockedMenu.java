@@ -57,11 +57,6 @@ public class UnlockedMenu extends ContainerMenu {
     }
 
     @Override
-    public void removed(Player player) {
-        super.removed(player);
-    }
-
-    @Override
     public boolean stillValid(Player player) {
         return container.stillValid(player);
     }

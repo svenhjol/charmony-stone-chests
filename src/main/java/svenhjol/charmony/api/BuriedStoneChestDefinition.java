@@ -3,8 +3,8 @@ package svenhjol.charmony.api;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
+import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.BreakBehavior;
 
 import java.util.List;
@@ -17,10 +17,9 @@ public interface BuriedStoneChestDefinition extends StringRepresentable {
     String name();
 
     /**
-     * The chest block to use when placing the chest.
-     * This must be a block that belongs to the stone chest block entity!
+     * The chest material to use when placing the chest.
      */
-    Block block();
+    StoneChestMaterial material();
 
     /**
      * Min and max depth that the chest can be buried.

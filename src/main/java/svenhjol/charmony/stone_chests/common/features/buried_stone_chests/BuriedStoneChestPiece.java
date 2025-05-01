@@ -18,6 +18,7 @@ import svenhjol.charmony.core.base.Log;
 import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.Tags;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
+import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
 
 import java.util.ArrayList;
 
@@ -107,7 +108,9 @@ public class BuriedStoneChestPiece extends StructurePiece {
         BlockPos pos,
         boolean waterlogged
     ) {
-        var block = definition.block();
+        var material = definition.material();
+        var block = StoneChests.feature().registers.chestBlocks.get(material).get();
+
         var lootTables = new ArrayList<>(definition.lootTables());
         var menus = new ArrayList<>(definition.lockMenus());
         var breakBehaviors = new ArrayList<>(definition.breakBehaviors());

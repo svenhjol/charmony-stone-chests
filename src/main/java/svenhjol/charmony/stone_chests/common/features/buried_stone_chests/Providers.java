@@ -2,7 +2,6 @@ package svenhjol.charmony.stone_chests.common.features.buried_stone_chests;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.Api;
@@ -13,7 +12,6 @@ import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.BreakBehavior;
 import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.puzzles.GemPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.puzzles.SherdPuzzleMenuProvider;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
 
 import java.util.List;
 
@@ -39,8 +37,8 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             }
 
             @Override
-            public Block block() {
-                return StoneChests.feature().registers.chestBlocks.get(StoneChestMaterial.STONE).get();
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.STONE;
             }
 
             @Override
@@ -80,8 +78,8 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             }
 
             @Override
-            public Block block() {
-                return StoneChests.feature().registers.chestBlocks.get(StoneChestMaterial.DEEPSLATE).get();
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.DEEPSLATE;
             }
 
             @Override

@@ -127,7 +127,7 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
 
             @Override
             public Pair<Integer, Integer> depth() {
-                return Pair.of(-61, -60);
+                return Pair.of(-60, -59);
             }
 
             @Override

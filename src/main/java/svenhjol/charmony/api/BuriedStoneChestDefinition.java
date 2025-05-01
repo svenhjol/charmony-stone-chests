@@ -87,6 +87,6 @@ public interface BuriedStoneChestDefinition extends StringRepresentable {
      * amount of deviation from the position of the structure.
      */
     default int fallbackXZOffset() {
-        return 8;
+        return 4;
     }
 }

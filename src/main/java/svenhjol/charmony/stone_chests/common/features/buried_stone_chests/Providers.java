@@ -57,7 +57,7 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             @Override
             public List<BreakBehavior> breakBehaviors() {
                 return List.of(
-                    BreakBehavior.EXPLODE
+                    BreakBehavior.GIVE_BAD_EFFECT
                 );
             }
 
@@ -97,7 +97,7 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             @Override
             public List<BreakBehavior> breakBehaviors() {
                 return List.of(
-                    BreakBehavior.EXPLODE
+                    BreakBehavior.GIVE_BAD_EFFECT
                 );
             }
 

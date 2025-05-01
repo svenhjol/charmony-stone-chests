@@ -2,10 +2,14 @@ package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
 
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -23,10 +27,12 @@ import svenhjol.charmony.core.helpers.WorldHelper;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Handlers extends Setup<StoneChestPuzzles> {
     public static final int MOB_SPAWN_RANGE = 2;
+    public static final List<Holder<MobEffect>> BAD_EFFECTS;
 
     public Handlers(StoneChestPuzzles feature) {
         super(feature);
@@ -71,23 +77,23 @@ public class Handlers extends Setup<StoneChestPuzzles> {
     public void doBreakBehavior(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
         var amplifier = chest.getDifficultyAmplifier();
         switch (chest.getBreakBehavior()) {
-            case SPAWN_OVERWORLD_MONSTER -> spawnOverworldMonster(player, level, pos, amplifier);
-            case EXPLODE -> explosion(level, pos, amplifier);
-            case GIVE_BAD_EFFECT -> badEffect(player, level, pos, amplifier);
+            case SPAWN_OVERWORLD_MONSTERS -> spawnMonsters(Tags.OVERWORLD_MOBS, player, level, pos, amplifier);
+            case EXPLODE -> explode(level, pos, amplifier);
+            case GIVE_BAD_EFFECT -> giveBadEffect(player, level, amplifier);
         }
     }
 
-    private void spawnOverworldMonster(Player player, Level level, BlockPos pos, double amplifier) {
+    private void spawnMonsters(TagKey<EntityType<?>> tag, Player player, Level level, BlockPos pos, double amplifier) {
         if (!(level instanceof ServerLevel serverLevel)) return;
 
         var random = serverLevel.getRandom();
         var count = Math.round(2 * amplifier);
 
-        var opt = randomMob(Tags.OVERWORLD_MOBS, random, serverLevel);
+        var opt = randomMob(tag, random, serverLevel);
         if (opt.isEmpty()) {
-            log().debug("overworld_mobs tag is empty, not spawning mobs");
+            log().debug("mobs tag is empty, not spawning anything");
             return;
-        };
+        }
         var mob = opt.get();
 
         for (var c = 0; c < count; c++) {
@@ -124,7 +130,7 @@ public class Handlers extends Setup<StoneChestPuzzles> {
                 mobEntity.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(pos), EntitySpawnReason.STRUCTURE, null);
                 mobEntity.spawnAnim();
 
-                if (!player.getAbilities().instabuild && !player.isSpectator()) {
+                if (isSurvivalMode(player)) {
                     mobEntity.setAggressive(true);
                     mobEntity.setTarget(player);
                 }
@@ -140,15 +146,23 @@ public class Handlers extends Setup<StoneChestPuzzles> {
         }
     }
 
-    private void explosion(Level level, BlockPos pos, double amplifier) {
+    private void explode(Level level, BlockPos pos, double amplifier) {
         var x = pos.getX() + 0.5d;
         var y = pos.getY() + 0.5d;
         var z = pos.getZ() + 0.5d;
         level.explode(null, x, y, z, Math.round(2 * amplifier), Level.ExplosionInteraction.BLOCK);
     }
 
-    private void badEffect(Player player, Level level, BlockPos pos, double amplifier) {
-        feature().log().debug("TODO: badEffect");
+    private void giveBadEffect(Player player, Level level, double amplifier) {
+        if (!(level instanceof ServerLevel serverLevel)) return;
+
+        var random = serverLevel.getRandom();
+        var effect = BAD_EFFECTS.get(random.nextInt(BAD_EFFECTS.size()));
+
+        var instance = new MobEffectInstance(effect, (int)Math.round(800 * amplifier), Math.max(0, -1 + (int)Math.floor(amplifier)));
+        if (isSurvivalMode(player)) {
+            player.addEffect(instance);
+        }
     }
 
     private Optional<EntityType<?>> randomMob(TagKey<EntityType<?>> tag, RandomSource random, ServerLevel level) {
@@ -159,5 +173,21 @@ public class Handlers extends Setup<StoneChestPuzzles> {
 
         Util.shuffle(mobs, random);
         return Optional.of(mobs.getFirst());
+    }
+
+    private boolean isSurvivalMode(Player player) {
+        return !player.getAbilities().instabuild && !player.isSpectator();
+    }
+
+    static {
+        BAD_EFFECTS = List.of(
+            MobEffects.BLINDNESS,
+            MobEffects.HUNGER,
+            MobEffects.INFESTED,
+            MobEffects.MINING_FATIGUE,
+            MobEffects.OOZING,
+            MobEffects.POISON,
+            MobEffects.SLOWNESS
+        );
     }
 }

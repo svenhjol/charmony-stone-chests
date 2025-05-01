@@ -25,7 +25,8 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
     public List<BuriedStoneChestDefinition> getBuriedStoneChestDefinitions() {
         return List.of(
             inStoneLayer(),
-            inDeepslateLayer()
+            inDeepslateLayer(),
+            inBedrockLayer()
         );
     }
 
@@ -97,7 +98,60 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             @Override
             public List<BreakBehavior> breakBehaviors() {
                 return List.of(
-                    BreakBehavior.GIVE_BAD_EFFECT
+                    BreakBehavior.GIVE_BAD_EFFECT,
+                    BreakBehavior.SPAWN_OVERWORLD_MONSTERS
+                );
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
+                    SherdPuzzleMenuProvider.ID,
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+        };
+    }
+
+    protected BuriedStoneChestDefinition inBedrockLayer() {
+        return new BuriedStoneChestDefinition() {
+            @Override
+            public String name() {
+                return "in_bedrock_layer";
+            }
+
+            @Override
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.DEEPSLATE;
+            }
+
+            @Override
+            public Pair<Integer, Integer> depth() {
+                return Pair.of(-61, -60);
+            }
+
+            @Override
+            public Pair<Integer, Integer> fallbackYOffset() {
+                return Pair.of(0, 2);
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.ANCIENT_CITY // Testing
+                );
+            }
+
+            @Override
+            public double difficultyAmplifier() {
+                return 2.0d;
+            }
+
+            @Override
+            public List<BreakBehavior> breakBehaviors() {
+                return List.of(
+                    BreakBehavior.EXPLODE,
+                    BreakBehavior.SPAWN_OVERWORLD_MONSTERS
                 );
             }
 

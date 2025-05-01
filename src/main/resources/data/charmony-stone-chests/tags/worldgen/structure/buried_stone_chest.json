@@ -1,6 +1,7 @@
 {
   "values": [
     "charmony-stone-chests:buried_stone_chest_in_stone_layer",
-    "charmony-stone-chests:buried_stone_chest_in_deepslate_layer"
+    "charmony-stone-chests:buried_stone_chest_in_deepslate_layer",
+    "charmony-stone-chests:buried_stone_chest_in_bedrock_layer"
   ]
 }

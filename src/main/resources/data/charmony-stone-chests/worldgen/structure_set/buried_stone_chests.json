@@ -8,10 +8,14 @@
   "structures": [
     {
       "structure": "charmony-stone-chests:buried_stone_chest_in_stone_layer",
-      "weight": 2
+      "weight": 3
     },
     {
       "structure": "charmony-stone-chests:buried_stone_chest_in_deepslate_layer",
+      "weight": 2
+    },
+    {
+      "structure": "charmony-stone-chests:buried_stone_chest_in_bedrock_layer",
       "weight": 1
     }
   ]

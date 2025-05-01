@@ -72,8 +72,8 @@ public class Handlers extends Setup<StoneChestPuzzles> {
         var amplifier = chest.getDifficultyAmplifier();
         switch (chest.getBreakBehavior()) {
             case SPAWN_OVERWORLD_MONSTER -> spawnOverworldMonster(player, level, pos, amplifier);
-            case SMALL_EXPLOSION -> smallExplosion(level, pos);
-            case BAD_EFFECT -> badEffect(player, level, pos);
+            case EXPLODE -> explosion(level, pos, amplifier);
+            case GIVE_BAD_EFFECT -> badEffect(player, level, pos, amplifier);
         }
     }
 
@@ -140,11 +140,14 @@ public class Handlers extends Setup<StoneChestPuzzles> {
         }
     }
 
-    private void smallExplosion(Level level, BlockPos pos) {
-        feature().log().debug("TODO: smallExplosion");
+    private void explosion(Level level, BlockPos pos, double amplifier) {
+        var x = pos.getX() + 0.5d;
+        var y = pos.getY() + 0.5d;
+        var z = pos.getZ() + 0.5d;
+        level.explode(null, x, y, z, Math.round(2 * amplifier), Level.ExplosionInteraction.BLOCK);
     }
 
-    private void badEffect(Player player, Level level, BlockPos pos) {
+    private void badEffect(Player player, Level level, BlockPos pos, double amplifier) {
         feature().log().debug("TODO: badEffect");
     }
 

@@ -166,7 +166,7 @@ public class BuriedStoneChestPiece extends StructurePiece {
             }
         }
 
-        log().debug("Generated buried stone chest at " + pos);
+        log().debug("Generated " + material.getSerializedName() + " chest at " + pos);
     }
 
     public static BuriedStoneChests feature() {

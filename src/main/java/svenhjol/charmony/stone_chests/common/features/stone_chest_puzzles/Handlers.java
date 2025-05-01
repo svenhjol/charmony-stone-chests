@@ -42,6 +42,7 @@ public class Handlers extends Setup<StoneChestPuzzles> {
             menuData.pos = pos;
             menuData.data = data;
             menuData.seed = seed;
+            menuData.difficultyAmplifier = chest.getDifficultyAmplifier();
 
             var menu = provider.getMenuProvider(menuData);
             if (menu.isPresent()) {

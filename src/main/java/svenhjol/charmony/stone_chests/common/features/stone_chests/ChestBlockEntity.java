@@ -33,6 +33,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     public static final String LOCK_MENU_TAG = "lock_menu";
     public static final String UNLOCKED_LOOT_TABLE_TAG = "unlocked_loot_table";
     public static final String BREAK_BEHAVIOR_TAG = "broken_behaviour";
+    public static final String DIFFICULTY_AMPLIFIER_TAG = "difficulty_amplifier";
 
     public static final int ROWS = 3;
     public static final int COLUMNS = 9;
@@ -46,6 +47,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     private String lockMenu;
     private String unlockedLootTable;
     private BreakBehavior breakBehavior;
+    private double difficultyAmplifier;
 
     public ChestBlockEntity(BlockPos pos, BlockState state) {
         super(StoneChests.feature().registers.chestBlockEntity.get(), pos, state);
@@ -55,6 +57,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.locked = false;
         this.lockMenu = "";
         this.unlockedLootTable = "";
+        this.difficultyAmplifier = 1.0d;
         this.breakBehavior = BreakBehavior.NOTHING;
 
         this.openersCounter = new ContainerOpenersCounter() {
@@ -110,6 +113,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         tag.putBoolean(LOCKED_TAG, locked);
         tag.putString(LOCK_MENU_TAG, lockMenu);
         tag.putString(UNLOCKED_LOOT_TABLE_TAG, unlockedLootTable);
+        tag.putDouble(DIFFICULTY_AMPLIFIER_TAG, difficultyAmplifier);
 
         if (breakBehavior != null) {
             tag.putString(BREAK_BEHAVIOR_TAG, breakBehavior.getSerializedName());
@@ -127,6 +131,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.material = StoneChestMaterial.byId(tag.getIntOr(MATERIAL_TAG, 0));
         this.lockMenu = tag.getStringOr(LOCK_MENU_TAG, "");
         this.unlockedLootTable = tag.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
+        this.difficultyAmplifier = tag.getDoubleOr(DIFFICULTY_AMPLIFIER_TAG, 1.0d);
 
         tag.getString(LOCK_MENU_TAG).ifPresent(str -> this.breakBehavior = BreakBehavior.getOrDefault(str));
 
@@ -232,6 +237,14 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         return breakBehavior;
     }
 
+    public double getDifficultyAmplifier() {
+        return difficultyAmplifier;
+    }
+
+    public ResourceKey<LootTable> getUnlockedLootTable() {
+        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(unlockedLootTable));
+    }
+
     public boolean isLocked() {
         return locked;
     }
@@ -247,13 +260,14 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         setChanged();
     }
 
-    public void setUnlockedLootTable(ResourceKey<LootTable> lootTable) {
-        this.unlockedLootTable = lootTable.location().toString();
-        this.setChanged();
+    public void setDifficultyAmplifier(double amplifier) {
+        this.difficultyAmplifier = amplifier;
+        setChanged();
     }
 
-    public ResourceKey<LootTable> getUnlockedLootTable() {
-        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(unlockedLootTable));
+    public void setUnlockedLootTable(ResourceKey<LootTable> lootTable) {
+        this.unlockedLootTable = lootTable.location().toString();
+        setChanged();
     }
 
     public void setBreakBehavior(BreakBehavior breakBehavior) {

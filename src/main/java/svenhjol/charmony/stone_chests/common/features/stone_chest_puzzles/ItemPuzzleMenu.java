@@ -61,6 +61,7 @@ public class ItemPuzzleMenu extends ContainerMenu {
         var syncId = menuData.syncId;
         var inventory = menuData.playerInventory;
         var data = menuData.data;
+        var amplifier = menuData.difficultyAmplifier;
         var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
 
         if (requirements.isEmpty()) {
@@ -76,6 +77,7 @@ public class ItemPuzzleMenu extends ContainerMenu {
 
             var item = requirement.item();
             var count = requirement.minCount() + random.nextInt(requirement.maxCount() - requirement.minCount());
+            var amplifiedCount = (int)Math.floor(count * amplifier);
 
             if (!cached.containsKey(item)) {
                 cached.put(item, new ArrayList<>(TagHelper.getValues(serverLevel.registryAccess().lookupOrThrow(Registries.ITEM), item)));
@@ -85,7 +87,7 @@ public class ItemPuzzleMenu extends ContainerMenu {
 
             var items = new ArrayList<>(cached.get(item));
             Collections.shuffle(items, random);
-            puzzle.add(new ItemStack(items.getFirst(), count));
+            puzzle.add(new ItemStack(items.getFirst(), amplifiedCount));
         }
 
         return Optional.of(new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(6), data, puzzle, access));

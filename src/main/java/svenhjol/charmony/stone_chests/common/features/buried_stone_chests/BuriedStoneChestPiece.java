@@ -144,12 +144,13 @@ public class BuriedStoneChestPiece extends StructurePiece {
                 // for when the player breaks the locked chest or gets the puzzle wrong.
                 chest.setUnlockedLootTable(lootTable);
                 chest.setLootTable(Tags.SIMPLE_LOOT);
-            }
+                chest.setDifficultyAmplifier(definition.difficultyAmplifier());
 
-            if (!breakBehaviors.isEmpty()) {
-                // Add a random break behavior to the chest.
-                Util.shuffle(breakBehaviors, random);
-                chest.setBreakBehavior(breakBehaviors.getFirst());
+                if (!breakBehaviors.isEmpty()) {
+                    // Add a random break behavior to the chest.
+                    Util.shuffle(breakBehaviors, random);
+                    chest.setBreakBehavior(breakBehaviors.getFirst());
+                }
             }
 
             if (!chest.isLocked()) {

@@ -33,6 +33,14 @@ public interface BuriedStoneChestDefinition extends StringRepresentable {
     List<ResourceKey<LootTable>> lootTables();
 
     /**
+     * Use this to increase the difficulty of locked chest puzzles
+     * and the penalty for breaking the chest or failing the puzzle.
+     */
+    default double difficultyAmplifier() {
+        return 1.0d;
+    }
+
+    /**
      * Behavior when the chest is broken.
      * If more than one is specified, one is randomly chosen from the list.
      */

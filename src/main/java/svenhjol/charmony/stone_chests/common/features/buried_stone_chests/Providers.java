@@ -95,6 +95,13 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             }
 
             @Override
+            public List<BreakBehavior> breakBehaviors() {
+                return List.of(
+                    BreakBehavior.SPAWN_OVERWORLD_MONSTER
+                );
+            }
+
+            @Override
             public List<String> lockMenus() {
                 return List.of(
                     SherdPuzzleMenuProvider.ID,

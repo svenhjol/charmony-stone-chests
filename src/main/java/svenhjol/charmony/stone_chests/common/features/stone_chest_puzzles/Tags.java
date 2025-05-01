@@ -3,6 +3,7 @@ package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
@@ -19,4 +20,7 @@ public final class Tags {
 
     public static final ResourceKey<LootTable> SIMPLE_LOOT = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("puzzle/simple"));
+
+    public static final TagKey<EntityType<?>> OVERWORLD_MOBS = TagKey.create(Registries.ENTITY_TYPE,
+        StoneChestsMod.id("puzzle/overworld_mobs"));
 }

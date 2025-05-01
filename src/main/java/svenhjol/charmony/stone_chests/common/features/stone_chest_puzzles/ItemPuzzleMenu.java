@@ -161,6 +161,7 @@ public class ItemPuzzleMenu extends ContainerMenu {
                     // Fail - return the items to the player
                     player.containerMenu.removed(player);
                     serverLevel.destroyBlock(pos, true);
+                    feature().handlers.doBreakBehavior(player, player.level(), chest.getBlockPos(), chest);
                 }
             }
         });
@@ -181,10 +182,6 @@ public class ItemPuzzleMenu extends ContainerMenu {
 
     @Override
     protected void clearContainer(Player player, Container container) {
-        if (container instanceof ChestBlockEntity chest && chest.isLocked()) {
-            chest.setLootTable(Tags.NO_LOOT);
-            feature().handlers.doBreakBehavior(player, player.level(), chest.getBlockPos(), chest);
-        }
         super.clearContainer(player, container);
     }
 

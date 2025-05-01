@@ -3,7 +3,7 @@
     "type": "minecraft:random_spread",
     "salt": 244144999,
     "separation": 8,
-    "spacing": 16
+    "spacing": 12
   },
   "structures": [
     {

@@ -9,7 +9,9 @@ import svenhjol.charmony.core.enums.Side;
     id = StoneChestsMod.ID,
     sides = {Side.Client, Side.Common},
     name = "Stone Chests",
-    description = "Stone chests.")
+    description = """
+        Adds craftable stone chests and buried stone chests found within caves.
+        Buried stone chests can be looted after solving a puzzle.""")
 public final class StoneChestsMod extends Mod {
     public static final String ID = "charmony-stone-chests";
     private static StoneChestsMod instance;

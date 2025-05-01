@@ -77,7 +77,9 @@ public class Handlers extends Setup<StoneChestPuzzles> {
     public void doBreakBehavior(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
         var amplifier = chest.getDifficultyAmplifier();
         switch (chest.getBreakBehavior()) {
-            case SPAWN_OVERWORLD_MONSTERS -> spawnMonsters(Tags.OVERWORLD_MOBS, player, level, pos, amplifier);
+            case SPAWN_OVERWORLD_MONSTERS -> spawnMonsters(Tags.OVERWORLD_MONSTERS, player, level, pos, amplifier);
+            case SPAWN_NETHER_MONSTERS -> spawnMonsters(Tags.NETHER_MONSTERS, player, level, pos, amplifier);
+            case SPAWN_END_MONSTERS -> spawnMonsters(Tags.END_MONSTERS, player, level, pos, amplifier);
             case EXPLODE -> explode(level, pos, amplifier);
             case GIVE_BAD_EFFECT -> giveBadEffect(player, level, amplifier);
         }
@@ -87,7 +89,7 @@ public class Handlers extends Setup<StoneChestPuzzles> {
         if (!(level instanceof ServerLevel serverLevel)) return;
 
         var random = serverLevel.getRandom();
-        var count = Math.round(2 * amplifier);
+        var count = Math.round(feature().numberOfMobsSpawned() * amplifier);
 
         var opt = randomMob(tag, random, serverLevel);
         if (opt.isEmpty()) {
@@ -159,7 +161,7 @@ public class Handlers extends Setup<StoneChestPuzzles> {
         var random = serverLevel.getRandom();
         var effect = BAD_EFFECTS.get(random.nextInt(BAD_EFFECTS.size()));
 
-        var instance = new MobEffectInstance(effect, (int)Math.round(800 * amplifier), Math.max(0, -1 + (int)Math.floor(amplifier)));
+        var instance = new MobEffectInstance(effect, (int)Math.round(feature().badEffectDuration() * amplifier), Math.max(0, -1 + (int)Math.floor(amplifier)));
         if (isSurvivalMode(player)) {
             player.addEffect(instance);
         }

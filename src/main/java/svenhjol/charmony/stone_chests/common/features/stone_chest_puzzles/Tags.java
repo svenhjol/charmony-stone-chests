@@ -21,6 +21,12 @@ public final class Tags {
     public static final ResourceKey<LootTable> SIMPLE_LOOT = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("puzzle/simple"));
 
-    public static final TagKey<EntityType<?>> OVERWORLD_MOBS = TagKey.create(Registries.ENTITY_TYPE,
-        StoneChestsMod.id("puzzle/overworld_mobs"));
+    public static final TagKey<EntityType<?>> OVERWORLD_MONSTERS = TagKey.create(Registries.ENTITY_TYPE,
+        StoneChestsMod.id("puzzle/overworld_monsters"));
+
+    public static final TagKey<EntityType<?>> NETHER_MONSTERS = TagKey.create(Registries.ENTITY_TYPE,
+        StoneChestsMod.id("puzzle/nether_monsters"));
+
+    public static final TagKey<EntityType<?>> END_MONSTERS = TagKey.create(Registries.ENTITY_TYPE,
+        StoneChestsMod.id("puzzle/end_monsters"));
 }

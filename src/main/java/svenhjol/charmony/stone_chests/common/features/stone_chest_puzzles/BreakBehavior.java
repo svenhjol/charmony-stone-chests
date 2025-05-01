@@ -5,6 +5,8 @@ import net.minecraft.util.StringRepresentable;
 public enum BreakBehavior implements StringRepresentable {
     NOTHING("nothing"),
     SPAWN_OVERWORLD_MONSTERS("spawn_overworld_monsters"),
+    SPAWN_NETHER_MONSTERS("spawn_nether_monsters"),
+    SPAWN_END_MONSTERS("spawn_end_monsters"),
     EXPLODE("explode"),
     GIVE_BAD_EFFECT("give_bad_effect");
 

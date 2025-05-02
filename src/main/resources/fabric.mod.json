@@ -4,7 +4,7 @@
   "version": "${mod_version}",
 
   "name": "Charmony Stone Chests",
-  "description": "Adds craftable stone chests and buried stone chests found within caves. Buried stone chests can be looted after solving a puzzle.",
+  "description": "Adds craftable stone chests and secret chests found within structures and caves. Secret chests can be looted after solving a puzzle.",
   "authors": [
     "svenhjol"
   ],

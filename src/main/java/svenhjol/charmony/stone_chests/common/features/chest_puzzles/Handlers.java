@@ -77,11 +77,11 @@ public class Handlers extends Setup<ChestPuzzles> {
     public void doBreakBehavior(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
         var amplifier = chest.getDifficultyAmplifier();
         switch (chest.getBreakBehavior()) {
-            case SPAWN_OVERWORLD_MONSTERS -> spawnMonsters(Tags.OVERWORLD_MONSTERS, player, level, pos, amplifier);
-            case SPAWN_NETHER_MONSTERS -> spawnMonsters(Tags.NETHER_MONSTERS, player, level, pos, amplifier);
-            case SPAWN_END_MONSTERS -> spawnMonsters(Tags.END_MONSTERS, player, level, pos, amplifier);
-            case EXPLODE -> explode(level, pos, amplifier);
-            case GIVE_BAD_EFFECT -> giveBadEffect(player, level, amplifier);
+            case SpawnOverworldMonsters -> spawnMonsters(Tags.OVERWORLD_MONSTERS, player, level, pos, amplifier);
+            case SpawnNetherMonsters -> spawnMonsters(Tags.NETHER_MONSTERS, player, level, pos, amplifier);
+            case SpawnEndMonsters -> spawnMonsters(Tags.END_MONSTERS, player, level, pos, amplifier);
+            case Explode -> explode(level, pos, amplifier);
+            case GiveBadEffect -> giveBadEffect(player, level, amplifier);
         }
     }
 

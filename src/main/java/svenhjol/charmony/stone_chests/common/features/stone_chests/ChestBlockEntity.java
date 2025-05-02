@@ -58,7 +58,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.lockMenu = "";
         this.unlockedLootTable = "";
         this.difficultyAmplifier = 1.0d;
-        this.breakBehavior = StoneChestBreakBehavior.NOTHING;
+        this.breakBehavior = StoneChestBreakBehavior.Nothing;
 
         this.openersCounter = new ContainerOpenersCounter() {
             @Override

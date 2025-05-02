@@ -58,7 +58,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<StoneChestBreakBehavior> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.GIVE_BAD_EFFECT
+                    StoneChestBreakBehavior.GiveBadEffect
                 );
             }
 
@@ -98,8 +98,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<StoneChestBreakBehavior> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.GIVE_BAD_EFFECT,
-                    StoneChestBreakBehavior.SPAWN_OVERWORLD_MONSTERS
+                    StoneChestBreakBehavior.GiveBadEffect,
+                    StoneChestBreakBehavior.SpawnOverworldMonsters
                 );
             }
 
@@ -150,8 +150,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<StoneChestBreakBehavior> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.EXPLODE,
-                    StoneChestBreakBehavior.SPAWN_OVERWORLD_MONSTERS
+                    StoneChestBreakBehavior.Explode,
+                    StoneChestBreakBehavior.SpawnOverworldMonsters
                 );
             }
 

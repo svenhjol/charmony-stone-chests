@@ -59,6 +59,7 @@ public class SecretChestPiece extends StructurePiece {
         if (stateBelow.isSolidRender() && state.isAir()) {
             this.boundingBox = new BoundingBox(offsetPos);
             this.createChest(level, this.boundingBox, random, offsetPos, false);
+            log().debug("Placed chest using exact coordinates at " + pos);
             return;
         }
 
@@ -81,6 +82,7 @@ public class SecretChestPiece extends StructurePiece {
                             var fluidState = level.getFluidState(tryPos);
                             this.boundingBox = new BoundingBox(tryPos);
                             this.createChest(level, this.boundingBox, random, tryPos, fluidState.is(Fluids.WATER));
+                            log().debug("Placed chest using buried XZ offsets at " + pos);
                             return;
                         }
                     }
@@ -105,10 +107,19 @@ public class SecretChestPiece extends StructurePiece {
                         if (tryStateBelow.isSolidRender() && (isAir || isWater || isNotSolidRender)) {
                             this.boundingBox = new BoundingBox(tryPos);
                             this.createChest(level, this.boundingBox, random, tryPos, isWater);
+                            log().debug("Placed chest using surface/cave XZ offsets at " + pos);
                             return;
                         }
                     }
                 }
+            }
+
+            // Let the definition do worldgen here.
+            var generated = definition.generateSurface(level, pos.below(), random);
+            if (generated) {
+                this.createChest(level, this.boundingBox, random, pos, false);
+                log().debug("Placed chest using generateSurface at " + pos);
+                return;
             }
 
             if (definition.canBeFullyBuried()) {
@@ -118,6 +129,7 @@ public class SecretChestPiece extends StructurePiece {
                     if (stateBelow.isSolidRender()) {
                         this.boundingBox = new BoundingBox(tryPos);
                         this.createChest(level, this.boundingBox, random, tryPos, false);
+                        log().debug("Placed chest using canBeFullyBuried at " + pos);
                         return;
                     }
                 }

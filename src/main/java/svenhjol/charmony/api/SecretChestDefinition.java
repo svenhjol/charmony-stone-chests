@@ -1,8 +1,11 @@
 package svenhjol.charmony.api;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 
@@ -44,6 +47,13 @@ public interface SecretChestDefinition extends StringRepresentable {
      * and the penalty for breaking the chest or failing the puzzle.
      */
     default double difficultyAmplifier() {
+        return 1.0d;
+    }
+
+    /**
+     * Chance (out of 1.0) of trying to place a secret chest.
+     */
+    default double chance() {
         return 1.0d;
     }
 
@@ -103,6 +113,15 @@ public interface SecretChestDefinition extends StringRepresentable {
      * If false, a position will be calculated in post-placement if no favorable position is found in pre-placement.
      */
     default boolean strict() {
+        return false;
+    }
+
+    /**
+     * Hook to generate land underneath the target position.
+     * This is called only if strict is false and the chest cannot be placed.
+     * If this function is false then the chest will be buried if canBeFullyBuried is true.
+     */
+    default boolean generateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {
         return false;
     }
 }

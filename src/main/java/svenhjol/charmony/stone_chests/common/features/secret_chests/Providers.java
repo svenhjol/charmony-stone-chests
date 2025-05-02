@@ -1,11 +1,17 @@
 package svenhjol.charmony.stone_chests.common.features.secret_chests;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
+import svenhjol.charmony.core.base.Environment;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GemPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.SherdPuzzleMenuProvider;
@@ -24,7 +30,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             inSurfaceCaves(),
             inDeepCaves(),
             atBedrock(),
-            onMountain()
+            onMountain(),
+            onEndIslands()
         );
     }
 
@@ -227,6 +234,92 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
                 return List.of(
                     GemPuzzleMenuProvider.ID
                 );
+            }
+        };
+    }
+
+    protected SecretChestDefinition onEndIslands() {
+        return new SecretChestDefinition() {
+            @Override
+            public String name() {
+                return "on_end_islands";
+            }
+
+            @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.Surface;
+            }
+
+            @Override
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.Purpur;
+            }
+
+            @Override
+            public double chance() {
+                return 0.5d;
+            }
+
+            @Override
+            public Pair<Integer, Integer> height() {
+                return Pair.of(30, 90);
+            }
+
+            @Override
+            public int fallbackXZOffset() {
+                return 12;
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.END_CITY_TREASURE // TODO: custom loot table
+                );
+            }
+
+            @Override
+            public double difficultyAmplifier() {
+                return 3.0d;
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+
+            @Override
+            public List<StoneChestBreakBehavior> breakBehaviors() {
+                return List.of(
+                    StoneChestBreakBehavior.SpawnEndMonsters,
+                    StoneChestBreakBehavior.Explode,
+                    StoneChestBreakBehavior.GiveBadEffect
+                );
+            }
+
+            /**
+             * @see net.minecraft.world.level.levelgen.feature.EndIslandFeature
+             */
+            @Override
+            public boolean generateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {
+                float f = random.nextInt(3) + 4.0f;
+
+                var block = Environment.isDebugMode() ? Blocks.OBSIDIAN : Blocks.END_STONE;
+
+                for (int i = 0; f > 0.5f; i--) {
+                    for (int j = Mth.floor(-f); j <= Mth.ceil(f); j++) {
+                        for (int k = Mth.floor(-f); k <= Mth.ceil(f); k++) {
+                            if (j * j + k * k <= (f + 1.0f) * (f + 1.0f)) {
+                                level.setBlock(pos.offset(j, i, k), block.defaultBlockState(), 3);
+                            }
+                        }
+                    }
+
+                    f -= random.nextInt(2) + 0.5f;
+                }
+
+                return true;
             }
         };
     }

@@ -33,7 +33,6 @@ public class SecretChestStructure extends Structure {
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         var opt = findStart(context);
         if (opt.isEmpty()) {
-            feature().log().warn("Could not find start position for secret chest");
             return Optional.empty();
         }
 
@@ -43,6 +42,10 @@ public class SecretChestStructure extends Structure {
     }
 
     private Optional<BlockPos> findStart(GenerationContext context) {
+        if (definition.chance() < context.random().nextDouble()) {
+            return Optional.empty();
+        }
+
         return switch (definition.placement()) {
             case Surface -> findSurfaceStart(context);
             case Cave -> findCaveStart(context);
@@ -71,8 +74,10 @@ public class SecretChestStructure extends Structure {
             return Optional.empty();
         }
 
-        // Make a chest in something solid; we will try and move it in post process.
-        var yOffset = definition.fallbackYOffset().getFirst();
+        // Make a chest anywhere; we will try and move it in post process.
+        var hmin = definition.height().getFirst();
+        var hmax = definition.height().getSecond();
+        var yOffset = hmin + context.random().nextInt(hmax - hmin);
         return Optional.of(new BlockPos(x, yOffset, z));
     }
 

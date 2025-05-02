@@ -4,12 +4,9 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
-import svenhjol.charmony.api.Api;
-import svenhjol.charmony.api.SecretChestDefinition;
-import svenhjol.charmony.api.SecretChestDefinitionProvider;
+import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
-import svenhjol.charmony.api.StoneChestBreakBehavior;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GemPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.SherdPuzzleMenuProvider;
 
@@ -38,8 +35,13 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.Cave;
+            }
+
+            @Override
             public StoneChestMaterial material() {
-                return StoneChestMaterial.STONE;
+                return StoneChestMaterial.Stone;
             }
 
             @Override
@@ -79,8 +81,13 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.Cave;
+            }
+
+            @Override
             public StoneChestMaterial material() {
-                return StoneChestMaterial.DEEPSLATE;
+                return StoneChestMaterial.Deepslate;
             }
 
             @Override
@@ -121,8 +128,13 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.Buried;
+            }
+
+            @Override
             public StoneChestMaterial material() {
-                return StoneChestMaterial.DEEPSLATE;
+                return StoneChestMaterial.Deepslate;
             }
 
             @Override

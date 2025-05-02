@@ -21,6 +21,14 @@ public interface SecretChestDefinition extends StringRepresentable {
     StoneChestMaterial material();
 
     /**
+     * Placement method to use.
+     * - Surface = land surface (with open sky) or ocean surface.
+     * - Cave = air/water space within a cave.
+     * - Buried = has solid block above and below.
+     */
+    SecretChestPlacement placement();
+
+    /**
      * Min and max Y-level that the chest can be placed.
      */
     Pair<Integer, Integer> depth();

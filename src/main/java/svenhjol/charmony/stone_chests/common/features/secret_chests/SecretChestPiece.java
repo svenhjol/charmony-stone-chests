@@ -14,6 +14,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.Fluids;
 import svenhjol.charmony.api.SecretChestDefinition;
+import svenhjol.charmony.api.SecretChestPlacement;
 import svenhjol.charmony.core.base.Log;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
@@ -66,35 +67,59 @@ public class SecretChestPiece extends StructurePiece {
         var maxYOffset = fallbackYOffset.getSecond();
         var xzOffset = definition.fallbackXZOffset();
 
-        // Check for air spaces for the chest.
-        for (var y = minYOffset; y < maxYOffset; y++) {
-            for (var x = -xzOffset; x < xzOffset; x++) {
-                for (var z = -xzOffset; z < xzOffset; z++) {
-                    var tryPos = offsetPos.offset(x, y, z);
-                    var tryState = level.getBlockState(tryPos);
-                    var tryStateBelow = level.getBlockState(tryPos.below());
-                    var fluidState = level.getFluidState(tryPos);
+        if (definition.placement().equals(SecretChestPlacement.Buried)) {
+            // Look for places to bury the chest in a range around the structure start pos.
+            // It is considered a success if there is a solid block below and above the target pos.
+            for (var y = minYOffset; y < maxYOffset; y++) {
+                for (var x = -xzOffset; x < xzOffset; x++) {
+                    for (var z = -xzOffset; z < xzOffset; z++) {
+                        var tryPos = offsetPos.offset(x, y, z);
+                        var tryStateAbove = level.getBlockState(tryPos.above());
+                        var tryStateBelow = level.getBlockState(tryPos.below());
 
-                    var isAir = tryState.isAir();
-                    var isWater = fluidState.is(Fluids.WATER);
-
-                    if (tryStateBelow.isSolidRender() && (isAir || isWater)) {
-                        this.boundingBox = new BoundingBox(tryPos);
-                        this.createChest(level, this.boundingBox, random, tryPos, isWater);
-                        return;
+                        if (tryStateBelow.isSolidRender() && tryStateAbove.isSolidRender()) {
+                            var fluidState = level.getFluidState(tryPos);
+                            this.boundingBox = new BoundingBox(tryPos);
+                            this.createChest(level, this.boundingBox, random, tryPos, fluidState.is(Fluids.WATER));
+                            return;
+                        }
                     }
                 }
             }
-        }
 
-        if (definition.canBeFullyBuried()) {
-            // Force the chest into solid blocks.
-            for (var y = 0; y < maxYOffset; y++) {
-                var tryPos = offsetPos.offset(0, y, 0);
-                if (stateBelow.isSolidRender()) {
-                    this.boundingBox = new BoundingBox(tryPos);
-                    this.createChest(level, this.boundingBox, random, tryPos, false);
-                    return;
+        } else {
+            // For surface and cave placements, look for places to place the chest in a range around the structure start pos.
+            // This is a success if the target block is air or water and there is a solid block beneath the target pos.
+            for (var y = minYOffset; y < maxYOffset; y++) {
+                for (var x = -xzOffset; x < xzOffset; x++) {
+                    for (var z = -xzOffset; z < xzOffset; z++) {
+                        var tryPos = offsetPos.offset(x, y, z);
+                        var tryState = level.getBlockState(tryPos);
+                        var tryStateBelow = level.getBlockState(tryPos.below());
+                        var fluidState = level.getFluidState(tryPos);
+
+                        var isAir = tryState.isAir();
+                        var isNotSolidRender = !tryState.isSolidRender();
+                        var isWater = fluidState.is(Fluids.WATER);
+
+                        if (tryStateBelow.isSolidRender() && (isAir || isWater || isNotSolidRender)) {
+                            this.boundingBox = new BoundingBox(tryPos);
+                            this.createChest(level, this.boundingBox, random, tryPos, isWater);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            if (definition.canBeFullyBuried()) {
+                // Force the chest into solid blocks.
+                for (var y = 0; y < maxYOffset; y++) {
+                    var tryPos = offsetPos.offset(0, y, 0);
+                    if (stateBelow.isSolidRender()) {
+                        this.boundingBox = new BoundingBox(tryPos);
+                        this.createChest(level, this.boundingBox, random, tryPos, false);
+                        return;
+                    }
                 }
             }
         }

@@ -23,7 +23,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
         return List.of(
             inSurfaceCaves(),
             inDeepCaves(),
-            atBedrock()
+            atBedrock(),
+            onMountain()
         );
     }
 
@@ -45,7 +46,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public Pair<Integer, Integer> depth() {
+            public Pair<Integer, Integer> height() {
                 return Pair.of(25, 50);
             }
 
@@ -67,7 +68,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.SIMPLE_DUNGEON
+                    BuiltInLootTables.SIMPLE_DUNGEON // TODO: custom loot table
                 );
             }
         };
@@ -91,14 +92,14 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public Pair<Integer, Integer> depth() {
+            public Pair<Integer, Integer> height() {
                 return Pair.of(-40, -10);
             }
 
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.ANCIENT_CITY // Testing
+                    BuiltInLootTables.ANCIENT_CITY // TODO: custom loot table
                 );
             }
 
@@ -133,12 +134,17 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
+            public boolean strict() {
+                return true;
+            }
+
+            @Override
             public StoneChestMaterial material() {
                 return StoneChestMaterial.Deepslate;
             }
 
             @Override
-            public Pair<Integer, Integer> depth() {
+            public Pair<Integer, Integer> height() {
                 return Pair.of(-60, -59);
             }
 
@@ -150,7 +156,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.ANCIENT_CITY // Testing
+                    BuiltInLootTables.ANCIENT_CITY // TODO: custom loot table
                 );
             }
 
@@ -171,6 +177,54 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             public List<String> lockMenus() {
                 return List.of(
                     SherdPuzzleMenuProvider.ID,
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+        };
+    }
+
+    protected SecretChestDefinition onMountain() {
+        return new SecretChestDefinition() {
+            @Override
+            public String name() {
+                return "on_mountain";
+            }
+
+            @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.Surface;
+            }
+
+            @Override
+            public boolean strict() {
+                return true;
+            }
+
+            @Override
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.Stone;
+            }
+
+            @Override
+            public Pair<Integer, Integer> height() {
+                return Pair.of(130, 200);
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.ANCIENT_CITY // TODO: custom loot table
+                );
+            }
+
+            @Override
+            public double difficultyAmplifier() {
+                return 2.0d;
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
                     GemPuzzleMenuProvider.ID
                 );
             }

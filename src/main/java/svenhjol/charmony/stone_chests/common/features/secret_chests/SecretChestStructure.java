@@ -3,6 +3,7 @@ package svenhjol.charmony.stone_chests.common.features.secret_chests;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import svenhjol.charmony.api.SecretChestDefinition;
@@ -42,9 +43,43 @@ public class SecretChestStructure extends Structure {
     }
 
     private Optional<BlockPos> findStart(GenerationContext context) {
+        return switch (definition.placement()) {
+            case Surface -> findSurfaceStart(context);
+            case Cave -> findCaveStart(context);
+            case Buried -> findBuriedStart(context);
+        };
+    }
+
+    private Optional<BlockPos> findSurfaceStart(GenerationContext context) {
         var x = context.chunkPos().getMinBlockX();
         var z = context.chunkPos().getMinBlockZ();
-        var depth = definition.depth();
+        var min = context.heightAccessor().getMinY() + 15;
+        var y = context.chunkGenerator().getFirstOccupiedHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
+        var column = context.chunkGenerator().getBaseColumn(x, z, context.heightAccessor(), context.randomState());
+        var heightMap = Heightmap.Types.WORLD_SURFACE_WG;
+
+        int surface;
+        for (surface = y; surface > min; --surface) {
+            var state = column.getBlock(y);
+            var above = column.getBlock(y + 1);
+            if (heightMap.isOpaque().test(state) && (!heightMap.isOpaque().test(above))) {
+                return Optional.of(new BlockPos(x, surface, z));
+            }
+        }
+
+        if (definition.strict()) {
+            return Optional.empty();
+        }
+
+        // Make a chest in something solid; we will try and move it in post process.
+        var yOffset = definition.fallbackYOffset().getFirst();
+        return Optional.of(new BlockPos(x, yOffset, z));
+    }
+
+    private Optional<BlockPos> findCaveStart(GenerationContext context) {
+        var x = context.chunkPos().getMinBlockX();
+        var z = context.chunkPos().getMinBlockZ();
+        var depth = definition.height();
         var base = 0;
         var min = depth.getFirst();
         var max = depth.getSecond();
@@ -61,7 +96,40 @@ public class SecretChestStructure extends Structure {
             }
         }
 
-        // Make a chest in something solid; we will move it in post process.
+        if (definition.strict()) {
+            return Optional.empty();
+        }
+
+        // Make a chest in something solid; we will try and move it in post process.
+        var y = base + min + context.random().nextInt(max - min);
+        return Optional.of(new BlockPos(x, y, z));
+    }
+
+    private Optional<BlockPos> findBuriedStart(GenerationContext context) {
+        var x = context.chunkPos().getMinBlockX();
+        var z = context.chunkPos().getMinBlockZ();
+        var depth = definition.height();
+        var base = 0;
+        var min = depth.getFirst();
+        var max = depth.getSecond();
+
+        var column = context.chunkGenerator().getBaseColumn(x, z, context.heightAccessor(), context.randomState());
+
+        for (var i = min; i < max; ++i) {
+            var y = base + i;
+            var below = column.getBlock(y - 1);
+            var above = column.getBlock(y + 1);
+            if (below.isSolidRender() && above.isSolidRender()) {
+                // Found solid above and below, return early.
+                return Optional.of(new BlockPos(x, y, z));
+            }
+        }
+
+        if (definition.strict()) {
+            return Optional.empty();
+        }
+
+        // Make a chest somewhere and we will try and move it in post process.
         var y = base + min + context.random().nextInt(max - min);
         return Optional.of(new BlockPos(x, y, z));
     }

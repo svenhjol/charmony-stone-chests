@@ -24,8 +24,8 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.BreakBehavior;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.StoneChestPuzzles;
+import svenhjol.charmony.api.StoneChestBreakBehavior;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 
 public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
     public static final String MATERIAL_TAG = "material";
@@ -46,7 +46,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     private boolean locked;
     private String lockMenu;
     private String unlockedLootTable;
-    private BreakBehavior breakBehavior;
+    private StoneChestBreakBehavior breakBehavior;
     private double difficultyAmplifier;
 
     public ChestBlockEntity(BlockPos pos, BlockState state) {
@@ -58,7 +58,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.lockMenu = "";
         this.unlockedLootTable = "";
         this.difficultyAmplifier = 1.0d;
-        this.breakBehavior = BreakBehavior.NOTHING;
+        this.breakBehavior = StoneChestBreakBehavior.NOTHING;
 
         this.openersCounter = new ContainerOpenersCounter() {
             @Override
@@ -133,7 +133,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.unlockedLootTable = tag.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
         this.difficultyAmplifier = tag.getDoubleOr(DIFFICULTY_AMPLIFIER_TAG, 1.0d);
 
-        tag.getString(LOCK_MENU_TAG).ifPresent(str -> this.breakBehavior = BreakBehavior.getOrDefault(str));
+        tag.getString(LOCK_MENU_TAG).ifPresent(str -> this.breakBehavior = StoneChestBreakBehavior.getOrDefault(str));
 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
@@ -233,7 +233,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         return lockMenu;
     }
 
-    public BreakBehavior getBreakBehavior() {
+    public StoneChestBreakBehavior getBreakBehavior() {
         return breakBehavior;
     }
 
@@ -270,12 +270,12 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         setChanged();
     }
 
-    public void setBreakBehavior(BreakBehavior breakBehavior) {
+    public void setBreakBehavior(StoneChestBreakBehavior breakBehavior) {
         this.breakBehavior = breakBehavior;
         setChanged();
     }
 
-    private StoneChestPuzzles puzzles() {
-        return StoneChestPuzzles.feature();
+    private ChestPuzzles puzzles() {
+        return ChestPuzzles.feature();
     }
 }

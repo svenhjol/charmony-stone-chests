@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import svenhjol.charmony.core.helpers.ColorHelper;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.ItemPuzzleMenu;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleMenu;
 
 public class ItemPuzzleScreen extends AbstractContainerScreen<ItemPuzzleMenu> {
     public static final ResourceLocation BACKGROUND = StoneChestsMod.id("textures/gui/container/item_puzzle.png");

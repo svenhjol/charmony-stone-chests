@@ -1,8 +1,8 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
+package svenhjol.charmony.api;
 
 import net.minecraft.util.StringRepresentable;
 
-public enum BreakBehavior implements StringRepresentable {
+public enum StoneChestBreakBehavior implements StringRepresentable {
     NOTHING("nothing"),
     SPAWN_OVERWORLD_MONSTERS("spawn_overworld_monsters"),
     SPAWN_NETHER_MONSTERS("spawn_nether_monsters"),
@@ -12,14 +12,14 @@ public enum BreakBehavior implements StringRepresentable {
 
     private final String name;
 
-    BreakBehavior(String name) {
+    StoneChestBreakBehavior(String name) {
         this.name = name;
     }
 
-    public static BreakBehavior getOrDefault(String name) {
-        BreakBehavior behavior;
+    public static StoneChestBreakBehavior getOrDefault(String name) {
+        StoneChestBreakBehavior behavior;
         try {
-            behavior = BreakBehavior.valueOf(name);
+            behavior = StoneChestBreakBehavior.valueOf(name);
         } catch (IllegalArgumentException e) {
             behavior = NOTHING;
         }

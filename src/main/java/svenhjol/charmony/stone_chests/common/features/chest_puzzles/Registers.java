@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
+package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
@@ -11,13 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class Registers extends Setup<StoneChestPuzzles> {
+public class Registers extends Setup<ChestPuzzles> {
     public static final String ITEM_PUZZLE_ID = "item_puzzle_stone_chest";
 
     public final Supplier<MenuType<ItemPuzzleMenu>> itemPuzzleMenu;
     public final Map<String, StoneChestLockMenuProvider> lockMenuProviders = new HashMap<>();
 
-    public Registers(StoneChestPuzzles feature) {
+    public Registers(ChestPuzzles feature) {
         super(feature);
 
         var registry = CommonRegistry.forFeature(feature);

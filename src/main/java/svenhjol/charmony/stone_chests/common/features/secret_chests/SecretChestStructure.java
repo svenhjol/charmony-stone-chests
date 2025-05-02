@@ -1,28 +1,28 @@
-package svenhjol.charmony.stone_chests.common.features.buried_stone_chests;
+package svenhjol.charmony.stone_chests.common.features.secret_chests;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import svenhjol.charmony.api.BuriedStoneChestDefinition;
+import svenhjol.charmony.api.SecretChestDefinition;
 
 import java.util.Optional;
 
-public class BuriedStoneChestStructure extends Structure {
-    public static final MapCodec<BuriedStoneChestStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-        BuriedStoneChestStructure.settingsCodec(instance),
-        feature().registers.buriedChestCodec.fieldOf(Registers.DEFINITION_ID)
+public class SecretChestStructure extends Structure {
+    public static final MapCodec<SecretChestStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+        SecretChestStructure.settingsCodec(instance),
+        feature().registers.secretChestCodec.fieldOf(Registers.DEFINITION_ID)
             .forGetter(structure -> structure.definition))
-        .apply(instance, BuriedStoneChestStructure::new));
+        .apply(instance, SecretChestStructure::new));
 
-    private final BuriedStoneChestDefinition definition;
+    private final SecretChestDefinition definition;
 
-    protected BuriedStoneChestStructure(StructureSettings settings, BuriedStoneChestDefinition definition) {
+    protected SecretChestStructure(StructureSettings settings, SecretChestDefinition definition) {
         super(settings);
 
         if (definition == null) {
-            throw new RuntimeException("Missing buried stone chest definition");
+            throw new RuntimeException("Missing secret stone chest definition");
         }
 
         this.definition = definition;
@@ -32,13 +32,13 @@ public class BuriedStoneChestStructure extends Structure {
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         var opt = findStart(context);
         if (opt.isEmpty()) {
-            feature().log().warn("Could not find start position for buried stone chest");
+            feature().log().warn("Could not find start position for secret chest");
             return Optional.empty();
         }
 
         var startPos = opt.get();
         return Optional.of(new GenerationStub(startPos,
-            builder -> builder.addPiece(new BuriedStoneChestPiece(definition, startPos))));
+            builder -> builder.addPiece(new SecretChestPiece(definition, startPos))));
     }
 
     private Optional<BlockPos> findStart(GenerationContext context) {
@@ -71,7 +71,7 @@ public class BuriedStoneChestStructure extends Structure {
         return feature().registers.structureType.get();
     }
 
-    private static BuriedStoneChests feature() {
-        return BuriedStoneChests.feature();
+    private static SecretChests feature() {
+        return SecretChests.feature();
     }
 }

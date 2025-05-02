@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
+package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;

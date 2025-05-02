@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
+package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;

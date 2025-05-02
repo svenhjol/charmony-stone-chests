@@ -1,40 +1,40 @@
-package svenhjol.charmony.stone_chests.common.features.buried_stone_chests;
+package svenhjol.charmony.stone_chests.common.features.secret_chests;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.Api;
-import svenhjol.charmony.api.BuriedStoneChestDefinition;
-import svenhjol.charmony.api.BuriedStoneChestDefinitionProvider;
+import svenhjol.charmony.api.SecretChestDefinition;
+import svenhjol.charmony.api.SecretChestDefinitionProvider;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.BreakBehavior;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.puzzles.GemPuzzleMenuProvider;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.puzzles.SherdPuzzleMenuProvider;
+import svenhjol.charmony.api.StoneChestBreakBehavior;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GemPuzzleMenuProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.SherdPuzzleMenuProvider;
 
 import java.util.List;
 
-public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneChestDefinitionProvider {
-    public Providers(BuriedStoneChests feature) {
+public class Providers extends Setup<SecretChests> implements SecretChestDefinitionProvider {
+    public Providers(SecretChests feature) {
         super(feature);
         Api.registerProvider(this);
     }
 
     @Override
-    public List<BuriedStoneChestDefinition> getBuriedStoneChestDefinitions() {
+    public List<SecretChestDefinition> getSecretChestDefinitions() {
         return List.of(
-            inStoneLayer(),
-            inDeepslateLayer(),
-            inBedrockLayer()
+            inSurfaceCaves(),
+            inDeepCaves(),
+            atBedrock()
         );
     }
 
-    protected BuriedStoneChestDefinition inStoneLayer() {
-        return new BuriedStoneChestDefinition() {
+    protected SecretChestDefinition inSurfaceCaves() {
+        return new SecretChestDefinition() {
             @Override
             public String name() {
-                return "in_stone_layer";
+                return "in_surface_caves";
             }
 
             @Override
@@ -44,7 +44,7 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
 
             @Override
             public Pair<Integer, Integer> depth() {
-                return Pair.of(10, 40);
+                return Pair.of(25, 50);
             }
 
             @Override
@@ -56,9 +56,9 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             }
 
             @Override
-            public List<BreakBehavior> breakBehaviors() {
+            public List<StoneChestBreakBehavior> breakBehaviors() {
                 return List.of(
-                    BreakBehavior.GIVE_BAD_EFFECT
+                    StoneChestBreakBehavior.GIVE_BAD_EFFECT
                 );
             }
 
@@ -71,11 +71,11 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
         };
     }
 
-    protected BuriedStoneChestDefinition inDeepslateLayer() {
-        return new BuriedStoneChestDefinition() {
+    protected SecretChestDefinition inDeepCaves() {
+        return new SecretChestDefinition() {
             @Override
             public String name() {
-                return "in_deepslate_layer";
+                return "in_deep_caves";
             }
 
             @Override
@@ -85,7 +85,7 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
 
             @Override
             public Pair<Integer, Integer> depth() {
-                return Pair.of(-50, -10);
+                return Pair.of(-40, -10);
             }
 
             @Override
@@ -96,10 +96,10 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             }
 
             @Override
-            public List<BreakBehavior> breakBehaviors() {
+            public List<StoneChestBreakBehavior> breakBehaviors() {
                 return List.of(
-                    BreakBehavior.GIVE_BAD_EFFECT,
-                    BreakBehavior.SPAWN_OVERWORLD_MONSTERS
+                    StoneChestBreakBehavior.GIVE_BAD_EFFECT,
+                    StoneChestBreakBehavior.SPAWN_OVERWORLD_MONSTERS
                 );
             }
 
@@ -113,11 +113,11 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
         };
     }
 
-    protected BuriedStoneChestDefinition inBedrockLayer() {
-        return new BuriedStoneChestDefinition() {
+    protected SecretChestDefinition atBedrock() {
+        return new SecretChestDefinition() {
             @Override
             public String name() {
-                return "in_bedrock_layer";
+                return "at_bedrock";
             }
 
             @Override
@@ -148,10 +148,10 @@ public class Providers extends Setup<BuriedStoneChests> implements BuriedStoneCh
             }
 
             @Override
-            public List<BreakBehavior> breakBehaviors() {
+            public List<StoneChestBreakBehavior> breakBehaviors() {
                 return List.of(
-                    BreakBehavior.EXPLODE,
-                    BreakBehavior.SPAWN_OVERWORLD_MONSTERS
+                    StoneChestBreakBehavior.EXPLODE,
+                    StoneChestBreakBehavior.SPAWN_OVERWORLD_MONSTERS
                 );
             }
 

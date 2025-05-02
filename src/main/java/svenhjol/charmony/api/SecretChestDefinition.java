@@ -5,11 +5,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.BreakBehavior;
 
 import java.util.List;
 
-public interface BuriedStoneChestDefinition extends StringRepresentable {
+public interface SecretChestDefinition extends StringRepresentable {
     /**
      * Name of this definition.
      * This will be used as a map key for this definition.
@@ -22,7 +21,7 @@ public interface BuriedStoneChestDefinition extends StringRepresentable {
     StoneChestMaterial material();
 
     /**
-     * Min and max depth that the chest can be buried.
+     * Min and max Y-level that the chest can be placed.
      */
     Pair<Integer, Integer> depth();
 
@@ -44,8 +43,8 @@ public interface BuriedStoneChestDefinition extends StringRepresentable {
      * Behavior when the chest is broken.
      * If more than one is specified, one is randomly chosen from the list.
      */
-    default List<BreakBehavior> breakBehaviors() {
-        return List.of(BreakBehavior.NOTHING);
+    default List<StoneChestBreakBehavior> breakBehaviors() {
+        return List.of(StoneChestBreakBehavior.NOTHING);
     }
 
     /**

@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
+package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
@@ -195,7 +195,7 @@ public class ItemPuzzleMenu extends ContainerMenu {
         return StoneChestMaterial.byId(id);
     }
 
-    private static StoneChestPuzzles feature() {
-        return StoneChestPuzzles.feature();
+    private static ChestPuzzles feature() {
+        return ChestPuzzles.feature();
     }
 }

@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.buried_stone_chests;
+package svenhjol.charmony.stone_chests.common.features.secret_chests;
 
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -13,27 +13,27 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.Fluids;
-import svenhjol.charmony.api.BuriedStoneChestDefinition;
+import svenhjol.charmony.api.SecretChestDefinition;
 import svenhjol.charmony.core.base.Log;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.StoneChestPuzzles;
-import svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles.Tags;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
 
 import java.util.ArrayList;
 
-public class BuriedStoneChestPiece extends StructurePiece {
-    private BuriedStoneChestDefinition definition;
+public class SecretChestPiece extends StructurePiece {
+    private SecretChestDefinition definition;
 
-    public BuriedStoneChestPiece(BuriedStoneChestDefinition definition, BlockPos pos) {
+    public SecretChestPiece(SecretChestDefinition definition, BlockPos pos) {
         super(feature().registers.structurePiece.get(), 0, new BoundingBox(pos));
         this.definition = definition;
     }
 
-    public BuriedStoneChestPiece(StructurePieceSerializationContext context, CompoundTag tag) {
+    public SecretChestPiece(StructurePieceSerializationContext context, CompoundTag tag) {
         super(feature().registers.structurePiece.get(), tag);
-        tag.getString(Registers.DEFINITION_ID).ifPresent(t -> this.definition = feature().registers.buriedChestDefinitions.get(t));
+        tag.getString(Registers.DEFINITION_ID).ifPresent(t -> this.definition = feature().registers.secretChestDefinitions.get(t));
     }
 
     @Override
@@ -99,7 +99,7 @@ public class BuriedStoneChestPiece extends StructurePiece {
             }
         }
 
-        log().debug("Could not find valid position for buried stone chest at " + pos);
+        log().debug("Could not find valid position for secret chest at " + pos);
     }
 
     protected void createChest(
@@ -117,7 +117,7 @@ public class BuriedStoneChestPiece extends StructurePiece {
         var breakBehaviors = new ArrayList<>(definition.breakBehaviors());
 
         if (lootTables.isEmpty()) {
-            log().debug("No loot tables for buried stone chest");
+            log().debug("No loot tables for secret chest");
             return;
         }
 
@@ -144,7 +144,7 @@ public class BuriedStoneChestPiece extends StructurePiece {
                 menu = menus.getFirst();
             }
 
-            if (!menu.isEmpty() && StoneChestPuzzles.feature().registers.lockMenuProviders.containsKey(menu)) {
+            if (!menu.isEmpty() && ChestPuzzles.feature().registers.lockMenuProviders.containsKey(menu)) {
                 chest.lock(menu);
 
                 // Add a loot table for when the chest is successfully unlocked, and a simple loot table
@@ -169,8 +169,8 @@ public class BuriedStoneChestPiece extends StructurePiece {
         log().debug("Generated " + material.getSerializedName() + " chest at " + pos);
     }
 
-    public static BuriedStoneChests feature() {
-        return BuriedStoneChests.feature();
+    public static SecretChests feature() {
+        return SecretChests.feature();
     }
 
     protected Log log() {

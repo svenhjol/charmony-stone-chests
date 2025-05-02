@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.stone_chest_puzzles;
+package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -30,11 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Handlers extends Setup<StoneChestPuzzles> {
+public class Handlers extends Setup<ChestPuzzles> {
     public static final int MOB_SPAWN_RANGE = 2;
     public static final List<Holder<MobEffect>> BAD_EFFECTS;
 
-    public Handlers(StoneChestPuzzles feature) {
+    public Handlers(ChestPuzzles feature) {
         super(feature);
     }
 

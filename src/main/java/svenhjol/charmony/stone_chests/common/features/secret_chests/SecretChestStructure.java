@@ -8,6 +8,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import svenhjol.charmony.api.SecretChestDefinition;
 
+import java.util.List;
 import java.util.Optional;
 
 public class SecretChestStructure extends Structure {
@@ -50,28 +51,33 @@ public class SecretChestStructure extends Structure {
             case Surface -> findSurfaceStart(context);
             case Cave -> findCaveStart(context);
             case Buried -> findBuriedStart(context);
+            default -> Optional.empty();
         };
     }
 
     private Optional<BlockPos> findSurfaceStart(GenerationContext context) {
         var x = context.chunkPos().getMinBlockX();
         var z = context.chunkPos().getMinBlockZ();
-        var min = context.heightAccessor().getMinY() + 15;
-        var y = context.chunkGenerator().getFirstOccupiedHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-        var column = context.chunkGenerator().getBaseColumn(x, z, context.heightAccessor(), context.randomState());
-        var heightMap = Heightmap.Types.WORLD_SURFACE_WG;
+        List<Heightmap.Types> heightMaps = List.of(Heightmap.Types.OCEAN_FLOOR_WG, Heightmap.Types.WORLD_SURFACE_WG);
 
-        int surface;
-        for (surface = y; surface > min; --surface) {
-            var state = column.getBlock(y);
-            var above = column.getBlock(y + 1);
-            if (heightMap.isOpaque().test(state) && (!heightMap.isOpaque().test(above))) {
-                return Optional.of(new BlockPos(x, surface, z));
+        for (Heightmap.Types heightMap : heightMaps) {
+            var offsets = definition.fallbackYOffset();
+
+            var y = context.chunkGenerator().getFirstOccupiedHeight(x, z, heightMap, context.heightAccessor(), context.randomState());
+            var column = context.chunkGenerator().getBaseColumn(x, z, context.heightAccessor(), context.randomState());
+
+            int surface;
+            for (surface = y + offsets.getFirst(); surface < y + offsets.getSecond(); ++surface) {
+                var state = column.getBlock(y);
+                var above = column.getBlock(y + 1);
+                if (heightMap.isOpaque().test(state) && (!heightMap.isOpaque().test(above))) {
+                    return Optional.of(new BlockPos(x, surface, z));
+                }
             }
-        }
 
-        if (definition.strict()) {
-            return Optional.empty();
+            if (definition.strict()) {
+                return Optional.empty();
+            }
         }
 
         // Make a chest anywhere; we will try and move it in post process.

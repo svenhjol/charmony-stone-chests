@@ -10,9 +10,11 @@ import svenhjol.charmony.core.enums.Side;
 public final class SecretChests extends SidedFeature {
     public final Registers registers;
     public final Providers providers;
+    public final Handlers handlers;
 
     public SecretChests(Mod mod) {
         super(mod);
+        handlers = new Handlers(this);
         registers = new Registers(this);
         providers = new Providers(this);
     }

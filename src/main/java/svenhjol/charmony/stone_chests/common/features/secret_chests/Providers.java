@@ -31,6 +31,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             inDeepCaves(),
             atBedrock(),
             onMountain(),
+            inOcean(),
             onEndIslands()
         );
     }
@@ -203,6 +204,16 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
+            public Pair<Integer, Integer> height() {
+                return Pair.of(130, 200);
+            }
+
+            @Override
+            public Pair<Integer, Integer> fallbackYOffset() {
+                return Pair.of(0, 10);
+            }
+
+            @Override
             public boolean strict() {
                 return true;
             }
@@ -210,11 +221,6 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public StoneChestMaterial material() {
                 return StoneChestMaterial.Stone;
-            }
-
-            @Override
-            public Pair<Integer, Integer> height() {
-                return Pair.of(130, 200);
             }
 
             @Override
@@ -227,6 +233,59 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public double difficultyAmplifier() {
                 return 2.0d;
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+        };
+    }
+
+    protected SecretChestDefinition inOcean() {
+        return new SecretChestDefinition() {
+            @Override
+            public String name() {
+                return "in_ocean";
+            }
+
+            @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.Surface;
+            }
+
+            @Override
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.Prismarine;
+            }
+
+            @Override
+            public Pair<Integer, Integer> height() {
+                return Pair.of(30, 50);
+            }
+
+            @Override
+            public Pair<Integer, Integer> fallbackYOffset() {
+                return Pair.of(0, 10);
+            }
+
+            @Override
+            public boolean canBeFullyBuried() {
+                return false;
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.FISHING_TREASURE // TODO: custom loot table
+                );
+            }
+
+            @Override
+            public double difficultyAmplifier() {
+                return 3.0d;
             }
 
             @Override

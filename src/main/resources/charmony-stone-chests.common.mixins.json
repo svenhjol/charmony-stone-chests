@@ -8,5 +8,9 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "secret_chests.NetherFortressPiecesMixin",
+    "secret_chests.SinglePoolElementMixin",
+    "secret_chests.StructureTemplateMixin",
+    "secret_chests.TemplateStructurePieceMixin"
   ]
 }

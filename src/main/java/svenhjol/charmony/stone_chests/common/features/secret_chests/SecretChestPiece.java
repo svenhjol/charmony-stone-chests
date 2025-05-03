@@ -136,7 +136,7 @@ public class SecretChestPiece extends StructurePiece {
             }
         }
 
-        log().debug("Could not find valid position for secret chest at " + pos);
+        log().warn("Could not find valid position for " + definition.material().getSerializedName() + " chest at " + pos);
     }
 
     protected void createChest(

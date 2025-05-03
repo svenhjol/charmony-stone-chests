@@ -25,22 +25,28 @@ public interface SecretChestDefinition extends StringRepresentable {
 
     /**
      * Placement method to use.
-     * - Surface = land surface (with open sky) or ocean surface.
-     * - Cave = air/water space within a cave.
-     * - Buried = has solid block above and below.
+     * - Surface: land surface (with open sky) or ocean surface.
+     * - Cave: air/water space within a cave.
+     * - Buried: has solid block above and below.
+     * - Fortress: inside Nether Fortress corridors.
+     * - EndCity: scattered around End Cities.
+     * - Bastion: scattered around Bastions.
      */
     SecretChestPlacement placement();
-
-    /**
-     * Min and max Y-level that the chest can be placed.
-     */
-    Pair<Integer, Integer> height();
 
     /**
      * Loot tables to use for the chest contents when unlocked.
      * If more than one is specified, one is randomly chosen from the list.
      */
     List<ResourceKey<LootTable>> lootTables();
+
+    /**
+     * Min and max Y-level that the chest can be placed.
+     * For surface placement, this provides a range where the chest will be placed if the surface is invalid.
+     */
+    default Pair<Integer, Integer> height() {
+        return Pair.of(50, 70);
+    }
 
     /**
      * Use this to increase the difficulty of locked chest puzzles

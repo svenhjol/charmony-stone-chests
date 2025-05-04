@@ -1,6 +1,5 @@
 package svenhjol.charmony.stone_chests.common.features.secret_chests;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -16,13 +15,6 @@ import net.minecraft.world.level.material.Fluids;
 import svenhjol.charmony.api.SecretChestDefinition;
 import svenhjol.charmony.api.SecretChestPlacement;
 import svenhjol.charmony.core.base.Log;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
-
-import java.util.ArrayList;
 
 public class SecretChestPiece extends StructurePiece {
     private SecretChestDefinition definition;
@@ -58,8 +50,9 @@ public class SecretChestPiece extends StructurePiece {
         var stateBelow = level.getBlockState(offsetPos.below());
         if (stateBelow.isSolidRender() && state.isAir()) {
             this.boundingBox = new BoundingBox(offsetPos);
-            this.createChest(level, this.boundingBox, random, offsetPos, false);
-            log().debug("Placed chest using exact coordinates at " + pos);
+            if (createChest(definition, level, this.boundingBox, random, offsetPos, false)) {
+                log().debug("Placed chest using exact coordinates at " + pos);
+            }
             return;
         }
 
@@ -81,8 +74,9 @@ public class SecretChestPiece extends StructurePiece {
                         if (tryStateBelow.isSolidRender() && tryStateAbove.isSolidRender()) {
                             var fluidState = level.getFluidState(tryPos);
                             this.boundingBox = new BoundingBox(tryPos);
-                            this.createChest(level, this.boundingBox, random, tryPos, fluidState.is(Fluids.WATER));
-                            log().debug("Placed chest using buried XZ offsets at " + pos);
+                            if (createChest(definition, level, this.boundingBox, random, tryPos, fluidState.is(Fluids.WATER))) {
+                                log().debug("Placed chest using buried XZ offsets at " + pos);
+                            }
                             return;
                         }
                     }
@@ -106,8 +100,9 @@ public class SecretChestPiece extends StructurePiece {
 
                         if (tryStateBelow.isSolidRender() && (isAir || isWater || isNotSolidRender)) {
                             this.boundingBox = new BoundingBox(tryPos);
-                            this.createChest(level, this.boundingBox, random, tryPos, isWater);
-                            log().debug("Placed chest using surface/cave XZ offsets at " + pos);
+                            if (createChest(definition, level, this.boundingBox, random, tryPos, isWater)) {
+                                log().debug("Placed chest using surface/cave XZ offsets at " + pos);
+                            }
                             return;
                         }
                     }
@@ -117,8 +112,9 @@ public class SecretChestPiece extends StructurePiece {
             // Let the definition do worldgen here.
             var generated = definition.generateSurface(level, pos.below(), random);
             if (generated) {
-                this.createChest(level, this.boundingBox, random, pos, false);
-                log().debug("Placed chest using generateSurface at " + pos);
+                if (createChest(definition, level, this.boundingBox, random, pos, false)) {
+                    log().debug("Placed chest using generateSurface at " + pos);
+                }
                 return;
             }
 
@@ -128,8 +124,9 @@ public class SecretChestPiece extends StructurePiece {
                     var tryPos = offsetPos.offset(0, y, 0);
                     if (stateBelow.isSolidRender()) {
                         this.boundingBox = new BoundingBox(tryPos);
-                        this.createChest(level, this.boundingBox, random, tryPos, false);
-                        log().debug("Placed chest using canBeFullyBuried at " + pos);
+                        if (createChest(definition, level, this.boundingBox, random, tryPos, false)) {
+                            log().debug("Placed chest using canBeFullyBuried at " + pos);
+                        }
                         return;
                     }
                 }
@@ -139,75 +136,23 @@ public class SecretChestPiece extends StructurePiece {
         log().warn("Could not find valid position for " + definition.material().getSerializedName() + " chest at " + pos);
     }
 
-    protected void createChest(
+    public static SecretChests feature() {
+        return SecretChests.feature();
+    }
+
+    protected boolean createChest(
+        SecretChestDefinition definition,
         ServerLevelAccessor level,
-        BoundingBox boundingBox,
+        BoundingBox box,
         RandomSource random,
         BlockPos pos,
         boolean waterlogged
     ) {
-        var material = definition.material();
-        var block = StoneChests.feature().registers.chestBlocks.get(material).get();
-
-        var lootTables = new ArrayList<>(definition.lootTables());
-        var menus = new ArrayList<>(definition.lockMenus());
-        var breakBehaviors = new ArrayList<>(definition.breakBehaviors());
-
-        if (lootTables.isEmpty()) {
-            log().debug("No loot tables for secret chest");
-            return;
-        }
-
-        Util.shuffle(lootTables, random);
-        var lootTable = lootTables.getFirst();
-
-        if (!boundingBox.isInside(pos)) {
+        if (!box.isInside(pos)) {
             log().debug("Bounding box is incorrect");
-            return;
+            return false;
         }
-
-        var state = reorient(level, pos, block.defaultBlockState());
-        if (waterlogged) {
-            state = state.setValue(ChestBlock.WATERLOGGED, true);
-        }
-
-        level.setBlock(pos, state, 2);
-        if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-            String menu = "";
-
-            if (!menus.isEmpty()) {
-                // Add a random lock menu to the chest.
-                Util.shuffle(menus, random);
-                menu = menus.getFirst();
-            }
-
-            if (!menu.isEmpty() && ChestPuzzles.feature().registers.lockMenuProviders.containsKey(menu)) {
-                chest.lock(menu);
-
-                // Add a loot table for when the chest is successfully unlocked, and a simple loot table
-                // for when the player breaks the locked chest or gets the puzzle wrong.
-                chest.setUnlockedLootTable(lootTable);
-                chest.setLootTable(Tags.SIMPLE_LOOT);
-                chest.setDifficultyAmplifier(definition.difficultyAmplifier());
-
-                if (!breakBehaviors.isEmpty()) {
-                    // Add a random break behavior to the chest.
-                    Util.shuffle(breakBehaviors, random);
-                    chest.setBreakBehavior(breakBehaviors.getFirst());
-                }
-            }
-
-            if (!chest.isLocked()) {
-                chest.setLootTable(lootTable, random.nextLong());
-                chest.setChanged();
-            }
-        }
-
-        log().debug("Generated " + material.getSerializedName() + " chest at " + pos);
-    }
-
-    public static SecretChests feature() {
-        return SecretChests.feature();
+        return feature().handlers.createChest(definition, level, random, pos, waterlogged);
     }
 
     protected Log log() {

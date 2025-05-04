@@ -29,10 +29,13 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
         return List.of(
             inSurfaceCaves(),
             inDeepCaves(),
+            inOcean(),
             atBedrock(),
             onMountain(),
-            inOcean(),
-            onEndIslands()
+            onEndIslands(),
+            inFortresses(),
+            inEndCities(),
+            inBastions()
         );
     }
 
@@ -379,6 +382,126 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
                 }
 
                 return true;
+            }
+        };
+    }
+
+    protected SecretChestDefinition inFortresses() {
+        return new SecretChestDefinition() {
+            @Override
+            public String name() {
+                return "in_fortresses";
+            }
+
+            @Override
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.NetherBrick;
+            }
+
+            @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.Fortress;
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.NETHER_BRIDGE
+                );
+            }
+
+            @Override
+            public List<StoneChestBreakBehavior> breakBehaviors() {
+                return List.of(
+                    StoneChestBreakBehavior.SpawnNetherMonsters
+                );
+            }
+        };
+    }
+
+    protected SecretChestDefinition inEndCities() {
+        return new SecretChestDefinition() {
+            @Override
+            public String name() {
+                return "in_end_cities";
+            }
+
+            @Override
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.Purpur;
+            }
+
+            @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.EndCity;
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.END_CITY_TREASURE
+                );
+            }
+
+            @Override
+            public List<StoneChestBreakBehavior> breakBehaviors() {
+                return List.of(
+                    StoneChestBreakBehavior.SpawnEndMonsters
+                );
+            }
+        };
+    }
+
+    protected SecretChestDefinition inBastions() {
+        return new SecretChestDefinition() {
+            @Override
+            public String name() {
+                return "in_bastions";
+            }
+
+            @Override
+            public StoneChestMaterial material() {
+                return StoneChestMaterial.Blackstone;
+            }
+
+            @Override
+            public SecretChestPlacement placement() {
+                return SecretChestPlacement.Bastion;
+            }
+
+            @Override
+            public List<String> lockMenus() {
+                return List.of(
+                    GemPuzzleMenuProvider.ID
+                );
+            }
+
+            @Override
+            public List<ResourceKey<LootTable>> lootTables() {
+                return List.of(
+                    BuiltInLootTables.BASTION_TREASURE
+                );
+            }
+
+            @Override
+            public List<StoneChestBreakBehavior> breakBehaviors() {
+                return List.of(
+                    StoneChestBreakBehavior.SpawnNetherMonsters
+                );
             }
         };
     }

@@ -1,2 +1,4 @@
 accessWidener v1 named
 accessible method net/minecraft/world/level/levelgen/structure/StructurePiece getWorldPos (III)Lnet/minecraft/core/BlockPos$MutableBlockPos;
+accessible method net/minecraft/client/renderer/blockentity/ChestRenderer render (Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/client/model/ChestModel;FII)V
+extendable method net/minecraft/client/renderer/blockentity/ChestRenderer render (Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/client/model/ChestModel;FII)V

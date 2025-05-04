@@ -1,6 +1,5 @@
 package svenhjol.charmony.stone_chests.client.features.stone_chests;
 
-import net.minecraft.client.renderer.blockentity.ChestRenderer;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
 import svenhjol.charmony.core.base.Setup;
@@ -13,7 +12,7 @@ public class Registers extends Setup<StoneChests> {
         var registry = ClientRegistry.forFeature(feature);
         var common = feature.common.get();
 
-        registry.blockEntityRenderer(common.registers.chestBlockEntity, () -> ChestRenderer::new);
+        registry.blockEntityRenderer(common.registers.chestBlockEntity, () -> ChestBlockEntityRenderer::new);
         registry.menuScreen(common.registers.unlockedMenu, () -> UnlockedScreen::new);
     }
 

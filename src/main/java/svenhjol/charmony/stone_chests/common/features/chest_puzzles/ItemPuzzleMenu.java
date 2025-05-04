@@ -158,10 +158,14 @@ public class ItemPuzzleMenu extends ContainerMenu {
 
                     player.openMenu(chest);
                 } else {
-                    // Fail - return the items to the player
+                    // Fail - return the items to the player and run the break behavior
                     player.containerMenu.removed(player);
-                    serverLevel.destroyBlock(pos, true);
-                    feature().handlers.doBreakBehavior(player, player.level(), chest.getBlockPos(), chest);
+                    chest.unlock();
+                    var result = feature().handlers.doBreakBehavior(player, player.level(), chest.getBlockPos(), chest);
+
+                    if (!result) {
+                        player.openMenu(chest);
+                    }
                 }
             }
         });

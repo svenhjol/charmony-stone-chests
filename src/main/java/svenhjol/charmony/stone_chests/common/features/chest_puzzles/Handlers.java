@@ -20,6 +20,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import svenhjol.charmony.api.StoneChestBreakBehavior;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.helpers.TagHelper;
@@ -74,8 +75,14 @@ public class Handlers extends Setup<ChestPuzzles> {
         return Optional.empty();
     }
 
-    public void doBreakBehavior(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
+    public boolean doBreakBehavior(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
         var amplifier = chest.getDifficultyAmplifier();
+        var behavior = chest.getBreakBehavior();
+
+        if (behavior == StoneChestBreakBehavior.Nothing) {
+            return false;
+        }
+
         switch (chest.getBreakBehavior()) {
             case SpawnOverworldMonsters -> spawnMonsters(Tags.OVERWORLD_MONSTERS, player, level, pos, amplifier);
             case SpawnNetherMonsters -> spawnMonsters(Tags.NETHER_MONSTERS, player, level, pos, amplifier);
@@ -83,6 +90,8 @@ public class Handlers extends Setup<ChestPuzzles> {
             case Explode -> explode(level, pos, amplifier);
             case GiveBadEffect -> giveBadEffect(player, level, amplifier);
         }
+
+        return true;
     }
 
     private void spawnMonsters(TagKey<EntityType<?>> tag, Player player, Level level, BlockPos pos, double amplifier) {

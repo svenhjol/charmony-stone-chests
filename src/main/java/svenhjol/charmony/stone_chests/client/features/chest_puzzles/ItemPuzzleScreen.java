@@ -56,7 +56,6 @@ public class ItemPuzzleScreen extends AbstractContainerScreen<DynamicItemPuzzleM
         var x = (width - imageWidth) / 2;
         var y = (height - imageHeight) / 2;
         ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blit(RenderType::guiTextured, BACKGROUND, x, y, 0.0f, 0.0f, imageWidth, imageHeight, 256, 256);
-//        ColorHelper.tintTexture(guiGraphics, BACKGROUND, tintedBg, x, y, 0.0f, 0.0f, imageWidth, imageHeight);
         renderDynamicSlots(guiGraphics, mouseX, mouseY);
     }
 

@@ -36,7 +36,6 @@ public class UnlockedScreen extends AbstractContainerScreen<UnlockedMenu> {
         var color = material.getColor();
         var tinted = ColorHelper.tintBackgroundColor(color);
         ((TintedGuiGraphics)guiGraphics).tint(tinted).blit(RenderType::guiTextured, BACKGROUND, x, y, 0.0f, 0.0f, imageWidth, imageHeight, 256, 256);
-//        ColorHelper.tintTexture(guiGraphics, BACKGROUND, tinted, x, y, 0.0f, 0.0f, imageWidth, imageHeight);
     }
 
     @Override

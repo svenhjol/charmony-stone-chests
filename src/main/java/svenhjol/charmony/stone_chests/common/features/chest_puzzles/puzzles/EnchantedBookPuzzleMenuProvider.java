@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import svenhjol.charmony.api.Api;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.DynamicItemPuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 
 import java.util.List;
@@ -40,16 +41,15 @@ public class EnchantedBookPuzzleMenuProvider implements StoneChestLockMenuProvid
         var random = RandomSource.create(menuData.seed);
         var registry = menuData.level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         var opt = registry.getRandomElementOf(Tags.PUZZLE_ENCHANTMENTS_FOR_BOOKS, random);
+        if (opt.isEmpty()) return Optional.empty();
 
-        if (opt.isPresent()) {
-            var holder = opt.get();
-            var enchantment = holder.value();
-            var min = Math.max(enchantment.getMinLevel(), amplifier);
-            var max = Math.min(enchantment.getMaxLevel(), amplifier);
-            var level = Mth.nextInt(random, min, max);
-            var stack = EnchantmentHelper.createBook(new EnchantmentInstance(holder, level));
-        }
+        var holder = opt.get();
+        var enchantment = holder.value();
+        var min = Math.max(enchantment.getMinLevel(), amplifier);
+        var max = Math.min(enchantment.getMaxLevel(), amplifier);
+        var level = Mth.nextInt(random, min, max);
+        var stack = EnchantmentHelper.createBook(new EnchantmentInstance(holder, level));
 
-        return Optional.empty();
+        return DynamicItemPuzzleMenu.getMenuProvider(menuData, List.of(stack));
     }
 }

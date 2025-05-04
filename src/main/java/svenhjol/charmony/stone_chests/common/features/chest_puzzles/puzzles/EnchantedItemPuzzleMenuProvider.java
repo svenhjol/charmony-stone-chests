@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import svenhjol.charmony.api.Api;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.DynamicItemPuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 
 import java.util.List;
@@ -41,18 +42,17 @@ public class EnchantedItemPuzzleMenuProvider implements StoneChestLockMenuProvid
 
         var itemRegistry = menuData.level.registryAccess().lookupOrThrow(Registries.ITEM);
         var itemOpt = itemRegistry.getRandomElementOf(Tags.PUZZLE_ENCHANTABLE_ITEMS, random);
+        if (itemOpt.isEmpty()) return Optional.empty();
 
-        if (itemOpt.isPresent()) {
-            var level = 5 + (5 * amplifier);
-            var stack = EnchantmentHelper.enchantItem(
-                random,
-                new ItemStack(itemOpt.get()),
-                level,
-                menuData.level.registryAccess(),
-                enchantmentRegistry.get(Tags.PUZZLE_ENCHANTMENTS_FOR_ITEMS)
-            );
-        }
+        var level = 5 + (5 * amplifier);
+        var stack = EnchantmentHelper.enchantItem(
+            random,
+            new ItemStack(itemOpt.get()),
+            level,
+            menuData.level.registryAccess(),
+            enchantmentRegistry.get(Tags.PUZZLE_ENCHANTMENTS_FOR_ITEMS)
+        );
 
-        return Optional.empty();
+        return DynamicItemPuzzleMenu.getMenuProvider(menuData, List.of(stack));
     }
 }

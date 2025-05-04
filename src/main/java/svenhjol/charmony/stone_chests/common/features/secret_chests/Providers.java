@@ -13,6 +13,7 @@ import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Environment;
 import svenhjol.charmony.core.base.Setup;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.EnchantedItemPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GemPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.SherdPuzzleMenuProvider;
 
@@ -241,7 +242,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID
+                    EnchantedItemPuzzleMenuProvider.ID
                 );
             }
         };

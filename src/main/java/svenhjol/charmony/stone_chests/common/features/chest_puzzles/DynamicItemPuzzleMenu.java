@@ -61,14 +61,20 @@ public class DynamicItemPuzzleMenu extends ContainerMenu {
         this.addDataSlots(data);
     }
 
-    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemPuzzleRequirement> requirements, int slots) {
-        var random = new Random(menuData.seed);
+    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemStack> items) {
         var serverLevel = menuData.level;
         var syncId = menuData.syncId;
         var inventory = menuData.playerInventory;
         var data = menuData.data;
-        var amplifier = menuData.difficultyAmplifier;
         var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
+
+        return Optional.of(new DynamicItemPuzzleMenu(syncId, inventory, new SimpleContainer(items.size() * 2), data, items, access));
+    }
+
+    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemPuzzleRequirement> requirements, int slots) {
+        var serverLevel = menuData.level;
+        var random = new Random(menuData.seed);
+        var amplifier = menuData.difficultyAmplifier;
         slots = Mth.clamp(slots, 1, Constants.MAX_ITEM_SLOTS);
 
         if (requirements.isEmpty()) {
@@ -96,7 +102,7 @@ public class DynamicItemPuzzleMenu extends ContainerMenu {
             puzzleItems.add(new ItemStack(items.getFirst(), amplifiedCount));
         }
 
-        return Optional.of(new DynamicItemPuzzleMenu(syncId, inventory, new SimpleContainer(slots * 2), data, puzzleItems, access));
+        return getMenuProvider(menuData, puzzleItems);
     }
 
     @Override

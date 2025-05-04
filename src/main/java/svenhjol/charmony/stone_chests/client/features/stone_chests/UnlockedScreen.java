@@ -2,9 +2,11 @@ package svenhjol.charmony.stone_chests.client.features.stone_chests;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import svenhjol.charmony.core.client.TintedGuiGraphics;
 import svenhjol.charmony.core.helpers.ColorHelper;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.UnlockedMenu;
@@ -33,7 +35,8 @@ public class UnlockedScreen extends AbstractContainerScreen<UnlockedMenu> {
         var material = getMenu().getMaterial();
         var color = material.getColor();
         var tinted = ColorHelper.tintBackgroundColor(color);
-        ColorHelper.tintTexture(guiGraphics, BACKGROUND, tinted, x, y, 0.0f, 0.0f, imageWidth, imageHeight);
+        ((TintedGuiGraphics)guiGraphics).tint(tinted).blit(RenderType::guiTextured, BACKGROUND, x, y, 0.0f, 0.0f, imageWidth, imageHeight, 256, 256);
+//        ColorHelper.tintTexture(guiGraphics, BACKGROUND, tinted, x, y, 0.0f, 0.0f, imageWidth, imageHeight);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class UnlockedScreen extends AbstractContainerScreen<UnlockedMenu> {
         var material = getMenu().getMaterial();
         var color = material.getColor();
         var tinted = ColorHelper.tintForegroundColor(color);
-        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, tinted, false);
-        guiGraphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, tinted, false);
+        guiGraphics.drawString(font, title, titleLabelX, titleLabelY, tinted, false);
+        guiGraphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, tinted, false);
     }
 }

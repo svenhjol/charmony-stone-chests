@@ -9,7 +9,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import svenhjol.charmony.core.Charmony;
-import svenhjol.charmony.core.client.ItemContainerTooltip;
+import svenhjol.charmony.core.client.SlotSprite;
+import svenhjol.charmony.core.client.TintedGuiGraphics;
 import svenhjol.charmony.core.helpers.ColorHelper;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.DynamicItemPuzzleMenu;
@@ -54,7 +55,8 @@ public class ItemPuzzleScreen extends AbstractContainerScreen<DynamicItemPuzzleM
     protected void renderBg(GuiGraphics guiGraphics, float ticks, int mouseX, int mouseY) {
         var x = (width - imageWidth) / 2;
         var y = (height - imageHeight) / 2;
-        ColorHelper.tintTexture(guiGraphics, BACKGROUND, tintedBg, x, y, 0.0f, 0.0f, imageWidth, imageHeight);
+        ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blit(RenderType::guiTextured, BACKGROUND, x, y, 0.0f, 0.0f, imageWidth, imageHeight, 256, 256);
+//        ColorHelper.tintTexture(guiGraphics, BACKGROUND, tintedBg, x, y, 0.0f, 0.0f, imageWidth, imageHeight);
         renderDynamicSlots(guiGraphics, mouseX, mouseY);
     }
 
@@ -85,12 +87,8 @@ public class ItemPuzzleScreen extends AbstractContainerScreen<DynamicItemPuzzleM
             var x = (i + 1) * q;
             var ox = bx + x;
 
-            var texture = ItemContainerTooltip.Texture.Slot;
-            guiGraphics.blitSprite(RenderType::guiTextured, texture.sprite, ox, oy, texture.width, texture.height);
-
-
-//            guiGraphics.blitSprite(RenderType::guiTextured, SLOT, ox, oy, 16, 16);
-//            ColorHelper.tintTexture(guiGraphics, SLOT, tintedBg, ox, oy, 0.0f, 0.0f, 16, 16, 18, 20);
+            var texture = SlotSprite.Slot;
+            ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blitSprite(RenderType::guiTextured, texture.sprite(), ox, oy, texture.width(), texture.height());
         }
     }
 }

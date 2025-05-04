@@ -1,5 +1,6 @@
 {
   "block.charmony-stone-chests.blackstone_chest": "Blackstone Chest",
+  "block.charmony-stone-chests.calcite_chest": "Calcite Chest",
   "block.charmony-stone-chests.deepslate_chest": "Deepslate Chest",
   "block.charmony-stone-chests.nether_brick_chest": "Nether Brick Chest",
   "block.charmony-stone-chests.prismarine_chest": "Prismarine Chest",
@@ -7,6 +8,7 @@
   "block.charmony-stone-chests.stone_chest": "Stone Chest",
   "gui.charmony-stone-chests.unlock": "Unlock",
   "item.charmony-stone-chests.blackstone_chest": "Blackstone Chest",
+  "item.charmony-stone-chests.calcite_chest": "Calcite Chest",
   "item.charmony-stone-chests.deepslate_chest": "Deepslate Chest",
   "item.charmony-stone-chests.nether_brick_chest": "Nether Brick Chest",
   "item.charmony-stone-chests.prismarine_chest": "Prismarine Chest",

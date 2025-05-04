@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.client.features.stone_chest_puzzles;
+package svenhjol.charmony.stone_chests.client.features.chest_puzzles;
 
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Registers;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;

@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.client.features.stone_chest_puzzles;
+package svenhjol.charmony.stone_chests.client.features.chest_puzzles;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;

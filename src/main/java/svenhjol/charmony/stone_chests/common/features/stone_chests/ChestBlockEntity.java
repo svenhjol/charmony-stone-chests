@@ -46,7 +46,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     private String lockMenu;
     private String unlockedLootTable;
     private StoneChestBreakBehavior breakBehavior;
-    private double difficultyAmplifier;
+    private int difficultyAmplifier;
 
     public ChestBlockEntity(BlockPos pos, BlockState state) {
         super(StoneChests.feature().registers.chestBlockEntity.get(), pos, state);
@@ -56,7 +56,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.locked = false;
         this.lockMenu = "";
         this.unlockedLootTable = "";
-        this.difficultyAmplifier = 1.0d;
+        this.difficultyAmplifier = 1;
         this.breakBehavior = StoneChestBreakBehavior.Nothing;
 
         this.openersCounter = new ContainerOpenersCounter() {
@@ -112,7 +112,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         tag.putBoolean(LOCKED_TAG, locked);
         tag.putString(LOCK_MENU_TAG, lockMenu);
         tag.putString(UNLOCKED_LOOT_TABLE_TAG, unlockedLootTable);
-        tag.putDouble(DIFFICULTY_AMPLIFIER_TAG, difficultyAmplifier);
+        tag.putInt(DIFFICULTY_AMPLIFIER_TAG, difficultyAmplifier);
 
         if (breakBehavior != null) {
             tag.putString(BREAK_BEHAVIOR_TAG, breakBehavior.getSerializedName());
@@ -130,7 +130,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.material = StoneChestMaterial.byId(tag.getIntOr(MATERIAL_TAG, 0));
         this.lockMenu = tag.getStringOr(LOCK_MENU_TAG, "");
         this.unlockedLootTable = tag.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
-        this.difficultyAmplifier = tag.getDoubleOr(DIFFICULTY_AMPLIFIER_TAG, 1.0d);
+        this.difficultyAmplifier = tag.getIntOr(DIFFICULTY_AMPLIFIER_TAG, 1);
 
         tag.getString(LOCK_MENU_TAG).ifPresent(str -> this.breakBehavior = StoneChestBreakBehavior.getOrDefault(str));
 
@@ -236,7 +236,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         return breakBehavior;
     }
 
-    public double getDifficultyAmplifier() {
+    public int getDifficultyAmplifier() {
         return difficultyAmplifier;
     }
 
@@ -259,7 +259,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         setChanged();
     }
 
-    public void setDifficultyAmplifier(double amplifier) {
+    public void setDifficultyAmplifier(int amplifier) {
         this.difficultyAmplifier = amplifier;
         setChanged();
     }

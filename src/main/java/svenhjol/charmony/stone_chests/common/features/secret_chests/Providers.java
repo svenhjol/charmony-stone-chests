@@ -172,8 +172,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public double difficultyAmplifier() {
-                return 2.0d;
+            public int difficultyAmplifier() {
+                return 2;
             }
 
             @Override
@@ -234,8 +234,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public double difficultyAmplifier() {
-                return 2.0d;
+            public int difficultyAmplifier() {
+                return 2;
             }
 
             @Override
@@ -287,8 +287,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public double difficultyAmplifier() {
-                return 3.0d;
+            public int difficultyAmplifier() {
+                return 3;
             }
 
             @Override
@@ -340,8 +340,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public double difficultyAmplifier() {
-                return 3.0d;
+            public int difficultyAmplifier() {
+                return 3;
             }
 
             @Override

@@ -6,10 +6,11 @@ import svenhjol.charmony.core.client.ClientRegistry;
 public class Registers extends Setup<ChestPuzzles> {
     public Registers(ChestPuzzles feature) {
         super(feature);
-
         var registry = ClientRegistry.forFeature(feature);
         var common = feature.common.get();
 
-        registry.menuScreen(common.registers.itemPuzzleMenu, () -> ItemPuzzleScreen::new);
+        for (var supplier : common.registers.itemPuzzleMenus.values()) {
+            registry.menuScreen(supplier.get(), ItemPuzzleScreen::new);
+        }
     }
 }

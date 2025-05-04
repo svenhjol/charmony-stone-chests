@@ -4,20 +4,17 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import svenhjol.charmony.api.Api;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
-import svenhjol.charmony.core.base.Setup;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleMenu;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.DynamicItemPuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleRequirement;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 
 import java.util.List;
 import java.util.Optional;
 
-public class SherdPuzzleMenuProvider extends Setup<ChestPuzzles> implements StoneChestLockMenuProvider {
+public class SherdPuzzleMenuProvider implements StoneChestLockMenuProvider {
     public static final String ID = "sherd_item_puzzle";
 
-    public SherdPuzzleMenuProvider(ChestPuzzles feature) {
-        super(feature);
+    public SherdPuzzleMenuProvider() {
         Api.registerProvider(this);
     }
 
@@ -32,6 +29,6 @@ public class SherdPuzzleMenuProvider extends Setup<ChestPuzzles> implements Ston
             new ItemPuzzleRequirement(Tags.PUZZLE_SHERDS, 1, 4)
         );
 
-        return ItemPuzzleMenu.getMenuProvider(menuData, requirements);
+        return DynamicItemPuzzleMenu.getMenuProvider(menuData, requirements, menuData.difficultyAmplifier);
     }
 }

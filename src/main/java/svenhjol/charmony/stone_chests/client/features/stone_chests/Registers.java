@@ -13,7 +13,7 @@ public class Registers extends Setup<StoneChests> {
         var common = feature.common.get();
 
         registry.blockEntityRenderer(common.registers.chestBlockEntity, () -> ChestBlockEntityRenderer::new);
-        registry.menuScreen(common.registers.unlockedMenu, () -> UnlockedScreen::new);
+        registry.menuScreen(common.registers.unlockedMenu.get(), UnlockedScreen::new);
     }
 
     @Override

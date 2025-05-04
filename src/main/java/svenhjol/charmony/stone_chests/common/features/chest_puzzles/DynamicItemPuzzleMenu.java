@@ -4,6 +4,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -19,43 +20,48 @@ import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEnt
 
 import java.util.*;
 
-public class ItemPuzzleMenu extends ContainerMenu {
+public class DynamicItemPuzzleMenu extends ContainerMenu {
     private final Container container;
     private final ContainerData data;
     private final ContainerLevelAccess access;
+    private final int numSlots;
+    private final int numItems;
 
-    public ItemPuzzleMenu(int syncId, Inventory playerInventory) {
-        this(syncId, playerInventory,
-            new SimpleContainer(6), // 3x puzzle items + 3x supplied items
-            new SimpleContainerData(1), // Chest material
-            NonNullList.withSize(3, ItemStack.EMPTY), // Puzzle items
-            ContainerLevelAccess.NULL);
+    public DynamicItemPuzzleMenu(int syncId, Inventory playerInventory, int slots) {
+        this(syncId, playerInventory, new SimpleContainer(slots * 2), new SimpleContainerData(1), NonNullList.withSize(slots, ItemStack.EMPTY), ContainerLevelAccess.NULL);
     }
 
-    public ItemPuzzleMenu(int syncId, Inventory playerInventory, Container container, ContainerData data, List<ItemStack> items, ContainerLevelAccess access) {
-        super(feature().registers.itemPuzzleMenu.get(), syncId, playerInventory, container);
+    public DynamicItemPuzzleMenu(int syncId, Inventory playerInventory, Container container, ContainerData data, List<ItemStack> items, ContainerLevelAccess access) {
+        super(feature().registers.itemPuzzleMenus.get(items.size()).get(), syncId, playerInventory, container);
         this.container = container;
         this.data = data;
         this.access = access;
+        this.numSlots = container.getContainerSize();
+        this.numItems = items.size();
 
-        // Populate the fake slots.
-        if (items.size() != 3) {
-            throw new RuntimeException("Must supply exactly three items to the puzzle menu");
+        if (numSlots != numItems * 2) {
+            throw new RuntimeException("Number of slots must equal double the number of items in the puzzle menu");
         }
 
-        this.addSlot(new ItemPuzzleSlot(container, 0, 26, 27)).set(items.get(0));
-        this.addSlot(new ItemPuzzleSlot(container, 1, 80, 27)).set(items.get(1));
-        this.addSlot(new ItemPuzzleSlot(container, 2, 134, 27)).set(items.get(2));
+        for (var i = 0; i < numItems; i++) {
+            var q = 160 / (numItems + 1);
+            var x = (i + 1) * q;
+            var ox = (1 + x);
+            this.addSlot(new ItemPuzzleSlot(container, i, ox, 27)).set(items.get(i));
+        }
 
-        this.addSlot(new Slot(container, 3, 26, 47));
-        this.addSlot(new Slot(container, 4, 80, 47));
-        this.addSlot(new Slot(container, 5, 134, 47));
+        for (var i = 0; i < numItems; i++) {
+            var q = 160 / (numItems + 1);
+            var x = (i + 1) * q;
+            var ox = (1 + x);
+            this.addSlot(new Slot(container, i + numItems, ox, 47));
+        }
 
         this.addStandardInventorySlots(playerInventory, 8, 113);
         this.addDataSlots(data);
     }
 
-    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemPuzzleRequirement> requirements) {
+    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemPuzzleRequirement> requirements, int slots) {
         var random = new Random(menuData.seed);
         var serverLevel = menuData.level;
         var syncId = menuData.syncId;
@@ -63,21 +69,21 @@ public class ItemPuzzleMenu extends ContainerMenu {
         var data = menuData.data;
         var amplifier = menuData.difficultyAmplifier;
         var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
+        slots = Mth.clamp(slots, 1, Constants.MAX_ITEM_SLOTS);
 
         if (requirements.isEmpty()) {
             return Optional.empty();
         }
 
         Map<TagKey<Item>, List<Item>> cached = new WeakHashMap<>();
+        List<ItemStack> puzzleItems = new ArrayList<>();
 
-        List<ItemStack> puzzle = new ArrayList<>();
-
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < slots; i++) {
             var requirement = requirements.get(random.nextInt(requirements.size()));
 
             var item = requirement.item();
             var count = requirement.minCount() + random.nextInt(requirement.maxCount() - requirement.minCount());
-            var amplifiedCount = (int)Math.floor(count * amplifier);
+            var amplifiedCount = count * amplifier;
 
             if (!cached.containsKey(item)) {
                 cached.put(item, new ArrayList<>(TagHelper.getValues(serverLevel.registryAccess().lookupOrThrow(Registries.ITEM), item)));
@@ -87,10 +93,10 @@ public class ItemPuzzleMenu extends ContainerMenu {
 
             var items = new ArrayList<>(cached.get(item));
             Collections.shuffle(items, random);
-            puzzle.add(new ItemStack(items.getFirst(), amplifiedCount));
+            puzzleItems.add(new ItemStack(items.getFirst(), amplifiedCount));
         }
 
-        return Optional.of(new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(6), data, puzzle, access));
+        return Optional.of(new DynamicItemPuzzleMenu(syncId, inventory, new SimpleContainer(slots * 2), data, puzzleItems, access));
     }
 
     @Override
@@ -101,12 +107,12 @@ public class ItemPuzzleMenu extends ContainerMenu {
             var slotItem = slot.getItem();
             selected = slotItem.copy();
 
-            // Move from the custom slots to the player inventory.
-            if (id >= 3 && id <= 5) {
-                if (!moveItemStackTo(selected, 6, 42, false)) {
+            if (id >= numItems && id < numSlots) {
+                // Move from the custom slots to the player inventory.
+                if (!moveItemStackTo(selected, numSlots, numSlots + 36, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!moveItemStackTo(selected, 3, 6, false)) {
+            } else if (!moveItemStackTo(selected, numItems, numSlots, false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -122,6 +128,7 @@ public class ItemPuzzleMenu extends ContainerMenu {
         return selected;
     }
 
+
     @Override
     public boolean clickMenuButton(Player player, int id) {
         access.execute((level, pos) -> {
@@ -129,10 +136,10 @@ public class ItemPuzzleMenu extends ContainerMenu {
             List<ItemStack> supplied = new ArrayList<>();
             int valid = 0;
 
-            for (var i = 0; i < 3; i++) {
+            for (var i = 0; i < numItems; i++) {
                 requires.add(container.getItem(i));
             }
-            for (var i = 3; i < 6; i++) {
+            for (var i = numItems; i < numSlots; i++) {
                 supplied.add(container.getItem(i));
             }
 
@@ -140,13 +147,14 @@ public class ItemPuzzleMenu extends ContainerMenu {
                 var item = supplied.get(i);
                 var req = requires.get(i);
 
+                // TODO: handle enchantment checking
                 if (ItemStack.isSameItem(item, req)) {
                     ++valid;
                 }
             }
 
             if (level instanceof ServerLevel serverLevel && serverLevel.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-                if (valid == 3) {
+                if (valid == numItems) {
                     // Success - consume the items
                     container.clearContent();
 
@@ -176,22 +184,21 @@ public class ItemPuzzleMenu extends ContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         access.execute((level, pos) -> {
-            var returnContainer = new SimpleContainer(3);
-            for (var i = 0; i < 3; i++) {
-                returnContainer.setItem(i, container.getItem(i + 3));
+            var returnContainer = new SimpleContainer(numItems);
+            for (var i = 0; i < numItems; i++) {
+                returnContainer.setItem(i, container.getItem(i + numItems));
             }
             clearContainer(player, returnContainer);
         });
     }
 
     @Override
-    protected void clearContainer(Player player, Container container) {
-        super.clearContainer(player, container);
-    }
-
-    @Override
     public boolean stillValid(Player player) {
         return !slots.isEmpty() && container.stillValid(player);
+    }
+
+    public int getNumItems() {
+        return numItems;
     }
 
     public StoneChestMaterial getMaterial() {

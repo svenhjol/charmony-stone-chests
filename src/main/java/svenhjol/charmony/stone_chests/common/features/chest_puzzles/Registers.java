@@ -12,17 +12,18 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class Registers extends Setup<ChestPuzzles> {
-    public static final String ITEM_PUZZLE_ID = "item_puzzle_stone_chest";
-
-    public final Supplier<MenuType<ItemPuzzleMenu>> itemPuzzleMenu;
+    public final Map<Integer, Supplier<MenuType<DynamicItemPuzzleMenu>>> itemPuzzleMenus = new HashMap<>();
     public final Map<String, StoneChestLockMenuProvider> lockMenuProviders = new HashMap<>();
 
     public Registers(ChestPuzzles feature) {
         super(feature);
-
         var registry = CommonRegistry.forFeature(feature);
 
-        itemPuzzleMenu = registry.menuType(ITEM_PUZZLE_ID, () -> new MenuType<>(ItemPuzzleMenu::new, FeatureFlags.VANILLA_SET));
+        for (var i = 1; i <= Constants.MAX_ITEM_SLOTS; i++) {
+            var slots = i;
+            itemPuzzleMenus.put(i, registry.menuType("item_puzzle_" + i + "_slot",
+                () -> new MenuType<>((id, inv) -> new DynamicItemPuzzleMenu(id, inv, slots), FeatureFlags.VANILLA_SET)));
+        }
     }
 
     @Override

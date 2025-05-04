@@ -52,8 +52,8 @@ public interface SecretChestDefinition extends StringRepresentable {
      * Use this to increase the difficulty of locked chest puzzles
      * and the penalty for breaking the chest or failing the puzzle.
      */
-    default double difficultyAmplifier() {
-        return 1.0d;
+    default int difficultyAmplifier() {
+        return 1;
     }
 
     /**

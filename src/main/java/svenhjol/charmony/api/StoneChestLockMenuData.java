@@ -16,5 +16,5 @@ public class StoneChestLockMenuData {
     public BlockPos pos;
     public ContainerData data;
     public long seed;
-    public double difficultyAmplifier;
+    public int difficultyAmplifier;
 }

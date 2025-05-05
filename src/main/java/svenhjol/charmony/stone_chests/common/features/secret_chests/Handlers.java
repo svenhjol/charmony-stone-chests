@@ -33,7 +33,7 @@ public class Handlers extends Setup<SecretChests> {
     }
 
     public void createNetherFortressChest(StructurePiece piece, WorldGenLevel level, RandomSource random) {
-        if (random.nextInt(1000) < 12) {
+        if (random.nextInt(1000) < 18) {
             var definition = definitionForPlacement(SecretChestPlacement.Fortress, random).orElse(null);
             if (definition == null) return;
             var pos = piece.getWorldPos(random.nextBoolean() ? 1 : 3, 2, 2);

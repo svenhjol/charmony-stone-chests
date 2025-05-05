@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
+package svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
@@ -16,28 +16,33 @@ import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
 import svenhjol.charmony.core.helpers.TagHelper;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Constants;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleRequirement;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleSlot;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
 import java.util.*;
 
-public class DynamicItemPuzzleMenu extends ContainerMenu {
+public class ItemMenuPuzzle extends ContainerMenu {
     private final Container container;
     private final ContainerData data;
     private final ContainerLevelAccess access;
     private final int numSlots;
     private final int numItems;
 
-    public DynamicItemPuzzleMenu(int syncId, Inventory playerInventory, int slots) {
-        this(syncId, playerInventory, new SimpleContainer(slots * 2), new SimpleContainerData(1), NonNullList.withSize(slots, ItemStack.EMPTY), ContainerLevelAccess.NULL);
+    public ItemMenuPuzzle(int syncId, Inventory playerInventory, int slots) {
+        this(syncId, playerInventory, new SimpleContainer(slots * 2), StoneChestMaterial.Stone, NonNullList.withSize(slots, ItemStack.EMPTY), ContainerLevelAccess.NULL);
     }
 
-    public DynamicItemPuzzleMenu(int syncId, Inventory playerInventory, Container container, ContainerData data, List<ItemStack> items, ContainerLevelAccess access) {
+    public ItemMenuPuzzle(int syncId, Inventory playerInventory, Container container, StoneChestMaterial material, List<ItemStack> items, ContainerLevelAccess access) {
         super(feature().registers.itemPuzzleMenus.get(items.size()).get(), syncId, playerInventory, container);
         this.container = container;
-        this.data = data;
         this.access = access;
         this.numSlots = container.getContainerSize();
         this.numItems = items.size();
+        this.data = new SimpleContainerData(1);
+        data.set(0, material.getId());
 
         if (numSlots != numItems * 2) {
             throw new RuntimeException("Number of slots must equal double the number of items in the puzzle menu");
@@ -65,10 +70,10 @@ public class DynamicItemPuzzleMenu extends ContainerMenu {
         var serverLevel = menuData.level;
         var syncId = menuData.syncId;
         var inventory = menuData.playerInventory;
-        var data = menuData.data;
+        var material = menuData.material;
         var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
 
-        return Optional.of(new DynamicItemPuzzleMenu(syncId, inventory, new SimpleContainer(items.size() * 2), data, items, access));
+        return Optional.of(new ItemMenuPuzzle(syncId, inventory, new SimpleContainer(items.size() * 2), material, items, access));
     }
 
     public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemPuzzleRequirement> requirements, int slots) {
@@ -161,25 +166,9 @@ public class DynamicItemPuzzleMenu extends ContainerMenu {
 
             if (level instanceof ServerLevel serverLevel && serverLevel.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
                 if (valid == numItems) {
-                    // Success - consume the items
-                    container.clearContent();
-
-                    // Get the stored "unlocked" loot table from the chest and set it as the primary loot table.
-                    // When the chest is next opened the loot will be generated.
-                    var unlockedLootTable = chest.getUnlockedLootTable();
-                    chest.setLootTable(unlockedLootTable);
-                    chest.unlock();
-
-                    player.openMenu(chest);
+                    feature().handlers.doSuccessOpen(container, player, chest);
                 } else {
-                    // Fail - return the items to the player and run the break behavior
-                    player.containerMenu.removed(player);
-                    chest.unlock();
-                    var result = feature().handlers.doBreakBehavior(player, player.level(), chest.getBlockPos(), chest);
-
-                    if (!result) {
-                        player.openMenu(chest);
-                    }
+                    feature().handlers.doFailOpen(player, chest);
                 }
             }
         });

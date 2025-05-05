@@ -4,7 +4,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import svenhjol.charmony.api.Api;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.DynamicItemPuzzleMenu;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemMenuPuzzle;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleRequirement;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 
@@ -29,6 +29,6 @@ public class SherdPuzzleMenuProvider implements StoneChestLockMenuProvider {
             new ItemPuzzleRequirement(Tags.PUZZLE_SHERDS, 1, 4)
         );
 
-        return DynamicItemPuzzleMenu.getMenuProvider(menuData, requirements, menuData.difficultyAmplifier);
+        return ItemMenuPuzzle.getMenuProvider(menuData, requirements, menuData.difficultyAmplifier);
     }
 }

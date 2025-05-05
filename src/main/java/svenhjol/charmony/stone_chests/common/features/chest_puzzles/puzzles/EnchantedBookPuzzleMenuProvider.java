@@ -12,7 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import svenhjol.charmony.api.Api;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.DynamicItemPuzzleMenu;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemMenuPuzzle;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 
 import java.util.List;
@@ -50,6 +50,6 @@ public class EnchantedBookPuzzleMenuProvider implements StoneChestLockMenuProvid
         var level = Mth.nextInt(random, min, max);
         var stack = EnchantmentHelper.createBook(new EnchantmentInstance(holder, level));
 
-        return DynamicItemPuzzleMenu.getMenuProvider(menuData, List.of(stack));
+        return ItemMenuPuzzle.getMenuProvider(menuData, List.of(stack));
     }
 }

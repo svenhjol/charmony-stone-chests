@@ -3,7 +3,7 @@ package svenhjol.charmony.api;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ContainerData;
+import svenhjol.charmony.api.materials.StoneChestMaterial;
 
 /**
  * Data holder passed to the lock menu provider.
@@ -14,7 +14,7 @@ public class StoneChestLockMenuData {
     public Inventory playerInventory;
     public ServerLevel level;
     public BlockPos pos;
-    public ContainerData data;
+    public StoneChestMaterial material;
     public long seed;
     public int difficultyAmplifier;
 }

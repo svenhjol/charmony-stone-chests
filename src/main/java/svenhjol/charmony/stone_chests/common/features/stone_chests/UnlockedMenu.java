@@ -16,13 +16,14 @@ public class UnlockedMenu extends ContainerMenu {
     private final ContainerData data;
 
     protected UnlockedMenu(int syncId, Inventory playerInventory) {
-        this(syncId, playerInventory, new SimpleContainer(ChestBlockEntity.SLOTS), new SimpleContainerData(1));
+        this(syncId, playerInventory, new SimpleContainer(ChestBlockEntity.SLOTS), StoneChestMaterial.Stone);
     }
 
-    protected UnlockedMenu(int syncId, Inventory playerInventory, Container container, ContainerData data) {
+    protected UnlockedMenu(int syncId, Inventory playerInventory, Container container, StoneChestMaterial material) {
         super(StoneChests.feature().registers.unlockedMenu.get(), syncId, playerInventory, container);
         this.container = container;
-        this.data = data;
+        this.data = new SimpleContainerData(1);
+        this.data.set(0, material.getId());
 
         this.addDataSlots(data);
         this.addChestGrid(8, 18);

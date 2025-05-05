@@ -2,7 +2,7 @@ package svenhjol.charmony.api;
 
 import net.minecraft.util.StringRepresentable;
 
-public enum StoneChestBreakBehavior implements StringRepresentable {
+public enum StoneChestSideEffects implements StringRepresentable {
     Nothing("nothing"),
     SpawnOverworldMonsters("spawn_overworld_monsters"),
     SpawnNetherMonsters("spawn_nether_monsters"),
@@ -12,14 +12,14 @@ public enum StoneChestBreakBehavior implements StringRepresentable {
 
     private final String name;
 
-    StoneChestBreakBehavior(String name) {
+    StoneChestSideEffects(String name) {
         this.name = name;
     }
 
-    public static StoneChestBreakBehavior getOrDefault(String name) {
-        StoneChestBreakBehavior behavior;
+    public static StoneChestSideEffects getOrDefault(String name) {
+        StoneChestSideEffects behavior;
         try {
-            behavior = StoneChestBreakBehavior.valueOf(name);
+            behavior = StoneChestSideEffects.valueOf(name);
         } catch (IllegalArgumentException e) {
             behavior = Nothing;
         }

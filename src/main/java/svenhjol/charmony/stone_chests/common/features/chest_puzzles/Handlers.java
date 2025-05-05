@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -16,12 +17,12 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import svenhjol.charmony.api.StoneChestBreakBehavior;
+import svenhjol.charmony.api.StoneChestSideEffects;
 import svenhjol.charmony.api.StoneChestLockMenuData;
+import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.helpers.TagHelper;
 import svenhjol.charmony.core.helpers.WorldHelper;
@@ -39,7 +40,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         super(feature);
     }
 
-    public Optional<AbstractContainerMenu> getMenuProvider(ServerLevel level, ChestBlockEntity chest, int syncId, Inventory inventory, ContainerData data) {
+    public Optional<AbstractContainerMenu> getMenuProvider(ServerLevel level, ChestBlockEntity chest, int syncId, Inventory inventory, StoneChestMaterial material) {
         var lockMenu = chest.lockMenu();
         var pos = chest.getBlockPos();
 
@@ -60,7 +61,7 @@ public class Handlers extends Setup<ChestPuzzles> {
             menuData.playerInventory = inventory;
             menuData.level = level;
             menuData.pos = pos;
-            menuData.data = data;
+            menuData.material = material;
             menuData.seed = seed;
             menuData.difficultyAmplifier = chest.getDifficultyAmplifier();
 
@@ -75,15 +76,39 @@ public class Handlers extends Setup<ChestPuzzles> {
         return Optional.empty();
     }
 
-    public boolean doBreakBehavior(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
-        var amplifier = chest.getDifficultyAmplifier();
-        var behavior = chest.getBreakBehavior();
+    public void doSuccessOpen(Container container, Player player, ChestBlockEntity chest) {
+        // Consume any items held in the container.
+        container.clearContent();
 
-        if (behavior == StoneChestBreakBehavior.Nothing) {
+        // Get the stored "unlocked" loot table from the chest and set it as the primary loot table.
+        // When the chest is next opened the loot will be generated.
+        chest.setLootTable(chest.getUnlockedLootTable());
+        chest.unlock();
+        player.openMenu(chest);
+    }
+
+    public void doFailOpen(Player player, ChestBlockEntity chest) {
+        // Let the container decide what to do with the container items.
+        player.containerMenu.removed(player);
+
+        // Unlock the chest and execute side-effets.
+        chest.unlock();
+        var result = doSideEffects(player, player.level(), chest.getBlockPos(), chest);
+
+        if (!result) {
+            player.openMenu(chest);
+        }
+    }
+
+    public boolean doSideEffects(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
+        var amplifier = chest.getDifficultyAmplifier();
+        var sideEffect = chest.getSideEffects();
+
+        if (sideEffect == StoneChestSideEffects.Nothing) {
             return false;
         }
 
-        switch (chest.getBreakBehavior()) {
+        switch (chest.getSideEffects()) {
             case SpawnOverworldMonsters -> spawnMonsters(Tags.OVERWORLD_MONSTERS, player, level, pos, amplifier);
             case SpawnNetherMonsters -> spawnMonsters(Tags.NETHER_MONSTERS, player, level, pos, amplifier);
             case SpawnEndMonsters -> spawnMonsters(Tags.END_MONSTERS, player, level, pos, amplifier);

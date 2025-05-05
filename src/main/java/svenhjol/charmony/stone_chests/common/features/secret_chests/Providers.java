@@ -13,8 +13,8 @@ import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Environment;
 import svenhjol.charmony.core.base.Setup;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.EnchantedItemPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GemPuzzleMenuProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.MoonPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.SherdPuzzleMenuProvider;
 
 import java.util.List;
@@ -71,9 +71,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestBreakBehavior> breakBehaviors() {
+            public List<StoneChestSideEffects> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.GiveBadEffect
+                    StoneChestSideEffects.GiveBadEffect
                 );
             }
 
@@ -116,10 +116,10 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestBreakBehavior> breakBehaviors() {
+            public List<StoneChestSideEffects> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.GiveBadEffect,
-                    StoneChestBreakBehavior.SpawnOverworldMonsters
+                    StoneChestSideEffects.GiveBadEffect,
+                    StoneChestSideEffects.SpawnOverworldMonsters
                 );
             }
 
@@ -178,10 +178,10 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestBreakBehavior> breakBehaviors() {
+            public List<StoneChestSideEffects> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.Explode,
-                    StoneChestBreakBehavior.SpawnOverworldMonsters
+                    StoneChestSideEffects.Explode,
+                    StoneChestSideEffects.SpawnOverworldMonsters
                 );
             }
 
@@ -242,7 +242,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    EnchantedItemPuzzleMenuProvider.ID
+                    MoonPuzzleMenuProvider.ID
                 );
             }
         };
@@ -295,7 +295,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID
+                    MoonPuzzleMenuProvider.ID
                 );
             }
         };
@@ -353,11 +353,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestBreakBehavior> breakBehaviors() {
+            public List<StoneChestSideEffects> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.SpawnEndMonsters,
-                    StoneChestBreakBehavior.Explode,
-                    StoneChestBreakBehavior.GiveBadEffect
+                    StoneChestSideEffects.SpawnEndMonsters,
+                    StoneChestSideEffects.Explode,
+                    StoneChestSideEffects.GiveBadEffect
                 );
             }
 
@@ -419,9 +419,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestBreakBehavior> breakBehaviors() {
+            public List<StoneChestSideEffects> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.SpawnNetherMonsters
+                    StoneChestSideEffects.SpawnNetherMonsters
                 );
             }
         };
@@ -459,9 +459,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestBreakBehavior> breakBehaviors() {
+            public List<StoneChestSideEffects> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.SpawnEndMonsters
+                    StoneChestSideEffects.SpawnEndMonsters
                 );
             }
         };
@@ -499,9 +499,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestBreakBehavior> breakBehaviors() {
+            public List<StoneChestSideEffects> breakBehaviors() {
                 return List.of(
-                    StoneChestBreakBehavior.SpawnNetherMonsters
+                    StoneChestSideEffects.SpawnNetherMonsters
                 );
             }
         };

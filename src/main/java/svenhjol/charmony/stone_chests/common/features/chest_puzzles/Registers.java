@@ -6,23 +6,29 @@ import svenhjol.charmony.api.StoneChestLockMenuProvider;
 import svenhjol.charmony.core.Api;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.common.CommonRegistry;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemMenuPuzzle;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.MoonMenuPuzzle;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class Registers extends Setup<ChestPuzzles> {
-    public final Map<Integer, Supplier<MenuType<DynamicItemPuzzleMenu>>> itemPuzzleMenus = new HashMap<>();
+    public final Supplier<MenuType<MoonMenuPuzzle>> moonPuzzleMenu;
+    public final Map<Integer, Supplier<MenuType<ItemMenuPuzzle>>> itemPuzzleMenus = new HashMap<>();
     public final Map<String, StoneChestLockMenuProvider> lockMenuProviders = new HashMap<>();
 
     public Registers(ChestPuzzles feature) {
         super(feature);
         var registry = CommonRegistry.forFeature(feature);
 
+        moonPuzzleMenu = registry.menuType("moon_puzzle",
+            () -> new MenuType<>(MoonMenuPuzzle::new, FeatureFlags.VANILLA_SET));
+
         for (var i = 1; i <= Constants.MAX_ITEM_SLOTS; i++) {
             var slots = i;
-            itemPuzzleMenus.put(i, registry.menuType("item_puzzle_" + i + "_slot",
-                () -> new MenuType<>((id, inv) -> new DynamicItemPuzzleMenu(id, inv, slots), FeatureFlags.VANILLA_SET)));
+            itemPuzzleMenus.put(i, registry.menuType("item_puzzle_" + i + "_slots",
+                () -> new MenuType<>((id, inv) -> new ItemMenuPuzzle(id, inv, slots), FeatureFlags.VANILLA_SET)));
         }
     }
 

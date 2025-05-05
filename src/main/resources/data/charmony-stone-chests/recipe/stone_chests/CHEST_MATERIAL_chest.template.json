@@ -7,12 +7,12 @@
     },
     "pattern": [
       "###",
-      "# #",
+      "#O#",
       "###"
     ],
     "result": {
       "count": 1,
-      "id": "charmony-stone-chests:CHEST_MATERIAL-chest"
+      "id": "charmony-stone-chests:CHEST_MATERIAL_chest"
     }
   },
   "variants": "chest_material"

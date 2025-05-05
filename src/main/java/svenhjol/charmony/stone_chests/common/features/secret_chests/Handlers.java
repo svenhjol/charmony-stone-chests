@@ -75,7 +75,7 @@ public class Handlers extends Setup<SecretChests> {
 
         var lootTables = new ArrayList<>(definition.lootTables());
         var menus = new ArrayList<>(definition.lockMenus());
-        var breakBehaviors = new ArrayList<>(definition.breakBehaviors());
+        var sideEffects = new ArrayList<>(definition.sideEffects());
 
         if (lootTables.isEmpty()) {
             log().debug("No loot tables for secret chest");
@@ -105,10 +105,10 @@ public class Handlers extends Setup<SecretChests> {
                 chest.setUnlockedLootTable(lootTable);
                 chest.setDifficultyAmplifier(definition.difficultyAmplifier());
 
-                if (!breakBehaviors.isEmpty()) {
-                    // Add a random break behavior to the chest.
-                    Util.shuffle(breakBehaviors, random);
-                    chest.setBreakBehavior(breakBehaviors.getFirst());
+                if (!sideEffects.isEmpty()) {
+                    // Add a random side-effect to the chest.
+                    Util.shuffle(sideEffects, random);
+                    chest.setSideEffect(sideEffects.getFirst());
                 }
             }
 

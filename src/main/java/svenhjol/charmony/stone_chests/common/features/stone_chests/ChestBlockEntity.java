@@ -30,7 +30,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     public static final String LOCKED_TAG = "locked";
     public static final String LOCK_MENU_TAG = "lock_menu";
     public static final String UNLOCKED_LOOT_TABLE_TAG = "unlocked_loot_table";
-    public static final String BREAK_BEHAVIOR_TAG = "broken_behaviour";
+    public static final String SIDE_EFFECT_TAG = "side_effect";
     public static final String DIFFICULTY_AMPLIFIER_TAG = "difficulty_amplifier";
 
     public static final int ROWS = 3;
@@ -44,7 +44,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     private boolean locked;
     private String lockMenu;
     private String unlockedLootTable;
-    private StoneChestSideEffects breakBehavior;
+    private StoneChestSideEffects sideEffect;
     private int difficultyAmplifier;
 
     public ChestBlockEntity(BlockPos pos, BlockState state) {
@@ -56,7 +56,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.lockMenu = "";
         this.unlockedLootTable = "";
         this.difficultyAmplifier = 1;
-        this.breakBehavior = StoneChestSideEffects.Nothing;
+        this.sideEffect = StoneChestSideEffects.Nothing;
 
         this.openersCounter = new ContainerOpenersCounter() {
             @Override
@@ -113,8 +113,8 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         tag.putString(UNLOCKED_LOOT_TABLE_TAG, unlockedLootTable);
         tag.putInt(DIFFICULTY_AMPLIFIER_TAG, difficultyAmplifier);
 
-        if (breakBehavior != null) {
-            tag.putString(BREAK_BEHAVIOR_TAG, breakBehavior.getSerializedName());
+        if (sideEffect != null) {
+            tag.putString(SIDE_EFFECT_TAG, sideEffect.getSerializedName());
         }
 
         if (!this.trySaveLootTable(tag)) {
@@ -131,7 +131,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.unlockedLootTable = tag.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
         this.difficultyAmplifier = tag.getIntOr(DIFFICULTY_AMPLIFIER_TAG, 1);
 
-        tag.getString(LOCK_MENU_TAG).ifPresent(str -> this.breakBehavior = StoneChestSideEffects.getOrDefault(str));
+        tag.getString(LOCK_MENU_TAG).ifPresent(str -> this.sideEffect = StoneChestSideEffects.getOrDefault(str));
 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
@@ -228,7 +228,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     }
 
     public StoneChestSideEffects getSideEffects() {
-        return breakBehavior;
+        return sideEffect;
     }
 
     public int getDifficultyAmplifier() {
@@ -264,8 +264,8 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         setChanged();
     }
 
-    public void setBreakBehavior(StoneChestSideEffects breakBehavior) {
-        this.breakBehavior = breakBehavior;
+    public void setSideEffect(StoneChestSideEffects sideEffect) {
+        this.sideEffect = sideEffect;
         setChanged();
     }
 

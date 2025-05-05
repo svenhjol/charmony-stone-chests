@@ -17,13 +17,13 @@ public enum StoneChestSideEffects implements StringRepresentable {
     }
 
     public static StoneChestSideEffects getOrDefault(String name) {
-        StoneChestSideEffects behavior;
+        StoneChestSideEffects sideEffect;
         try {
-            behavior = StoneChestSideEffects.valueOf(name);
+            sideEffect = StoneChestSideEffects.valueOf(name);
         } catch (IllegalArgumentException e) {
-            behavior = Nothing;
+            sideEffect = Nothing;
         }
-        return behavior;
+        return sideEffect;
     }
 
     public String getName() {

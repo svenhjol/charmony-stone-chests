@@ -67,7 +67,7 @@ public interface SecretChestDefinition extends StringRepresentable {
      * Behavior when the chest is broken.
      * If more than one is specified, one is randomly chosen from the list.
      */
-    default List<StoneChestSideEffects> breakBehaviors() {
+    default List<StoneChestSideEffects> sideEffects() {
         return List.of(StoneChestSideEffects.Nothing);
     }
 

@@ -69,7 +69,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> breakBehaviors() {
+            public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
                     StoneChestSideEffects.GiveBadEffect
                 );
@@ -114,7 +114,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> breakBehaviors() {
+            public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
                     StoneChestSideEffects.GiveBadEffect,
                     StoneChestSideEffects.SpawnOverworldMonsters
@@ -176,7 +176,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> breakBehaviors() {
+            public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
                     StoneChestSideEffects.Explode,
                     StoneChestSideEffects.SpawnOverworldMonsters
@@ -351,7 +351,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> breakBehaviors() {
+            public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
                     StoneChestSideEffects.SpawnEndMonsters,
                     StoneChestSideEffects.Explode,
@@ -417,7 +417,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> breakBehaviors() {
+            public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
                     StoneChestSideEffects.SpawnNetherMonsters
                 );
@@ -457,7 +457,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> breakBehaviors() {
+            public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
                     StoneChestSideEffects.SpawnEndMonsters
                 );
@@ -497,7 +497,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> breakBehaviors() {
+            public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
                     StoneChestSideEffects.SpawnNetherMonsters
                 );

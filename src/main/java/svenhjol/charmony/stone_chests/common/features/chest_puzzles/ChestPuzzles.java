@@ -12,7 +12,8 @@ import svenhjol.charmony.core.enums.Side;
 public final class ChestPuzzles extends SidedFeature {
     public final Registers registers;
     public final Handlers handlers;
-    public final Providers providers;
+    public final MenuProviders menuProviders;
+    public final ItemPuzzleTagProviders itemPuzzleTagProviders;
 
     @Configurable(
         name = "Bad effect duration",
@@ -30,7 +31,8 @@ public final class ChestPuzzles extends SidedFeature {
         super(mod);
         registers = new Registers(this);
         handlers = new Handlers(this);
-        providers = new Providers(this);
+        menuProviders = new MenuProviders(this);
+        itemPuzzleTagProviders = new ItemPuzzleTagProviders(this);
     }
 
     public static ChestPuzzles feature() {

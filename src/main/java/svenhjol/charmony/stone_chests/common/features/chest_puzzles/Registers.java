@@ -1,7 +1,10 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import svenhjol.charmony.api.ItemPuzzleTagProvider;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
 import svenhjol.charmony.core.Api;
 import svenhjol.charmony.core.base.Setup;
@@ -10,7 +13,9 @@ import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ClockP
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemPuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.MoonPuzzleMenu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -19,6 +24,7 @@ public class Registers extends Setup<ChestPuzzles> {
     public final Supplier<MenuType<ClockPuzzleMenu>> clockPuzzleMenu;
     public final Map<Integer, Supplier<MenuType<ItemPuzzleMenu>>> itemPuzzleMenus = new HashMap<>();
     public final Map<String, StoneChestLockMenuProvider> lockMenuProviders = new HashMap<>();
+    public final List<TagKey<Item>> itemPuzzleTags = new ArrayList<>();
 
     public Registers(ChestPuzzles feature) {
         super(feature);
@@ -42,6 +48,9 @@ public class Registers extends Setup<ChestPuzzles> {
         return () -> {
             Api.consume(StoneChestLockMenuProvider.class,
                 provider -> lockMenuProviders.put(provider.getMenuProviderId(), provider));
+
+            Api.consume(ItemPuzzleTagProvider.class,
+                provider -> itemPuzzleTags.addAll(provider.getItemPuzzleTags()));
         };
     }
 }

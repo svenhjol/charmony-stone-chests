@@ -346,7 +346,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID
+                    GemPuzzleMenuProvider.ID,
+                    EnchantedBookPuzzleMenuProvider.ID
                 );
             }
 
@@ -419,7 +420,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.SpawnNetherMonsters
+                    StoneChestSideEffects.SpawnNetherMonsters,
+                    StoneChestSideEffects.Explode,
+                    StoneChestSideEffects.GiveBadEffect
                 );
             }
         };
@@ -445,7 +448,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID
+                    GemPuzzleMenuProvider.ID,
+                    EnchantedItemPuzzleMenuProvider.ID
                 );
             }
 
@@ -459,7 +463,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.SpawnEndMonsters
+                    StoneChestSideEffects.SpawnEndMonsters,
+                    StoneChestSideEffects.Explode,
+                    StoneChestSideEffects.GiveBadEffect
                 );
             }
         };
@@ -485,7 +491,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID
+                    GemPuzzleMenuProvider.ID,
+                    EnchantedItemPuzzleMenuProvider.ID
                 );
             }
 
@@ -499,7 +506,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<StoneChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.SpawnNetherMonsters
+                    StoneChestSideEffects.SpawnNetherMonsters,
+                    StoneChestSideEffects.Explode,
+                    StoneChestSideEffects.GiveBadEffect
                 );
             }
         };

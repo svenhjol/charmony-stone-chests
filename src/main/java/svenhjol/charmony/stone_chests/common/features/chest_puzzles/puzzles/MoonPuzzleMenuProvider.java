@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import svenhjol.charmony.api.Api;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.MoonMenuPuzzle;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.MoonPuzzleMenu;
 
 import java.util.Optional;
 
@@ -37,6 +37,6 @@ public class MoonPuzzleMenuProvider implements StoneChestLockMenuProvider {
         var random = RandomSource.create(seed);
         var phase = random.nextInt(0, 8);
 
-        return Optional.of(new MoonMenuPuzzle(syncId, inventory, new SimpleContainer(1), material, phase, access));
+        return Optional.of(new MoonPuzzleMenu(syncId, inventory, new SimpleContainer(1), material, phase, access));
     }
 }

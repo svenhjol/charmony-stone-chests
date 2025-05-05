@@ -12,16 +12,16 @@ import svenhjol.charmony.core.client.SlotSprite;
 import svenhjol.charmony.core.client.TintedGuiGraphics;
 import svenhjol.charmony.core.helpers.ColorHelper;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemMenuPuzzle;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemPuzzleMenu;
 
-public class ItemPuzzleScreen extends AbstractContainerScreen<ItemMenuPuzzle> {
+public class ItemPuzzleScreen extends AbstractContainerScreen<ItemPuzzleMenu> {
     public static final ResourceLocation BACKGROUND = StoneChestsMod.id("textures/gui/container/generic_puzzle.png");
 
     private final int numSlots;
     protected ColorHelper.Color tintedBg;
     protected int tintedFg;
 
-    public ItemPuzzleScreen(ItemMenuPuzzle menu, Inventory inventory, Component component) {
+    public ItemPuzzleScreen(ItemPuzzleMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
         this.imageWidth = 176;
         this.imageHeight = 195;

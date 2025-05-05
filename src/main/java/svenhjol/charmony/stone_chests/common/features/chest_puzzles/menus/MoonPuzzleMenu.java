@@ -14,15 +14,15 @@ import svenhjol.charmony.core.common.ContainerMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
-public class MoonMenuPuzzle extends ContainerMenu {
+public class MoonPuzzleMenu extends ContainerMenu {
     private final ContainerLevelAccess access;
     private final ContainerData data;
 
-    public MoonMenuPuzzle(int id, Inventory playerInventory) {
+    public MoonPuzzleMenu(int id, Inventory playerInventory) {
         this(id, playerInventory, new SimpleContainer(1), StoneChestMaterial.Stone, 0, ContainerLevelAccess.NULL);
     }
 
-    public MoonMenuPuzzle(int id, Inventory playerInventory, Container container, StoneChestMaterial material, int phase, ContainerLevelAccess access) {
+    public MoonPuzzleMenu(int id, Inventory playerInventory, Container container, StoneChestMaterial material, int phase, ContainerLevelAccess access) {
         super(feature().registers.moonPuzzleMenu.get(), id, playerInventory, container);
         this.access = access;
         this.data = new SimpleContainerData(2);

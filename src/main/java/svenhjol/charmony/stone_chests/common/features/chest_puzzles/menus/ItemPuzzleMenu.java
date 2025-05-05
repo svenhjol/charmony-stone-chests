@@ -29,18 +29,18 @@ import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEnt
 
 import java.util.*;
 
-public class ItemMenuPuzzle extends ContainerMenu {
+public class ItemPuzzleMenu extends ContainerMenu {
     private final Container container;
     private final ContainerData data;
     private final ContainerLevelAccess access;
     private final int numSlots;
     private final int numItems;
 
-    public ItemMenuPuzzle(int syncId, Inventory playerInventory, int slots) {
+    public ItemPuzzleMenu(int syncId, Inventory playerInventory, int slots) {
         this(syncId, playerInventory, new SimpleContainer(slots * 2), StoneChestMaterial.Stone, NonNullList.withSize(slots, ItemStack.EMPTY), ContainerLevelAccess.NULL);
     }
 
-    public ItemMenuPuzzle(int syncId, Inventory playerInventory, Container container, StoneChestMaterial material, List<ItemStack> items, ContainerLevelAccess access) {
+    public ItemPuzzleMenu(int syncId, Inventory playerInventory, Container container, StoneChestMaterial material, List<ItemStack> items, ContainerLevelAccess access) {
         super(feature().registers.itemPuzzleMenus.get(items.size()).get(), syncId, playerInventory, container);
         this.container = container;
         this.access = access;
@@ -78,7 +78,7 @@ public class ItemMenuPuzzle extends ContainerMenu {
         var material = menuData.material;
         var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
 
-        return Optional.of(new ItemMenuPuzzle(syncId, inventory, new SimpleContainer(items.size() * 2), material, items, access));
+        return Optional.of(new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(items.size() * 2), material, items, access));
     }
 
     public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemPuzzleRequirement> requirements, int slots) {

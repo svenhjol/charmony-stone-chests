@@ -11,19 +11,19 @@ import net.minecraft.world.entity.player.Inventory;
 import svenhjol.charmony.core.client.TintedGuiGraphics;
 import svenhjol.charmony.core.helpers.ColorHelper;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.MoonMenuPuzzle;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.MoonPuzzleMenu;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MoonPuzzleScreen extends AbstractContainerScreen<MoonMenuPuzzle> {
+public class MoonPuzzleScreen extends AbstractContainerScreen<MoonPuzzleMenu> {
     public static final ResourceLocation BACKGROUND = StoneChestsMod.id("textures/gui/container/generic_puzzle.png");
     public static final Map<Integer, ResourceLocation> MOON_PHASES = new HashMap<>();
 
     protected ColorHelper.Color tintedBg;
     protected int tintedFg;
 
-    public MoonPuzzleScreen(MoonMenuPuzzle menu, Inventory inventory, Component component) {
+    public MoonPuzzleScreen(MoonPuzzleMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
         this.imageWidth = 176;
         this.imageHeight = 195;

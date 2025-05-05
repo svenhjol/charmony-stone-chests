@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
-import svenhjol.charmony.core.base.Environment;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
 
@@ -380,8 +379,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             public boolean generateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {
                 float f = random.nextInt(3) + 4.0f;
 
-                var block = Environment.isDebugMode() ? Blocks.OBSIDIAN : Blocks.END_STONE;
-
+                var block = Blocks.END_STONE;
                 for (int i = 0; f > 0.5f; i--) {
                     for (int j = Mth.floor(-f); j <= Mth.ceil(f); j++) {
                         for (int k = Mth.floor(-f); k <= Mth.ceil(f); k++) {

@@ -21,15 +21,12 @@ import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
 import svenhjol.charmony.core.helpers.TagHelper;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Constants;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleRequirement;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleSlot;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.*;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
 import java.util.*;
 
-public class ItemPuzzleMenu extends ContainerMenu {
+public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
     private final Container container;
     private final ContainerData data;
     private final ContainerLevelAccess access;

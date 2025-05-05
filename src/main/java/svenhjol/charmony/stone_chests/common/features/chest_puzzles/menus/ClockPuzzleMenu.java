@@ -15,20 +15,20 @@ import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.PuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
-public class MoonPuzzleMenu extends ContainerMenu implements PuzzleMenu {
+public class ClockPuzzleMenu extends ContainerMenu implements PuzzleMenu {
     private final ContainerLevelAccess access;
     private final ContainerData data;
 
-    public MoonPuzzleMenu(int id, Inventory playerInventory) {
+    public ClockPuzzleMenu(int id, Inventory playerInventory) {
         this(id, playerInventory, new SimpleContainer(1), StoneChestMaterial.Stone, 0, ContainerLevelAccess.NULL);
     }
 
-    public MoonPuzzleMenu(int id, Inventory playerInventory, Container container, StoneChestMaterial material, int phase, ContainerLevelAccess access) {
-        super(feature().registers.moonPuzzleMenu.get(), id, playerInventory, container);
+    public ClockPuzzleMenu(int id, Inventory playerInventory, Container container, StoneChestMaterial material, int time, ContainerLevelAccess access) {
+        super(feature().registers.clockPuzzleMenu.get(), id, playerInventory, container);
         this.access = access;
         this.data = new SimpleContainerData(2);
         this.data.set(0, material.getId());
-        this.data.set(1, phase);
+        this.data.set(1, time);
 
         this.addStandardInventorySlots(playerInventory, 8, 113);
         this.addDataSlots(data);
@@ -43,7 +43,28 @@ public class MoonPuzzleMenu extends ContainerMenu implements PuzzleMenu {
     public boolean clickMenuButton(Player player, int id) {
         access.execute((level, pos) -> {
             if (level instanceof ServerLevel serverLevel && serverLevel.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-                if (level.getMoonPhase() == getMoonPhase()) {
+                var clockTime = level.getTimeOfDay(1.0f) * 64;
+                var tolerance = 0.95d;
+
+                var reqTime = getTime() - 0.5d;
+                if (reqTime < 0) {
+                    if (clockTime > 60) {
+                        reqTime = 63.5;
+                    } else {
+                        reqTime = 0;
+                        tolerance = 0.5d;
+                    }
+                } else if (reqTime > 62) {
+                    if (clockTime > 63) {
+                        reqTime = 63;
+                        tolerance = 0.5d;
+                    }
+                }
+
+                var valid = clockTime >= reqTime && clockTime < reqTime + tolerance;
+                feature().log().debug("clockTime: " + clockTime + ", reqTime: " + reqTime + ", valid: " + valid);
+
+                if (valid) {
                     feature().handlers.doSuccessOpen(container, player, chest);
                 } else {
                     feature().handlers.doFailOpen(player, chest);
@@ -58,7 +79,7 @@ public class MoonPuzzleMenu extends ContainerMenu implements PuzzleMenu {
         return StoneChestMaterial.byId(id);
     }
 
-    public int getMoonPhase() {
+    public int getTime() {
         return this.data.get(1);
     }
 

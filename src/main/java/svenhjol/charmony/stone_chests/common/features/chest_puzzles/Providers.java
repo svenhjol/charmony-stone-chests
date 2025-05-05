@@ -7,6 +7,7 @@ public class Providers extends Setup<ChestPuzzles> {
     public Providers(ChestPuzzles feature) {
         super(feature);
 
+        new ClockPuzzleMenuProvider();
         new EnchantedBookPuzzleMenuProvider();
         new EnchantedItemPuzzleMenuProvider();
         new GemPuzzleMenuProvider();

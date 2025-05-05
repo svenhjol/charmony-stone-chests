@@ -26,15 +26,18 @@ public class ClockPuzzleScreen extends BasePuzzleScreen<ClockPuzzleMenu> {
     }
 
     protected void renderClockTime(GuiGraphics guiGraphics) {
-        var bx = width / 2;
-        var by = (height - imageHeight) / 2;
-        var ox = bx - 8;
-        var oy = by + 46;
-
         var time = getMenu().getTime();
         var image = getClockImage(time);
 
-        ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blit(RenderType::guiTextured, image, ox, oy, 0.0f, 0.0f, 16, 16, 16, 16);
+        var pose = guiGraphics.pose();
+
+        pose.pushPose();
+        var x = -9; // This is scaled by pose.scale()
+        var y = -42; // This is scaled by pose.scale()
+        pose.translate(((float) width / 2), ((float)height / 2), 1.0f);
+        pose.scale(1.24f, 1.24f, 1.24f);
+        ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blit(RenderType::guiTextured, image, x, y, 0.0f, 0.0f, 16, 16, 16, 16);
+        pose.popPose();
     }
 
     protected ResourceLocation getClockImage(int time) {

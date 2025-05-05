@@ -293,7 +293,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    EnchantedBookPuzzleMenuProvider.ID
+                    ClockPuzzleMenuProvider.ID
                 );
             }
         };

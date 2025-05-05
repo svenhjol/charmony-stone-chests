@@ -7,7 +7,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
@@ -63,8 +62,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    SherdPuzzleMenuProvider.ID,
-                    GemPuzzleMenuProvider.ID
+                    ItemPuzzleMenuProvider.ID
                 );
             }
 
@@ -78,7 +76,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.SIMPLE_DUNGEON // TODO: custom loot table
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
         };
@@ -109,7 +108,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.ANCIENT_CITY // TODO: custom loot table
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
 
@@ -124,8 +124,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    SherdPuzzleMenuProvider.ID,
-                    GemPuzzleMenuProvider.ID
+                    SherdPuzzleMenuProvider.ID
                 );
             }
         };
@@ -166,7 +165,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.ANCIENT_CITY // TODO: custom loot table
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
 
@@ -186,8 +186,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    SherdPuzzleMenuProvider.ID,
-                    GemPuzzleMenuProvider.ID
+                    ClockPuzzleMenuProvider.ID,
+                    MoonPuzzleMenuProvider.ID,
+                    EnchantedBookPuzzleMenuProvider.ID
                 );
             }
         };
@@ -228,7 +229,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.ANCIENT_CITY // TODO: custom loot table
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
 
@@ -240,7 +242,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    ClockPuzzleMenuProvider.ID
+                    ClockPuzzleMenuProvider.ID,
+                    MoonPuzzleMenuProvider.ID,
+                    ItemPuzzleMenuProvider.ID
                 );
             }
         };
@@ -281,19 +285,21 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.FISHING_TREASURE // TODO: custom loot table
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
 
             @Override
             public int difficultyAmplifier() {
-                return 3;
+                return 2;
             }
 
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    ClockPuzzleMenuProvider.ID
+                    ItemPuzzleMenuProvider.ID,
+                    EnchantedItemPuzzleMenuProvider.ID
                 );
             }
         };
@@ -334,7 +340,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.END_CITY_TREASURE // TODO: custom loot table
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
 
@@ -346,8 +353,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID,
-                    EnchantedBookPuzzleMenuProvider.ID
+                    GemPuzzleMenuProvider.ID
                 );
             }
 
@@ -411,9 +417,15 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
+            public int difficultyAmplifier() {
+                return 2;
+            }
+
+            @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.NETHER_BRIDGE
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
 
@@ -446,6 +458,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
+            public int difficultyAmplifier() {
+                return 3;
+            }
+
+            @Override
             public List<String> lockMenus() {
                 return List.of(
                     GemPuzzleMenuProvider.ID,
@@ -456,7 +473,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.END_CITY_TREASURE
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
 
@@ -491,15 +509,20 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID,
-                    EnchantedItemPuzzleMenuProvider.ID
+                    ItemPuzzleMenuProvider.ID
                 );
+            }
+
+            @Override
+            public int difficultyAmplifier() {
+                return 3;
             }
 
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    BuiltInLootTables.BASTION_TREASURE
+                    Tags.TREASURE1,
+                    Tags.TREASURE2
                 );
             }
 

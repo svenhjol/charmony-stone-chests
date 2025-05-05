@@ -191,6 +191,7 @@ public class Handlers extends Setup<ChestPuzzles> {
     }
 
     private void explode(Level level, BlockPos pos, double amplifier) {
+        level.destroyBlock(pos, false);
         var x = pos.getX() + 0.5d;
         var y = pos.getY() + 0.5d;
         var z = pos.getZ() + 0.5d;

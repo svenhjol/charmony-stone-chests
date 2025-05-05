@@ -6,15 +6,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import svenhjol.charmony.core.client.TintedGuiGraphics;
-import svenhjol.charmony.stone_chests.StoneChestsMod;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ClockPuzzleMenu;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ClockPuzzleScreen extends BasePuzzleScreen<ClockPuzzleMenu> {
-    public static final Map<Integer, ResourceLocation> MOON_PHASES = new HashMap<>();
-
     public ClockPuzzleScreen(ClockPuzzleMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
     }
@@ -49,16 +43,5 @@ public class ClockPuzzleScreen extends BasePuzzleScreen<ClockPuzzleMenu> {
             i = "0" + i;
         }
         return ResourceLocation.withDefaultNamespace("textures/item/clock_" + i + ".png");
-    }
-
-    static {
-        MOON_PHASES.put(0, StoneChestsMod.id("moon/full"));
-        MOON_PHASES.put(1, StoneChestsMod.id("moon/waning_gibbous"));
-        MOON_PHASES.put(2, StoneChestsMod.id("moon/waning_half"));
-        MOON_PHASES.put(3, StoneChestsMod.id("moon/waning_crescent"));
-        MOON_PHASES.put(4, StoneChestsMod.id("moon/new"));
-        MOON_PHASES.put(5, StoneChestsMod.id("moon/waxing_crescent"));
-        MOON_PHASES.put(6, StoneChestsMod.id("moon/waxing_half"));
-        MOON_PHASES.put(7, StoneChestsMod.id("moon/waxing_gibbous"));
     }
 }

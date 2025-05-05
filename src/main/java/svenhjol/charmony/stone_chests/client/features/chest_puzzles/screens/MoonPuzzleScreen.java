@@ -55,7 +55,7 @@ public class MoonPuzzleScreen extends AbstractContainerScreen<MoonMenuPuzzle> {
         var x = (width - imageWidth) / 2;
         var y = (height - imageHeight) / 2;
         ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blit(RenderType::guiTextured, BACKGROUND, x, y, 0.0f, 0.0f, imageWidth, imageHeight, 256, 256);
-        renderMoonPhase(guiGraphics, mouseX, mouseY);
+        renderMoonPhase(guiGraphics);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class MoonPuzzleScreen extends AbstractContainerScreen<MoonMenuPuzzle> {
         renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
-    protected void renderMoonPhase(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    protected void renderMoonPhase(GuiGraphics guiGraphics) {
         var bx = width / 2;
         var by = (height - imageHeight) / 2;
         var ox = bx - 8;

@@ -11,7 +11,6 @@ import svenhjol.charmony.api.SecretChestDefinition;
 import svenhjol.charmony.api.SecretChestPlacement;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
@@ -103,11 +102,7 @@ public class Handlers extends Setup<SecretChests> {
 
             if (!menu.isEmpty() && ChestPuzzles.feature().registers.lockMenuProviders.containsKey(menu)) {
                 chest.lock(menu);
-
-                // Add a loot table for when the chest is successfully unlocked, and a simple loot table
-                // for when the player breaks the locked chest or gets the puzzle wrong.
                 chest.setUnlockedLootTable(lootTable);
-                chest.setLootTable(Tags.SIMPLE_LOOT);
                 chest.setDifficultyAmplifier(definition.difficultyAmplifier());
 
                 if (!breakBehaviors.isEmpty()) {

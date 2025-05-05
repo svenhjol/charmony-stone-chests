@@ -1,6 +1,8 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -12,6 +14,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
@@ -145,7 +150,7 @@ public class ItemMenuPuzzle extends ContainerMenu {
         access.execute((level, pos) -> {
             List<ItemStack> requires = new ArrayList<>();
             List<ItemStack> supplied = new ArrayList<>();
-            int valid = 0;
+            int validItems = 0;
 
             for (var i = 0; i < numItems; i++) {
                 requires.add(container.getItem(i));
@@ -158,14 +163,43 @@ public class ItemMenuPuzzle extends ContainerMenu {
                 var item = supplied.get(i);
                 var req = requires.get(i);
 
-                // TODO: handle enchantment checking
                 if (ItemStack.isSameItem(item, req)) {
-                    ++valid;
+                    ItemEnchantments reqEnchants;
+                    ItemEnchantments itemEnchants;
+
+                    if (req.is(Items.ENCHANTED_BOOK) && item.is(Items.ENCHANTED_BOOK)) {
+                        // Books store their enchantments in a different component.
+                        reqEnchants = req.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
+                        itemEnchants = item.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
+                    } else {
+                        itemEnchants = item.getEnchantments();
+                        reqEnchants = req.getEnchantments();
+                    }
+
+                    // Check enchantments match the requirements.
+                    int validEnchants = 0;
+
+                    Map<Holder<Enchantment>, Integer> reqMap = new HashMap<>();
+                    for (var entry : reqEnchants.entrySet()) {
+                        reqMap.put(entry.getKey(), entry.getIntValue());
+                    }
+
+                    for (var entry : itemEnchants.entrySet()) {
+                        var lev = entry.getIntValue();
+                        var enchant = entry.getKey();
+
+                        if (!reqMap.containsKey(enchant)) continue;
+                        if (reqMap.get(enchant) != lev) continue;
+                        ++validEnchants;
+                    }
+
+                    if (validEnchants != reqMap.size()) continue;
+                    ++validItems;
                 }
             }
 
             if (level instanceof ServerLevel serverLevel && serverLevel.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-                if (valid == numItems) {
+                if (validItems == numItems) {
                     feature().handlers.doSuccessOpen(container, player, chest);
                 } else {
                     feature().handlers.doFailOpen(player, chest);

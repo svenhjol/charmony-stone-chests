@@ -13,9 +13,7 @@ import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Environment;
 import svenhjol.charmony.core.base.Setup;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GemPuzzleMenuProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.MoonPuzzleMenuProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.SherdPuzzleMenuProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
 
 import java.util.List;
 
@@ -242,7 +240,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    MoonPuzzleMenuProvider.ID
+                    EnchantedItemPuzzleMenuProvider.ID
                 );
             }
         };
@@ -295,7 +293,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    MoonPuzzleMenuProvider.ID
+                    EnchantedBookPuzzleMenuProvider.ID
                 );
             }
         };

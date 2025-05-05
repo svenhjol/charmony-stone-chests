@@ -92,6 +92,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         player.containerMenu.removed(player);
 
         // Unlock the chest and execute side-effets.
+        chest.setLootTable(Tags.SIMPLE_LOOT);
         chest.unlock();
         var result = doSideEffects(player, player.level(), chest.getBlockPos(), chest);
 

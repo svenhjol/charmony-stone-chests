@@ -80,6 +80,13 @@ public class Handlers extends Setup<ChestPuzzles> {
         // Consume any items held in the container.
         container.clearContent();
 
+        // If it was a difficult challenge then give the player luck to modify the loot rolls.
+        var difficultyAmplifier = chest.getDifficultyAmplifier();
+        if (difficultyAmplifier > 1) {
+            var luck = new MobEffectInstance(MobEffects.LUCK, difficultyAmplifier * 20, difficultyAmplifier - 2);
+            player.addEffect(luck);
+        }
+
         // Get the stored "unlocked" loot table from the chest and set it as the primary loot table.
         // When the chest is next opened the loot will be generated.
         chest.setLootTable(chest.getUnlockedLootTable());

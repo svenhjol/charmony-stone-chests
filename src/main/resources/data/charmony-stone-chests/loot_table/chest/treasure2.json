@@ -13,98 +13,10 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
-              "count": 1,
-              "function": "minecraft:set_count"
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "max": 20,
-                "min": 30
-              },
-              "options": "#minecraft:on_random_loot"
-            }
-          ],
-          "name": "minecraft:diamond_sword",
-          "weight": 2,
-          "quality": 1
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": 1,
-              "function": "minecraft:set_count"
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "max": 20,
-                "min": 30
-              },
-              "options": "#minecraft:on_random_loot"
-            }
-          ],
-          "name": "minecraft:diamond_axe",
-          "weight": 2,
-          "quality": 1
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": 1,
-              "function": "minecraft:set_count"
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "max": 20,
-                "min": 30
-              },
-              "options": "#minecraft:on_random_loot"
-            }
-          ],
-          "name": "minecraft:diamond_pickaxe",
-          "weight": 2,
-          "quality": 1
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": 1,
-              "function": "minecraft:set_count"
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "max": 20,
-                "min": 30
-              },
-              "options": "#minecraft:on_random_loot"
-            }
-          ],
-          "name": "minecraft:diamond_shovel",
-          "weight": 2,
-          "quality": 1
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
               "function": "minecraft:set_components",
               "components": {
                 "minecraft:trim": {
-                  "material": "minecraft:copper",
+                  "material": "minecraft:quartz",
                   "pattern": "minecraft:eye"
                 }
               }
@@ -113,8 +25,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "max": 30,
-                "min": 20
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -133,7 +45,7 @@
               "function": "minecraft:set_components",
               "components": {
                 "minecraft:trim": {
-                  "material": "minecraft:copper",
+                  "material": "minecraft:quartz",
                   "pattern": "minecraft:eye"
                 }
               }
@@ -142,8 +54,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20,
-                "max": 30
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -159,7 +71,7 @@
               "function": "minecraft:set_components",
               "components": {
                 "minecraft:trim": {
-                  "material": "minecraft:copper",
+                  "material": "minecraft:quartz",
                   "pattern": "minecraft:eye"
                 }
               }
@@ -168,8 +80,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20,
-                "max": 30
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -185,7 +97,7 @@
               "function": "minecraft:set_components",
               "components": {
                 "minecraft:trim": {
-                  "material": "minecraft:copper",
+                  "material": "minecraft:quartz",
                   "pattern": "minecraft:eye"
                 }
               }
@@ -194,8 +106,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 20,
-                "max": 30
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -206,8 +118,8 @@
     {
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 2,
-        "min": 1
+        "min": 1,
+        "max": 2
       },
       "bonus_rolls": 1,
       "entries": [
@@ -355,7 +267,7 @@
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1,
+                "min": 2,
                 "max": 8
               }
             }
@@ -397,6 +309,21 @@
                 "type": "minecraft:uniform",
                 "min": 2,
                 "max": 8
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_nugget",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 8,
+                "max": 16
               }
             }
           ]

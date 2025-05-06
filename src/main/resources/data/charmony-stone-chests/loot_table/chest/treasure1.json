@@ -21,8 +21,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "max": 20,
-                "min": 30
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -43,8 +43,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "max": 20,
-                "min": 30
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -65,8 +65,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "max": 20,
-                "min": 30
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -87,8 +87,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "max": 20,
-                "min": 30
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -101,113 +101,31 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:trim": {
-                  "material": "minecraft:quartz",
-                  "pattern": "minecraft:eye"
-                }
-              }
+              "add": false,
+              "count": 1,
+              "function": "minecraft:set_count"
             },
             {
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "max": 30,
-                "min": 20
+                "min": 10,
+                "max": 20
               },
               "options": "#minecraft:on_random_loot"
             }
           ],
-          "name": "minecraft:diamond_leggings",
+          "name": "minecraft:diamond_how",
           "weight": 2,
           "quality": 1
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:diamond_chestplate",
-          "weight": 2,
-          "quality": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:trim": {
-                  "material": "minecraft:quartz",
-                  "pattern": "minecraft:eye"
-                }
-              }
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 20,
-                "max": 30
-              },
-              "options": "#minecraft:on_random_loot"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:diamond_helmet",
-          "weight": 2,
-          "quality": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:trim": {
-                  "material": "minecraft:quartz",
-                  "pattern": "minecraft:eye"
-                }
-              }
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 20,
-                "max": 30
-              },
-              "options": "#minecraft:on_random_loot"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:diamond_boots",
-          "weight": 2,
-          "quality": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:trim": {
-                  "material": "minecraft:quartz",
-                  "pattern": "minecraft:eye"
-                }
-              }
-            },
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": {
-                "type": "minecraft:uniform",
-                "min": 20,
-                "max": 30
-              },
-              "options": "#minecraft:on_random_loot"
-            }
-          ]
         }
       ]
     },
     {
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 2,
-        "min": 1
+        "min": 1,
+        "max": 2
       },
       "bonus_rolls": 1,
       "entries": [
@@ -383,7 +301,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:bone",
+          "name": "minecraft:flint",
           "weight": 4,
           "functions": [
             {
@@ -398,15 +316,30 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:string",
+          "name": "minecraft:gold_nugget",
           "weight": 4,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2,
-                "max": 8
+                "min": 8,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_nugget",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 8,
+                "max": 16
               }
             }
           ]

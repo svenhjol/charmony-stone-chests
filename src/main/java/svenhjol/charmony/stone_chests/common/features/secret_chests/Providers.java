@@ -116,6 +116,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
                 return List.of(
                     Tags.EMERALDS,
                     Tags.GOLD,
+                    Tags.BOOKS,
                     Tags.ILLAGERS,
                     Tags.ORES,
                     Tags.TREASURE1,
@@ -300,6 +301,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
                     Tags.POTIONS,
+                    Tags.BOOKS,
                     Tags.TREASURE1,
                     Tags.TREASURE2
                 );
@@ -440,8 +442,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
                     Tags.GOLD,
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.NETHER1,
+                    Tags.NETHER2
                 );
             }
 
@@ -475,7 +477,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
 
             @Override
             public int difficultyAmplifier() {
-                return 3;
+                return 2;
             }
 
             @Override
@@ -489,6 +491,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
+                    Tags.DIAMONDS,
                     Tags.END1,
                     Tags.END2
                 );
@@ -538,8 +541,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
                     Tags.GOLD,
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.NETHER1,
+                    Tags.NETHER2
                 );
             }
 

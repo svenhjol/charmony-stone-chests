@@ -6,6 +6,9 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 
 public final class Tags {
+    public static final ResourceKey<LootTable> BOOKS = ResourceKey.create(Registries.LOOT_TABLE,
+        StoneChestsMod.id("chest/books"));
+
     public static final ResourceKey<LootTable> DIAMONDS = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/diamonds"));
 
@@ -23,6 +26,12 @@ public final class Tags {
 
     public static final ResourceKey<LootTable> GOLD = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/gold"));
+
+    public static final ResourceKey<LootTable> NETHER1 = ResourceKey.create(Registries.LOOT_TABLE,
+        StoneChestsMod.id("chest/nether1"));
+
+    public static final ResourceKey<LootTable> NETHER2 = ResourceKey.create(Registries.LOOT_TABLE,
+        StoneChestsMod.id("chest/nether2"));
 
     public static final ResourceKey<LootTable> ORES = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/ores"));

@@ -83,8 +83,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         // If it was a difficult challenge then give the player luck to modify the loot rolls.
         var difficultyAmplifier = chest.getDifficultyAmplifier();
         if (difficultyAmplifier > 1) {
-            var luck = new MobEffectInstance(MobEffects.LUCK, difficultyAmplifier * 20, difficultyAmplifier - 2);
-            player.addEffect(luck);
+            setPlayerLuck(player, difficultyAmplifier - 2);
         }
 
         // Get the stored "unlocked" loot table from the chest and set it as the primary loot table.
@@ -98,8 +97,11 @@ public class Handlers extends Setup<ChestPuzzles> {
         // Let the container decide what to do with the container items.
         player.containerMenu.removed(player);
 
-        // Unlock the chest and execute side-effets.
-        chest.setLootTable(Tags.SIMPLE_LOOT);
+        // Give the player bad luck to make the treasure really crap.
+        setPlayerBadLuck(player);
+
+        // Unlock the chest and execute side-effects.
+        chest.setLootTable(chest.getUnlockedLootTable());
         chest.unlock();
         var result = doSideEffects(player, player.level(), chest.getBlockPos(), chest);
 
@@ -127,7 +129,15 @@ public class Handlers extends Setup<ChestPuzzles> {
         return true;
     }
 
-    private void spawnMonsters(TagKey<EntityType<?>> tag, Player player, Level level, BlockPos pos, double amplifier) {
+    protected void setPlayerLuck(Player player, int amplifier) {
+        player.addEffect(new MobEffectInstance(MobEffects.LUCK, 30, amplifier));
+    }
+
+    protected void setPlayerBadLuck(Player player) {
+        player.addEffect(new MobEffectInstance(MobEffects.UNLUCK, 30, 2));
+    }
+
+    protected void spawnMonsters(TagKey<EntityType<?>> tag, Player player, Level level, BlockPos pos, double amplifier) {
         if (!(level instanceof ServerLevel serverLevel)) return;
 
         var random = serverLevel.getRandom();
@@ -190,7 +200,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         }
     }
 
-    private void explode(Level level, BlockPos pos, double amplifier) {
+    protected void explode(Level level, BlockPos pos, double amplifier) {
         level.destroyBlock(pos, false);
         var x = pos.getX() + 0.5d;
         var y = pos.getY() + 0.5d;
@@ -198,7 +208,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         level.explode(null, x, y, z, Math.round(2 * amplifier), Level.ExplosionInteraction.BLOCK);
     }
 
-    private void giveBadEffect(Player player, Level level, double amplifier) {
+    protected void giveBadEffect(Player player, Level level, double amplifier) {
         if (!(level instanceof ServerLevel serverLevel)) return;
 
         var random = serverLevel.getRandom();
@@ -210,7 +220,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         }
     }
 
-    private Optional<EntityType<?>> randomMob(TagKey<EntityType<?>> tag, RandomSource random, ServerLevel level) {
+    protected Optional<EntityType<?>> randomMob(TagKey<EntityType<?>> tag, RandomSource random, ServerLevel level) {
         var mobs = new ArrayList<>(TagHelper.getValues(level.registryAccess().lookupOrThrow(Registries.ENTITY_TYPE), tag));
         if (mobs.isEmpty()) {
             return Optional.empty();
@@ -220,7 +230,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         return Optional.of(mobs.getFirst());
     }
 
-    private boolean isSurvivalMode(Player player) {
+    protected boolean isSurvivalMode(Player player) {
         return !player.getAbilities().instabuild && !player.isSpectator();
     }
 

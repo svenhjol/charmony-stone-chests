@@ -75,9 +75,10 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
+                    Tags.EMERALDS,
+                    Tags.GOLD,
                     Tags.ORES,
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.POTIONS
                 );
             }
         };
@@ -113,7 +114,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
+                    Tags.EMERALDS,
                     Tags.GOLD,
+                    Tags.ILLAGERS,
                     Tags.ORES,
                     Tags.TREASURE1,
                     Tags.TREASURE2
@@ -172,6 +175,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
+                    Tags.DIAMONDS,
                     Tags.TREASURE1,
                     Tags.TREASURE2
                 );
@@ -236,6 +240,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
+                    Tags.EMERALDS,
+                    Tags.GOLD,
+                    Tags.ILLAGERS,
                     Tags.TREASURE1,
                     Tags.TREASURE2
                 );
@@ -292,6 +299,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
+                    Tags.POTIONS,
                     Tags.TREASURE1,
                     Tags.TREASURE2
                 );
@@ -347,8 +355,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.DIAMONDS,
+                    Tags.END1,
+                    Tags.END2
                 );
             }
 
@@ -480,8 +489,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.END1,
+                    Tags.END2
                 );
             }
 

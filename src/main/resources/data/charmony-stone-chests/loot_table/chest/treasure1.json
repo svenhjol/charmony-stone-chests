@@ -115,7 +115,7 @@
               "options": "#minecraft:on_random_loot"
             }
           ],
-          "name": "minecraft:diamond_how",
+          "name": "minecraft:diamond_hoe",
           "weight": 2,
           "quality": 1
         }
@@ -193,15 +193,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
-              },
-              "function": "minecraft:set_count"
-            },
-            {
               "function": "minecraft:set_potion",
               "id": "minecraft:strong_regeneration"
             }
@@ -213,15 +204,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
-              },
-              "function": "minecraft:set_count"
-            },
-            {
               "function": "minecraft:set_potion",
               "id": "minecraft:strong_healing"
             }
@@ -232,15 +214,6 @@
         {
           "type": "minecraft:item",
           "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
-              },
-              "function": "minecraft:set_count"
-            },
             {
               "function": "minecraft:set_potion",
               "id": "minecraft:strong_strength"

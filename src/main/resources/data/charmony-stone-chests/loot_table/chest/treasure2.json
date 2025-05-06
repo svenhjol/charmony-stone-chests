@@ -187,15 +187,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
-              },
-              "function": "minecraft:set_count"
-            },
-            {
               "function": "minecraft:set_potion",
               "id": "minecraft:long_invisibility"
             }
@@ -207,15 +198,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
-              },
-              "function": "minecraft:set_count"
-            },
-            {
               "function": "minecraft:set_potion",
               "id": "minecraft:strong_leaping"
             }
@@ -226,15 +208,6 @@
         {
           "type": "minecraft:item",
           "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
-              },
-              "function": "minecraft:set_count"
-            },
             {
               "function": "minecraft:set_potion",
               "id": "minecraft:strong_swiftness"

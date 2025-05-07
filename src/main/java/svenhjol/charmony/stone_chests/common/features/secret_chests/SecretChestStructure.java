@@ -3,6 +3,7 @@ package svenhjol.charmony.stone_chests.common.features.secret_chests;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -70,7 +71,12 @@ public class SecretChestStructure extends Structure {
             for (surface = y + offsets.getFirst(); surface < y + offsets.getSecond(); ++surface) {
                 var state = column.getBlock(y);
                 var above = column.getBlock(y + 1);
-                if (heightMap.isOpaque().test(state) && (!heightMap.isOpaque().test(above))) {
+                var stateIsValid = heightMap.isOpaque().test(state)
+                    || state.is(Blocks.POWDER_SNOW);
+                var aboveIsValid = !heightMap.isOpaque().test(above)
+                    || above.is(Blocks.POWDER_SNOW);
+
+                if (stateIsValid && aboveIsValid) {
                     return Optional.of(new BlockPos(x, surface, z));
                 }
             }

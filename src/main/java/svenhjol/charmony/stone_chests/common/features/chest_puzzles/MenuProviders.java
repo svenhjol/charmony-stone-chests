@@ -1,18 +1,34 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
+import svenhjol.charmony.api.Api;
+import svenhjol.charmony.api.StoneChestLockMenuProvider;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.EnderItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.GenericItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.NetherItemPuzzleProvider;
+
+import java.util.List;
 
 public class MenuProviders extends Setup<ChestPuzzles> {
     public MenuProviders(ChestPuzzles feature) {
         super(feature);
 
-        new ClockPuzzleMenuProvider();
-        new EnchantedBookPuzzleMenuProvider();
-        new EnchantedItemPuzzleMenuProvider();
-        new ItemPuzzleMenuProvider();
-        new GemPuzzleMenuProvider();
-        new MoonPuzzleMenuProvider();
-        new SherdPuzzleMenuProvider();
+        List<? extends StoneChestLockMenuProvider> providers = List.of(
+            new ClockPuzzleMenuProvider(),
+            new EnchantedBookPuzzleMenuProvider(),
+            new EnchantedItemPuzzleMenuProvider(),
+            new GenericItemPuzzleProvider(),
+            new MoonPuzzleMenuProvider(),
+
+            // Specific item puzzles
+            new NetherItemPuzzleProvider(),
+            new EnderItemPuzzleProvider()
+        );
+
+        for (var provider : providers) {
+            Api.registerProvider(provider);
+            feature.log().debug("Registered puzzle provider: " + provider.getClass().getSimpleName());
+        }
     }
 }

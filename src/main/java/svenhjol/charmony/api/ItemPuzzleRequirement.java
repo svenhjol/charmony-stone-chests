@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
+package svenhjol.charmony.api;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -6,6 +6,7 @@ import net.minecraft.world.item.Item;
 public record ItemPuzzleRequirement(
     TagKey<Item> item,
     int minCount,
-    int maxCount
+    int maxCount,
+    int slots
 ) {
 }

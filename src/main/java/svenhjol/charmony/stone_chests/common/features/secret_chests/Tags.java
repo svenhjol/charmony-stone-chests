@@ -2,46 +2,57 @@ package svenhjol.charmony.stone_chests.common.features.secret_chests;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 
 public final class Tags {
-    public static final ResourceKey<LootTable> BOOKS = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final TagKey<Block> GENERATES_BASTION_CHESTS = TagKey.create(Registries.BLOCK,
+        StoneChestsMod.id("generates_bastion_chests"));
+
+    public static final TagKey<Block> GENERATES_END_CITY_CHESTS = TagKey.create(Registries.BLOCK,
+        StoneChestsMod.id("generates_end_city_chests"));
+
+    public static final TagKey<Block> GENERATES_FORTRESS_CHESTS = TagKey.create(Registries.BLOCK,
+        StoneChestsMod.id("generates_fortress_chests"));
+
+    public static final ResourceKey<LootTable> LOOT_BOOKS = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/books"));
 
-    public static final ResourceKey<LootTable> DIAMONDS = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_DIAMONDS = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/diamonds"));
 
-    public static final ResourceKey<LootTable> EMERALDS = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_EMERALDS = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/emeralds"));
 
-    public static final ResourceKey<LootTable> END1 = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_END1 = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/end1"));
 
-    public static final ResourceKey<LootTable> END2 = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_END2 = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/end2"));
 
-    public static final ResourceKey<LootTable> ILLAGERS = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_ILLAGERS = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/illagers"));
 
-    public static final ResourceKey<LootTable> GOLD = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_GOLD = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/gold"));
 
-    public static final ResourceKey<LootTable> NETHER1 = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_NETHER1 = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/nether1"));
 
-    public static final ResourceKey<LootTable> NETHER2 = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_NETHER2 = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/nether2"));
 
-    public static final ResourceKey<LootTable> ORES = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_ORES = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/ores"));
 
-    public static final ResourceKey<LootTable> POTIONS = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_POTIONS = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/potions"));
 
-    public static final ResourceKey<LootTable> TREASURE1 = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_TREASURE1 = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/treasure1"));
 
-    public static final ResourceKey<LootTable> TREASURE2 = ResourceKey.create(Registries.LOOT_TABLE,
+    public static final ResourceKey<LootTable> LOOT_TREASURE2 = ResourceKey.create(Registries.LOOT_TABLE,
         StoneChestsMod.id("chest/treasure2"));
 }

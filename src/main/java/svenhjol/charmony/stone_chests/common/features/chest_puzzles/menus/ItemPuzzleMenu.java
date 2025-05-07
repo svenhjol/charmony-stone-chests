@@ -1,5 +1,6 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus;
 
+import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -17,11 +18,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+import svenhjol.charmony.api.ItemPuzzleRequirement;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
 import svenhjol.charmony.core.helpers.TagHelper;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.*;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Constants;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleSlot;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.PuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
 import java.util.*;
@@ -68,32 +73,16 @@ public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
         this.addDataSlots(data);
     }
 
-    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemStack> items) {
+    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, ItemPuzzleRequirement requirement, int difficulty) {
         var serverLevel = menuData.level;
-        var syncId = menuData.syncId;
-        var inventory = menuData.playerInventory;
-        var material = menuData.material;
-        var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
-
-        return Optional.of(new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(items.size() * 2), material, items, access));
-    }
-
-    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemPuzzleRequirement> requirements, int slots) {
-        var serverLevel = menuData.level;
-        var random = new Random(menuData.seed);
+        var random = menuData.random;
         var amplifier = menuData.difficultyAmplifier;
-        slots = Mth.clamp(slots, 1, Constants.MAX_ITEM_SLOTS);
-
-        if (requirements.isEmpty()) {
-            return Optional.empty();
-        }
+        var slots = Mth.clamp(requirement.slots() * difficulty, 1, Constants.MAX_ITEM_SLOTS);
 
         Map<TagKey<Item>, List<Item>> cached = new WeakHashMap<>();
         List<ItemStack> puzzleItems = new ArrayList<>();
 
         for (int i = 0; i < slots; i++) {
-            var requirement = requirements.get(random.nextInt(requirements.size()));
-
             var item = requirement.item();
             var count = requirement.minCount() + random.nextInt(requirement.maxCount() - requirement.minCount());
             var amplifiedCount = count * amplifier;
@@ -105,11 +94,21 @@ public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
             }
 
             var items = new ArrayList<>(cached.get(item));
-            Collections.shuffle(items, random);
+            Util.shuffle(items, random);
             puzzleItems.add(new ItemStack(items.getFirst(), amplifiedCount));
         }
 
         return getMenuProvider(menuData, puzzleItems);
+    }
+
+    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemStack> items) {
+        var serverLevel = menuData.level;
+        var syncId = menuData.syncId;
+        var inventory = menuData.playerInventory;
+        var material = menuData.material;
+        var access = ContainerLevelAccess.create(serverLevel, menuData.pos);
+
+        return Optional.of(new ItemPuzzleMenu(syncId, inventory, new SimpleContainer(items.size() * 2), material, items, access));
     }
 
     @Override

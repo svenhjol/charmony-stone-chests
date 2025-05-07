@@ -2,6 +2,7 @@ package svenhjol.charmony.api;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 
@@ -15,6 +16,7 @@ public class StoneChestLockMenuData {
     public ServerLevel level;
     public BlockPos pos;
     public StoneChestMaterial material;
+    public RandomSource random;
     public long seed;
     public int difficultyAmplifier;
 }

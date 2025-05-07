@@ -16,7 +16,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import svenhjol.charmony.stone_chests.common.features.secret_chests.SecretChests;
 
-@Mixin(NetherFortressPieces.CastleSmallCorridorPiece.class)
+@Mixin(value = {
+    NetherFortressPieces.CastleSmallCorridorPiece.class,
+    NetherFortressPieces.BridgeStraight.class
+})
 public abstract class NetherFortressPiecesMixin extends StructurePiece {
     protected NetherFortressPiecesMixin(StructurePieceType structurePieceType, int i, BoundingBox boundingBox) {
         super(structurePieceType, i, boundingBox);
@@ -24,11 +27,7 @@ public abstract class NetherFortressPiecesMixin extends StructurePiece {
 
     @Inject(
         method = "postProcess",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/level/levelgen/structure/structures/NetherFortressPieces$CastleSmallCorridorPiece;generateBox(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;IIIIIILnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Z)V",
-            ordinal = 7
-        )
+        at = @At("TAIL")
     )
     private void hookPostProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos pos, CallbackInfo ci) {
         SecretChests.feature().handlers.createNetherFortressChest(this, level, random);

@@ -12,6 +12,9 @@ import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.EnderItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.GenericItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.NetherItemPuzzleProvider;
 
 import java.util.List;
 
@@ -61,7 +64,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    ItemPuzzleMenuProvider.ID
+                    GenericItemPuzzleProvider.ID
                 );
             }
 
@@ -75,10 +78,10 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.EMERALDS,
-                    Tags.GOLD,
-                    Tags.ORES,
-                    Tags.POTIONS
+                    Tags.LOOT_EMERALDS,
+                    Tags.LOOT_GOLD,
+                    Tags.LOOT_ORES,
+                    Tags.LOOT_POTIONS
                 );
             }
         };
@@ -103,7 +106,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
 
             @Override
             public Pair<Integer, Integer> height() {
-                return Pair.of(-40, -10);
+                return Pair.of(-48, -10);
             }
 
             @Override
@@ -114,13 +117,13 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.EMERALDS,
-                    Tags.GOLD,
-                    Tags.BOOKS,
-                    Tags.ILLAGERS,
-                    Tags.ORES,
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.LOOT_EMERALDS,
+                    Tags.LOOT_GOLD,
+                    Tags.LOOT_BOOKS,
+                    Tags.LOOT_ILLAGERS,
+                    Tags.LOOT_ORES,
+                    Tags.LOOT_TREASURE1,
+                    Tags.LOOT_TREASURE2
                 );
             }
 
@@ -135,7 +138,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    SherdPuzzleMenuProvider.ID
+                    GenericItemPuzzleProvider.ID,
+                    EnchantedItemPuzzleMenuProvider.ID
                 );
             }
         };
@@ -176,9 +180,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.DIAMONDS,
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.LOOT_DIAMONDS,
+                    Tags.LOOT_TREASURE1,
+                    Tags.LOOT_TREASURE2
                 );
             }
 
@@ -200,7 +204,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
                 return List.of(
                     ClockPuzzleMenuProvider.ID,
                     MoonPuzzleMenuProvider.ID,
-                    EnchantedBookPuzzleMenuProvider.ID
+                    EnchantedBookPuzzleMenuProvider.ID,
+                    EnchantedItemPuzzleMenuProvider.ID
                 );
             }
         };
@@ -241,11 +246,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.EMERALDS,
-                    Tags.GOLD,
-                    Tags.ILLAGERS,
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.LOOT_EMERALDS,
+                    Tags.LOOT_GOLD,
+                    Tags.LOOT_ILLAGERS,
+                    Tags.LOOT_TREASURE1,
+                    Tags.LOOT_TREASURE2
                 );
             }
 
@@ -259,7 +264,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
                 return List.of(
                     ClockPuzzleMenuProvider.ID,
                     MoonPuzzleMenuProvider.ID,
-                    ItemPuzzleMenuProvider.ID
+                    GenericItemPuzzleProvider.ID
                 );
             }
         };
@@ -300,10 +305,10 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.POTIONS,
-                    Tags.BOOKS,
-                    Tags.TREASURE1,
-                    Tags.TREASURE2
+                    Tags.LOOT_POTIONS,
+                    Tags.LOOT_BOOKS,
+                    Tags.LOOT_TREASURE1,
+                    Tags.LOOT_TREASURE2
                 );
             }
 
@@ -315,7 +320,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    ItemPuzzleMenuProvider.ID,
+                    GenericItemPuzzleProvider.ID,
                     EnchantedItemPuzzleMenuProvider.ID
                 );
             }
@@ -357,9 +362,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.DIAMONDS,
-                    Tags.END1,
-                    Tags.END2
+                    Tags.LOOT_DIAMONDS,
+                    Tags.LOOT_END1,
+                    Tags.LOOT_END2
                 );
             }
 
@@ -371,7 +376,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID
+                    EnderItemPuzzleProvider.ID
                 );
             }
 
@@ -429,7 +434,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID
+                    NetherItemPuzzleProvider.ID
                 );
             }
 
@@ -441,9 +446,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.GOLD,
-                    Tags.NETHER1,
-                    Tags.NETHER2
+                    Tags.LOOT_GOLD,
+                    Tags.LOOT_NETHER1,
+                    Tags.LOOT_NETHER2
                 );
             }
 
@@ -483,17 +488,16 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    GemPuzzleMenuProvider.ID,
-                    EnchantedItemPuzzleMenuProvider.ID
+                    EnderItemPuzzleProvider.ID
                 );
             }
 
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.DIAMONDS,
-                    Tags.END1,
-                    Tags.END2
+                    Tags.LOOT_DIAMONDS,
+                    Tags.LOOT_END1,
+                    Tags.LOOT_END2
                 );
             }
 
@@ -528,7 +532,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> lockMenus() {
                 return List.of(
-                    ItemPuzzleMenuProvider.ID
+                    NetherItemPuzzleProvider.ID
                 );
             }
 
@@ -540,9 +544,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.GOLD,
-                    Tags.NETHER1,
-                    Tags.NETHER2
+                    Tags.LOOT_GOLD,
+                    Tags.LOOT_NETHER1,
+                    Tags.LOOT_NETHER2
                 );
             }
 

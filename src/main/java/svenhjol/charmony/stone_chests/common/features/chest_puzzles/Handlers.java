@@ -63,6 +63,7 @@ public class Handlers extends Setup<ChestPuzzles> {
             menuData.pos = pos;
             menuData.material = material;
             menuData.seed = seed;
+            menuData.random = RandomSource.create(seed);
             menuData.difficultyAmplifier = chest.getDifficultyAmplifier();
 
             var menu = provider.getMenuProvider(menuData);

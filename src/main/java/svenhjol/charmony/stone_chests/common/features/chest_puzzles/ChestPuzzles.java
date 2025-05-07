@@ -13,7 +13,7 @@ public final class ChestPuzzles extends SidedFeature {
     public final Registers registers;
     public final Handlers handlers;
     public final MenuProviders menuProviders;
-    public final ItemPuzzleTagProviders itemPuzzleTagProviders;
+    public final ItemRequirementProviders itemRequirementProviders;
 
     @Configurable(
         name = "Bad effect duration",
@@ -32,7 +32,7 @@ public final class ChestPuzzles extends SidedFeature {
         registers = new Registers(this);
         handlers = new Handlers(this);
         menuProviders = new MenuProviders(this);
-        itemPuzzleTagProviders = new ItemPuzzleTagProviders(this);
+        itemRequirementProviders = new ItemRequirementProviders(this);
     }
 
     public static ChestPuzzles feature() {

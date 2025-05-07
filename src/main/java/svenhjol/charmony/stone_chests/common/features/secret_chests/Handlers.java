@@ -6,7 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.structures.NetherFortressPieces;
 import svenhjol.charmony.api.SecretChestDefinition;
 import svenhjol.charmony.api.SecretChestPlacement;
 import svenhjol.charmony.core.base.Setup;
@@ -33,17 +35,29 @@ public class Handlers extends Setup<SecretChests> {
     }
 
     public void createNetherFortressChest(StructurePiece piece, WorldGenLevel level, RandomSource random) {
-        if (random.nextInt(1000) < 18) {
+        if (random.nextInt(1000) < feature().fortressChance()) {
             var definition = definitionForPlacement(SecretChestPlacement.Fortress, random).orElse(null);
             if (definition == null) return;
-            var pos = piece.getWorldPos(random.nextBoolean() ? 1 : 3, 2, 2);
-            createChest(definition, level, random, pos, false);
+
+            BlockPos pos;
+            if (piece instanceof NetherFortressPieces.CastleSmallCorridorPiece) {
+                pos = piece.getWorldPos(random.nextBoolean() ? 1 : 3, 2, 2);
+            } else if (piece instanceof NetherFortressPieces.BridgeStraight) {
+                pos = piece.getWorldPos(random.nextBoolean() ? 1 : 3, 5, 2);
+            } else {
+                return;
+            }
+
+            var stateBelow = level.getBlockState(pos.below());
+            if (stateBelow.is(Tags.GENERATES_FORTRESS_CHESTS)) {
+                createChest(definition, level, random, pos, false);
+            }
         }
     }
 
-    public boolean createEndCityChest(ServerLevelAccessor level, BlockPos pos) {
-        if (template != null && END_CITY_TEMPLATES.contains(template)) {
-            if (level.getRandom().nextInt(1000) < 3) {
+    public boolean createEndCityChest(ServerLevelAccessor level, BlockPos pos, BlockState stateBelow) {
+        if (template != null && END_CITY_TEMPLATES.contains(template) && stateBelow.is(Tags.GENERATES_END_CITY_CHESTS)) {
+            if (level.getRandom().nextInt(1000) < feature().endCityChance()) {
                 var definition = definitionForPlacement(SecretChestPlacement.EndCity, level.getRandom()).orElse(null);
                 if (definition == null) return false;
                 return createChest(definition, level, level.getRandom(), pos, false);
@@ -52,9 +66,9 @@ public class Handlers extends Setup<SecretChests> {
         return false;
     }
 
-    public boolean createBastionChest(ServerLevelAccessor level, BlockPos pos) {
-        if (jigsawTemplate != null && jigsawTemplate.getPath().contains("bastion")) {
-            if (level.getRandom().nextInt(1000) < 3) {
+    public boolean createBastionChest(ServerLevelAccessor level, BlockPos pos, BlockState stateBelow) {
+        if (jigsawTemplate != null && jigsawTemplate.getPath().contains("bastion") && stateBelow.is(Tags.GENERATES_BASTION_CHESTS)) {
+            if (level.getRandom().nextInt(1000) < feature().bastionChance()) {
                 var definition = definitionForPlacement(SecretChestPlacement.Bastion, level.getRandom()).orElse(null);
                 if (definition == null) return false;
                 return createChest(definition, level, level.getRandom(), pos, false);
@@ -100,7 +114,9 @@ public class Handlers extends Setup<SecretChests> {
                 menu = menus.getFirst();
             }
 
-            if (!menu.isEmpty() && ChestPuzzles.feature().registers.lockMenuProviders.containsKey(menu)) {
+            var providers = ChestPuzzles.feature().registers.lockMenuProviders;
+
+            if (!menu.isEmpty() && providers.containsKey(menu)) {
                 chest.lock(menu);
                 chest.setUnlockedLootTable(lootTable);
                 chest.setDifficultyAmplifier(definition.difficultyAmplifier());

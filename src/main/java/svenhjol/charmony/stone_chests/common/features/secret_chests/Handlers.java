@@ -173,8 +173,9 @@ public class Handlers extends Setup<SecretChests> {
                 var tryPos = heightMap.offset(x, y, z);
                 var tryState = level.getBlockState(tryPos);
                 var tryStateBelow = level.getBlockState(tryPos.below());
+                var validState = tryState.isAir() || (tryState.canBeReplaced() && tryState.getFluidState().isEmpty());
 
-                if (tryStateBelow.is(Tags.GENERATES_FLOWER_RINGS) && (tryState.isAir() || tryState.canBeReplaced())) {
+                if (tryStateBelow.is(Tags.GENERATES_FLOWER_RINGS) && validState) {
                     level.setBlock(tryPos, flower.defaultBlockState(), 3);
                 }
             }

@@ -130,4 +130,9 @@ public interface SecretChestDefinition extends StringRepresentable {
     default boolean generateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {
         return false;
     }
+
+    /**
+     * Hook to generate decoration at the world surface, if possible.
+     */
+    default void decorateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {}
 }

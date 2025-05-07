@@ -34,9 +34,7 @@ import svenhjol.charmony.core.helpers.TagHelper;
 import svenhjol.charmony.core.helpers.WorldHelper;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Handlers extends Setup<ChestPuzzles> {
     public static final int MOB_SPAWN_RANGE = 2;

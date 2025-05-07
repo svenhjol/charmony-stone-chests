@@ -45,19 +45,14 @@
   "chest_unlock": {
     "sounds": [
       {
-        "name": "charmony-stone-chests:chest_unlock",
+        "name": "charmony-stone-chests:chest_unlock1",
+        "volume": 1.0
+      },
+      {
+        "name": "charmony-stone-chests:chest_unlock2",
         "volume": 1.0
       }
     ],
     "subtitle": "subtitles.charmony-stone-chests.block.chest_unlock"
-  },
-  "chest_unlocking": {
-    "sounds": [
-      {
-        "name": "charmony-stone-chests:chest_unlocking",
-        "volume": 1.0
-      }
-    ],
-    "subtitle": "subtitles.charmony-stone-chests.block.chest_unlocking"
   }
 }

@@ -244,8 +244,13 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     }
 
     public void unlock() {
+        if (isLocked() && level instanceof ServerLevel serverLevel) {
+            serverLevel.playSound(null, getBlockPos(), feature().registers.chestUnlockSound.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
+        }
+
         this.locked = false;
         setChanged();
+
     }
 
     public void lock(String lockMenu) {
@@ -271,5 +276,9 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
 
     private ChestPuzzles puzzles() {
         return ChestPuzzles.feature();
+    }
+
+    private StoneChests feature() {
+        return StoneChests.feature();
     }
 }

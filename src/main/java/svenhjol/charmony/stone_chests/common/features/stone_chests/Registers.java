@@ -24,6 +24,8 @@ public class Registers extends Setup<StoneChests> {
 
     public final Supplier<SoundEvent> chestOpenSound;
     public final Supplier<SoundEvent> chestCloseSound;
+    public final Supplier<SoundEvent> chestBreakSound;
+    public final Supplier<SoundEvent> chestUnlockSound;
 
     public final Supplier<MenuType<UnlockedMenu>> unlockedMenu;
 
@@ -45,6 +47,8 @@ public class Registers extends Setup<StoneChests> {
 
         chestOpenSound = registry.sound("chest_open");
         chestCloseSound = registry.sound("chest_close");
+        chestBreakSound = registry.sound("chest_break");
+        chestUnlockSound = registry.sound("chest_unlock");
 
         unlockedMenu = registry.menuType(UNLOCKED_ID, () -> new MenuType<>(UnlockedMenu::new, FeatureFlags.VANILLA_SET));
     }

@@ -4,9 +4,9 @@ import svenhjol.charmony.api.Api;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.EnderItemPuzzleProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.GenericItemPuzzleProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.NetherItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.EnderItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GenericItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.NetherItemPuzzleProvider;
 
 import java.util.List;
 

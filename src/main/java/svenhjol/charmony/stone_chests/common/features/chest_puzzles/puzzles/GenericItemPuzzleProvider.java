@@ -1,9 +1,8 @@
-package svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items;
+package svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles;
 
 import svenhjol.charmony.api.ItemPuzzleRequirement;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.BaseItemPuzzleMenuProvider;
 
 import java.util.List;
 

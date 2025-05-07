@@ -12,9 +12,9 @@ import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.EnderItemPuzzleProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.GenericItemPuzzleProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items.NetherItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.EnderItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GenericItemPuzzleProvider;
+import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.NetherItemPuzzleProvider;
 
 import java.util.List;
 
@@ -446,7 +446,6 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.LOOT_GOLD,
                     Tags.LOOT_NETHER1,
                     Tags.LOOT_NETHER2
                 );
@@ -544,7 +543,6 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
-                    Tags.LOOT_GOLD,
                     Tags.LOOT_NETHER1,
                     Tags.LOOT_NETHER2
                 );

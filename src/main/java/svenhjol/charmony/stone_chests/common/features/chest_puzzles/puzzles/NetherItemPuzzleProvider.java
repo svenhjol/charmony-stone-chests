@@ -1,9 +1,8 @@
-package svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.items;
+package svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles;
 
 import svenhjol.charmony.api.ItemPuzzleRequirement;
 import svenhjol.charmony.api.StoneChestLockMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.BaseItemPuzzleMenuProvider;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class NetherItemPuzzleProvider extends BaseItemPuzzleMenuProvider impleme
     @Override
     protected List<ItemPuzzleRequirement> getRequirements() {
         return List.of(
-            new ItemPuzzleRequirement(Tags.PUZZLE_NETHER, 4, 8, 2)
+            new ItemPuzzleRequirement(Tags.PUZZLE_NETHER, 1, 2, 2)
         );
     }
 }

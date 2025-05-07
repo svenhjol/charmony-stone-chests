@@ -8,6 +8,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import svenhjol.charmony.api.SecretChestDefinition;
+import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,10 @@ public class SecretChestStructure extends Structure {
     }
 
     private Optional<BlockPos> findStart(GenerationContext context) {
+        if (!feature().enabled() || !StoneChests.feature().enabled()) {
+            return Optional.empty();
+        }
+
         if (definition.chance() < context.random().nextDouble()) {
             return Optional.empty();
         }

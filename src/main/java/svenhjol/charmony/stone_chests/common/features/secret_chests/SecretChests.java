@@ -7,7 +7,7 @@ import svenhjol.charmony.core.base.SidedFeature;
 import svenhjol.charmony.core.enums.Side;
 
 @FeatureDefinition(side = Side.Common, description = """
-    Adds stone chests hidden in certain structures, caves, the ocean floor and End islands.""")
+    Adds stone chests hidden in certain structures, underground caves, the ocean floor and End islands.""")
 public final class SecretChests extends SidedFeature {
     public final Registers registers;
     public final Providers providers;
@@ -22,24 +22,26 @@ public final class SecretChests extends SidedFeature {
 
     @Configurable(
         name = "Fortress chance",
-        description = "Chance (out of 1000) of a secret chest being placed in a Nether Fortress corridor or bridge.",
+        description = """
+            Chance (out of 1000) of a secret chest being placed in a Nether Fortress corridor or bridge.
+            Only one chest will be placed per corridor or bridge section.""",
         requireRestart = false
     )
-    private static int fortressChance = 20;
+    private static int fortressChance = 30;
 
     @Configurable(
         name = "End City chance",
         description = "Chance (out of 1000) of a secret chest being placed in an End City tower room or roof.",
         requireRestart = false
     )
-    private static int endCityChance = 3;
+    private static int endCityChance = 8;
 
     @Configurable(
         name = "Bastion chance",
         description = "Chance (out of 1000) of a secret chest being placed randomly in a Bastion Remnant.",
         requireRestart = false
     )
-    private static int bastionChance = 5;
+    private static int bastionChance = 8;
 
     public SecretChests(Mod mod) {
         super(mod);

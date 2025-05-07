@@ -6,7 +6,7 @@ import svenhjol.charmony.core.base.SidedFeature;
 import svenhjol.charmony.core.enums.Side;
 
 @FeatureDefinition(side = Side.Common, description = """
-    TODO""")
+    Chests made from various types of stone.""")
 public final class StoneChests extends SidedFeature {
     public final Registers registers;
 

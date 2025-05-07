@@ -25,7 +25,7 @@ public class EnchantedBookPuzzleMenuProvider implements StoneChestLockMenuProvid
         var amplifier = menuData.difficultyAmplifier;
         var random = menuData.random;
         var registry = menuData.level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-        var opt = registry.getRandomElementOf(Tags.PUZZLE_ENCHANTMENTS_FOR_BOOKS, random);
+        var opt = registry.getRandomElementOf(Tags.ENCHANTMENTS_FOR_BOOKS, random);
         if (opt.isEmpty()) return Optional.empty();
 
         var holder = opt.get();

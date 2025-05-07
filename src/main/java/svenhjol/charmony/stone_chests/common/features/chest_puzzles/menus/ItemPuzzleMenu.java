@@ -1,19 +1,15 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus;
 
-import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -22,7 +18,6 @@ import svenhjol.charmony.api.ItemPuzzleRequirement;
 import svenhjol.charmony.api.StoneChestLockMenuData;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
-import svenhjol.charmony.core.helpers.TagHelper;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Constants;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleSlot;
@@ -73,29 +68,24 @@ public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
         this.addDataSlots(data);
     }
 
-    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, ItemPuzzleRequirement requirement, int difficulty) {
+    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, ItemPuzzleRequirement requirement) {
         var serverLevel = menuData.level;
-        var random = menuData.random;
         var amplifier = menuData.difficultyAmplifier;
-        var slots = Mth.clamp(requirement.slots() * difficulty, 1, Constants.MAX_ITEM_SLOTS);
-
-        Map<TagKey<Item>, List<Item>> cached = new WeakHashMap<>();
+        var seed = menuData.seed;
+        var slots = Mth.clamp(requirement.slots() * amplifier, 1, Constants.MAX_ITEM_SLOTS);
         List<ItemStack> puzzleItems = new ArrayList<>();
 
+
         for (int i = 0; i < slots; i++) {
-            var item = requirement.item();
-            var count = requirement.minCount() + random.nextInt(requirement.maxCount() - requirement.minCount());
-            var amplifiedCount = count * amplifier;
+            seed += (i * 15000L);
+            var items = feature().handlers.getItemsFromLootTable(serverLevel, requirement.lootTable(), seed);
+            // Bail out if there are no resolved items from the loot table.
+            if (items.isEmpty()) return Optional.empty();
 
-            if (!cached.containsKey(item)) {
-                cached.put(item, new ArrayList<>(TagHelper.getValues(serverLevel.registryAccess().lookupOrThrow(Registries.ITEM), item)));
-            } else {
-                feature().log().debug("Using cached item list for " + item);
-            }
-
-            var items = new ArrayList<>(cached.get(item));
-            Util.shuffle(items, random);
-            puzzleItems.add(new ItemStack(items.getFirst(), amplifiedCount));
+            var stack = items.getFirst();
+            var count = stack.getCount();
+            stack.setCount(Math.min(stack.getMaxStackSize(), count * amplifier));
+            puzzleItems.add(stack);
         }
 
         return getMenuProvider(menuData, puzzleItems);

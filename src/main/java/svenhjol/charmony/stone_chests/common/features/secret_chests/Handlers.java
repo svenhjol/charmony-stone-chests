@@ -126,6 +126,8 @@ public class Handlers extends Setup<SecretChests> {
                     Util.shuffle(sideEffects, random);
                     chest.setSideEffect(sideEffects.getFirst());
                 }
+            } else {
+                log().debug("No provider matching menu: " + menu);
             }
 
             if (!chest.isLocked()) {

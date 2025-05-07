@@ -17,7 +17,7 @@ public class EnderItemPuzzleProvider extends BaseItemPuzzleMenuProvider implemen
     @Override
     protected List<ItemPuzzleRequirement> getRequirements() {
         return List.of(
-            new ItemPuzzleRequirement(Tags.PUZZLE_ENDER, 4, 8, 2)
+            new ItemPuzzleRequirement(Tags.PUZZLE_ENDER, 2)
         );
     }
 }

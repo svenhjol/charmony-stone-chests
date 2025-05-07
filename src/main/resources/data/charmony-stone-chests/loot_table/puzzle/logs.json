@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:tag",
+          "name": "minecraft:logs",
+          "expand": true
+        }
+      ]
+    }
+  ],
+  "random_sequence": "charmony-stone-chests:puzzles/logs"
+}

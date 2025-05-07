@@ -43,6 +43,6 @@ public class ClockPuzzleScreen extends BasePuzzleScreen<ClockPuzzleMenu> {
         if (time < 10) {
             i = "0" + i;
         }
-        return ResourceLocation.withDefaultNamespace("textures/item/clock_" + i + ".png");
+        return ResourceLocation.withDefaultNamespace("textures/lootTable/clock_" + i + ".png");
     }
 }

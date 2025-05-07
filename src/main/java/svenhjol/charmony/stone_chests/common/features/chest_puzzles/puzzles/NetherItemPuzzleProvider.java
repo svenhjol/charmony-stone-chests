@@ -17,7 +17,7 @@ public class NetherItemPuzzleProvider extends BaseItemPuzzleMenuProvider impleme
     @Override
     protected List<ItemPuzzleRequirement> getRequirements() {
         return List.of(
-            new ItemPuzzleRequirement(Tags.PUZZLE_NETHER, 1, 2, 2)
+            new ItemPuzzleRequirement(Tags.PUZZLE_NETHER, 2)
         );
     }
 }

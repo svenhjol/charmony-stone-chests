@@ -20,7 +20,7 @@ public abstract class BaseItemPuzzleMenuProvider implements StoneChestLockMenuPr
         Util.shuffle(requirements, menuData.random);
         var requirement = requirements.getFirst();
 
-        return ItemPuzzleMenu.getMenuProvider(menuData, requirement, menuData.difficultyAmplifier);
+        return ItemPuzzleMenu.getMenuProvider(menuData, requirement);
     }
 
     protected abstract List<ItemPuzzleRequirement> getRequirements();

@@ -21,7 +21,7 @@ public class MenuProviders extends Setup<ChestPuzzles> {
             new GenericItemPuzzleProvider(),
             new MoonPuzzleMenuProvider(),
 
-            // Specific item puzzles
+            // Specific lootTable puzzles
             new NetherItemPuzzleProvider(),
             new EnderItemPuzzleProvider()
         );

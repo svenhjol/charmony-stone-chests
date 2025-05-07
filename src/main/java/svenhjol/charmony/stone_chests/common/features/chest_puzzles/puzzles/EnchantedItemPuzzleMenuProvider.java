@@ -27,7 +27,7 @@ public class EnchantedItemPuzzleMenuProvider implements StoneChestLockMenuProvid
         var enchantmentRegistry = menuData.level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
 
         var itemRegistry = menuData.level.registryAccess().lookupOrThrow(Registries.ITEM);
-        var itemOpt = itemRegistry.getRandomElementOf(Tags.PUZZLE_ENCHANTABLE_ITEMS, random);
+        var itemOpt = itemRegistry.getRandomElementOf(Tags.ENCHANTABLE_ITEMS, random);
         if (itemOpt.isEmpty()) return Optional.empty();
 
         var level = 5 + (5 * amplifier);
@@ -36,7 +36,7 @@ public class EnchantedItemPuzzleMenuProvider implements StoneChestLockMenuProvid
             new ItemStack(itemOpt.get()),
             level,
             menuData.level.registryAccess(),
-            enchantmentRegistry.get(Tags.PUZZLE_ENCHANTMENTS_FOR_ITEMS)
+            enchantmentRegistry.get(Tags.ENCHANTMENTS_FOR_ITEMS)
         );
 
         return ItemPuzzleMenu.getMenuProvider(menuData, List.of(stack));

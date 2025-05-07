@@ -16,16 +16,16 @@ public class ItemRequirementProviders extends Setup<ChestPuzzles> implements Ite
     @Override
     public List<ItemPuzzleRequirement> getItemPuzzleTags() {
         return List.of(
-            new ItemPuzzleRequirement(Tags.PUZZLE_BUTTONS, 2, 4, 2),
-            new ItemPuzzleRequirement(Tags.PUZZLE_CANDLES, 2, 4, 2),
-            new ItemPuzzleRequirement(Tags.PUZZLE_GEMS, 1, 2, 2),
-            new ItemPuzzleRequirement(Tags.PUZZLE_GLAZED_TERRACOTTA, 2, 4, 2),
-            new ItemPuzzleRequirement(Tags.PUZZLE_INGOTS, 8, 16, 2),
-            new ItemPuzzleRequirement(Tags.PUZZLE_LOGS, 8, 16, 2),
-            new ItemPuzzleRequirement(Tags.PUZZLE_SHERDS, 1, 2, 1),
-            new ItemPuzzleRequirement(Tags.PUZZLE_STONES, 8, 16, 3),
-            new ItemPuzzleRequirement(Tags.PUZZLE_TERRACOTTA, 4, 8, 3),
-            new ItemPuzzleRequirement(Tags.PUZZLE_WOOL, 2, 4, 2)
+            new ItemPuzzleRequirement(Tags.PUZZLE_CANDLES, 2),
+            new ItemPuzzleRequirement(Tags.PUZZLE_GEMS, 2),
+            new ItemPuzzleRequirement(Tags.PUZZLE_GLAZED_TERRACOTTA, 2),
+            new ItemPuzzleRequirement(Tags.PUZZLE_INGOTS,  2),
+            new ItemPuzzleRequirement(Tags.PUZZLE_LOGS,  2),
+            new ItemPuzzleRequirement(Tags.PUZZLE_SHERDS, 1),
+            new ItemPuzzleRequirement(Tags.PUZZLE_STAINED_GLASS, 2),
+            new ItemPuzzleRequirement(Tags.PUZZLE_STONES,  3),
+            new ItemPuzzleRequirement(Tags.PUZZLE_TERRACOTTA, 3),
+            new ItemPuzzleRequirement(Tags.PUZZLE_WOOL, 2)
         );
     }
 }

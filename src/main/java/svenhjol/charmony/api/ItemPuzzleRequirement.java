@@ -1,12 +1,10 @@
 package svenhjol.charmony.api;
 
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 public record ItemPuzzleRequirement(
-    TagKey<Item> item,
-    int minCount,
-    int maxCount,
+    ResourceKey<LootTable> lootTable,
     int slots
 ) {
 }

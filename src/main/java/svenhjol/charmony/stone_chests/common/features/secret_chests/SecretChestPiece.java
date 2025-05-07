@@ -44,6 +44,9 @@ public class SecretChestPiece extends StructurePiece {
         ChunkPos chunkPos,
         BlockPos pos
     ) {
+        // Let the definition do world surface decoration.
+        definition.decorateSurface(level, pos, random);
+
         var offsetPos = new BlockPos(boundingBox.minX(), pos.getY(), boundingBox.minZ());
 
         var state = level.getBlockState(offsetPos);

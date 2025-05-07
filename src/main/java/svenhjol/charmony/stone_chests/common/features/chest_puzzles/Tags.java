@@ -22,6 +22,9 @@ public final class Tags {
     public static final TagKey<EntityType<?>> END_MONSTERS = TagKey.create(Registries.ENTITY_TYPE,
         StoneChestsMod.id("puzzle/end_monsters"));
 
+    public static final ResourceKey<LootTable> LOOT_TRASH = ResourceKey.create(Registries.LOOT_TABLE,
+        StoneChestsMod.id("chest/trash"));
+
     public static final TagKey<EntityType<?>> NETHER_MONSTERS = TagKey.create(Registries.ENTITY_TYPE,
         StoneChestsMod.id("puzzle/nether_monsters"));
 

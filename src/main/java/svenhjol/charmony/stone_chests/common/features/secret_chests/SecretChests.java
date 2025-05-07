@@ -14,6 +14,13 @@ public final class SecretChests extends SidedFeature {
     public final Handlers handlers;
 
     @Configurable(
+        name = "Flower rings",
+        description = "If true, try and place flower rings at the surface above a buried overworld secret chest.",
+        requireRestart = false
+    )
+    private static boolean flowerRings = true;
+
+    @Configurable(
         name = "Fortress chance",
         description = "Chance (out of 1000) of a secret chest being placed in a Nether Fortress corridor or bridge.",
         requireRestart = false
@@ -43,6 +50,10 @@ public final class SecretChests extends SidedFeature {
 
     public static SecretChests feature() {
         return Mod.getSidedFeature(SecretChests.class);
+    }
+
+    public boolean flowerRings() {
+        return flowerRings;
     }
 
     public int fortressChance() {

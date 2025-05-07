@@ -12,9 +12,6 @@ import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.EnderItemPuzzleProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.GenericItemPuzzleProvider;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.NetherItemPuzzleProvider;
 
 import java.util.List;
 
@@ -84,6 +81,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
                     Tags.LOOT_POTIONS
                 );
             }
+
+            @Override
+            public void decorateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {
+                feature().handlers.createFlowerRing(level, pos, random, Tags.FLOWER_RING_FOR_SURFACE);
+            }
         };
     }
 
@@ -141,6 +143,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
                     GenericItemPuzzleProvider.ID,
                     EnchantedItemPuzzleMenuProvider.ID
                 );
+            }
+
+            @Override
+            public void decorateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {
+                feature().handlers.createFlowerRing(level, pos, random, Tags.FLOWER_RING_FOR_DEEPSLATE);
             }
         };
     }
@@ -207,6 +214,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
                     EnchantedBookPuzzleMenuProvider.ID,
                     EnchantedItemPuzzleMenuProvider.ID
                 );
+            }
+
+            @Override
+            public void decorateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {
+                feature().handlers.createFlowerRing(level, pos, random, Tags.FLOWER_RING_FOR_BEDROCK);
             }
         };
     }

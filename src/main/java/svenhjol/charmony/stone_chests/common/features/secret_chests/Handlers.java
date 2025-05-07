@@ -2,16 +2,22 @@ package svenhjol.charmony.stone_chests.common.features.secret_chests;
 
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.structures.NetherFortressPieces;
 import svenhjol.charmony.api.SecretChestDefinition;
 import svenhjol.charmony.api.SecretChestPlacement;
+import svenhjol.charmony.core.base.Mod;
 import svenhjol.charmony.core.base.Setup;
+import svenhjol.charmony.core.helpers.TagHelper;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
@@ -106,30 +112,37 @@ public class Handlers extends Setup<SecretChests> {
 
         level.setBlock(pos, state, 2);
         if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-            String menu = "";
 
-            if (!menus.isEmpty()) {
-                // Add a random lock menu to the chest.
-                Util.shuffle(menus, random);
-                menu = menus.getFirst();
-            }
-
-            var providers = ChestPuzzles.feature().registers.lockMenuProviders;
-
-            if (!menu.isEmpty() && providers.containsKey(menu)) {
-                chest.lock(menu);
-                chest.setUnlockedLootTable(lootTable);
-                chest.setDifficultyAmplifier(definition.difficultyAmplifier());
-
-                if (!sideEffects.isEmpty()) {
-                    // Add a random side-effect to the chest.
-                    Util.shuffle(sideEffects, random);
-                    chest.setSideEffect(sideEffects.getFirst());
+            // If the puzzles feature is enabled then add a puzzle to the chest entity.
+            // Add the loot table to the "unlocked loot table" property so that
+            // if the chest is broken it won't drop anything.
+            if (Mod.getSidedFeature(ChestPuzzles.class).enabled()) {
+                String menu = "";
+                if (!menus.isEmpty()) {
+                    // Add a random lock menu to the chest.
+                    Util.shuffle(menus, random);
+                    menu = menus.getFirst();
                 }
-            } else {
-                log().warn("No provider matching menu: " + menu);
+
+                var providers = ChestPuzzles.feature().registers.lockMenuProviders;
+
+                if (!menu.isEmpty() && providers.containsKey(menu)) {
+                    chest.lock(menu);
+                    chest.setUnlockedLootTable(lootTable);
+                    chest.setDifficultyAmplifier(definition.difficultyAmplifier());
+
+                    if (!sideEffects.isEmpty()) {
+                        // Add a random side-effect to the chest.
+                        Util.shuffle(sideEffects, random);
+                        chest.setSideEffect(sideEffects.getFirst());
+                    }
+                } else {
+                    log().warn("No provider matching menu: " + menu);
+                }
             }
 
+            // If the puzzles feature isn't enabled or has failed then the chest
+            // will not be locked. Set the custom loot table directly.
             if (!chest.isLocked()) {
                 chest.setLootTable(lootTable, random.nextLong());
                 chest.setChanged();
@@ -138,6 +151,34 @@ public class Handlers extends Setup<SecretChests> {
 
         log().debug("Generated " + material.getSerializedName() + " chest at " + pos);
         return true;
+    }
+
+    public void createFlowerRing(WorldGenLevel level, BlockPos pos, RandomSource random, TagKey<Block> flowers) {
+        if (!feature().flowerRings()) return;
+
+        var values = new ArrayList<>(TagHelper.getValues(level.registryAccess().lookupOrThrow(Registries.BLOCK), flowers));
+        if (values.isEmpty()) return;
+        Util.shuffle(values, random);
+        var flower = values.getFirst();
+
+        var heightMap = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
+        var radius = random.nextBoolean() ? 7 : 8;
+        var heightTolerance = 5;
+
+        for (int i = 0; i < 360; i += (28 + random.nextInt(5))) {
+            var x = (int)(radius * Math.cos(i * Math.PI / 180));
+            var z = (int)(radius * Math.sin(i * Math.PI / 180));
+
+            for (int y = -heightTolerance; y < heightTolerance; y++) {
+                var tryPos = heightMap.offset(x, y, z);
+                var tryState = level.getBlockState(tryPos);
+                var tryStateBelow = level.getBlockState(tryPos.below());
+
+                if (tryStateBelow.is(Tags.GENERATES_FLOWER_RINGS) && (tryState.isAir() || tryState.canBeReplaced())) {
+                    level.setBlock(tryPos, flower.defaultBlockState(), 3);
+                }
+            }
+        }
     }
 
     public Optional<SecretChestDefinition> definitionForPlacement(SecretChestPlacement placement, RandomSource random) {

@@ -8,11 +8,23 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 
 public final class Tags {
+    public static final TagKey<Block> FLOWER_RING_FOR_BEDROCK = TagKey.create(Registries.BLOCK,
+        StoneChestsMod.id("flower_ring/bedrock"));
+
+    public static final TagKey<Block> FLOWER_RING_FOR_DEEPSLATE = TagKey.create(Registries.BLOCK,
+        StoneChestsMod.id("flower_ring/deepslate"));
+
+    public static final TagKey<Block> FLOWER_RING_FOR_SURFACE = TagKey.create(Registries.BLOCK,
+        StoneChestsMod.id("flower_ring/surface"));
+
     public static final TagKey<Block> GENERATES_BASTION_CHESTS = TagKey.create(Registries.BLOCK,
         StoneChestsMod.id("generates_bastion_chests"));
 
     public static final TagKey<Block> GENERATES_END_CITY_CHESTS = TagKey.create(Registries.BLOCK,
         StoneChestsMod.id("generates_end_city_chests"));
+
+    public static final TagKey<Block> GENERATES_FLOWER_RINGS = TagKey.create(Registries.BLOCK,
+        StoneChestsMod.id("generates_flower_rings"));
 
     public static final TagKey<Block> GENERATES_FORTRESS_CHESTS = TagKey.create(Registries.BLOCK,
         StoneChestsMod.id("generates_fortress_chests"));

@@ -103,11 +103,8 @@ public class Handlers extends Setup<ChestPuzzles> {
         // Let the container decide what to do with the container items.
         player.containerMenu.removed(player);
 
-        // Give the player bad luck to make the treasure really crap.
-        setPlayerBadLuck(player);
-
         // Unlock the chest and execute side-effects.
-        chest.setLootTable(chest.getUnlockedLootTable());
+        chest.setLootTable(Tags.LOOT_TRASH);
         chest.unlock();
         var result = doSideEffects(player, player.level(), chest.getBlockPos(), chest);
 
@@ -140,7 +137,7 @@ public class Handlers extends Setup<ChestPuzzles> {
     }
 
     public void setPlayerBadLuck(Player player) {
-        player.addEffect(new MobEffectInstance(MobEffects.UNLUCK, 30, 2));
+        player.addEffect(new MobEffectInstance(MobEffects.UNLUCK, 30, 3));
     }
 
     public void spawnMonsters(TagKey<EntityType<?>> tag, Player player, Level level, BlockPos pos, double amplifier) {

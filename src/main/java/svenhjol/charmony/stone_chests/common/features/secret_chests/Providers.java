@@ -255,6 +255,14 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
+            public List<StoneChestSideEffects> sideEffects() {
+                return List.of(
+                    StoneChestSideEffects.GiveBadEffect,
+                    StoneChestSideEffects.SpawnOverworldMonsters
+                );
+            }
+
+            @Override
             public int difficultyAmplifier() {
                 return 2;
             }

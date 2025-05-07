@@ -24,7 +24,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:diamond",
-          "weight": 5,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -40,7 +40,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:amethyst_shard",
-          "weight": 10,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -56,7 +56,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:redstone",
-          "weight": 15,
+          "weight": 10,
           "functions": [
             {
               "function": "minecraft:set_count",

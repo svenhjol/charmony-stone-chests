@@ -53,7 +53,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         var providers = feature().registers.lockMenuProviders;
         if (!providers.containsKey(lockMenu)) {
             // No lock menu provider, just unlock the chest.
-            feature().log().debug("Provider not found, unlocking: " + lockMenu);
+            feature().log().warn("Provider " + lockMenu + " not found, unlocking chest");
             chest.unlock();
         }
 
@@ -76,6 +76,7 @@ public class Handlers extends Setup<ChestPuzzles> {
             if (menu.isPresent()) {
                 return menu;
             } else {
+                feature().log().warn("Menu " + lockMenu + " not found, unlocking");
                 chest.unlock();
             }
         }

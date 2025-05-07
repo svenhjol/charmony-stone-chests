@@ -11,13 +11,13 @@ import svenhjol.charmony.stone_chests.StoneChestsMod;
 
 public final class Tags {
     public static final TagKey<Item> ENCHANTABLE_ITEMS = TagKey.create(Registries.ITEM,
-        StoneChestsMod.id("puzzle/enchantable_items"));
+        StoneChestsMod.id("enchantable_items"));
 
     public static final TagKey<Enchantment> ENCHANTMENTS_FOR_BOOKS = TagKey.create(Registries.ENCHANTMENT,
-        StoneChestsMod.id("puzzle/on_books"));
+        StoneChestsMod.id("on_books"));
 
     public static final TagKey<Enchantment> ENCHANTMENTS_FOR_ITEMS = TagKey.create(Registries.ENCHANTMENT,
-        StoneChestsMod.id("puzzle/on_items"));
+        StoneChestsMod.id("on_items"));
 
     public static final TagKey<EntityType<?>> END_MONSTERS = TagKey.create(Registries.ENTITY_TYPE,
         StoneChestsMod.id("puzzle/end_monsters"));

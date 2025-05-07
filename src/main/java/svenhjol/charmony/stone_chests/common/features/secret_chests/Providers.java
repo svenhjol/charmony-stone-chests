@@ -106,7 +106,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
 
             @Override
             public Pair<Integer, Integer> height() {
-                return Pair.of(-48, -10);
+                return Pair.of(-50, -5);
             }
 
             @Override

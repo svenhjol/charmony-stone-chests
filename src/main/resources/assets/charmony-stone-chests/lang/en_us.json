@@ -19,6 +19,9 @@
   "item.charmony-stone-chests.prismarine_chest": "Prismarine Chest",
   "item.charmony-stone-chests.purpur_chest": "Purpur Chest",
   "item.charmony-stone-chests.stone_chest": "Stone Chest",
+  "subtitles.charmony-stone-chests.block.chest_break": "Stone Chest breaks",
   "subtitles.charmony-stone-chests.block.chest_close": "Stone Chest closes",
-  "subtitles.charmony-stone-chests.block.chest_open": "Stone Chest opens"
+  "subtitles.charmony-stone-chests.block.chest_open": "Stone Chest opens",
+  "subtitles.charmony-stone-chests.block.chest_unlock": "Stone Chest unlocks",
+  "subtitles.charmony-stone-chests.block.chest_unlocking": "Stone Chest starts to unlock"
 }

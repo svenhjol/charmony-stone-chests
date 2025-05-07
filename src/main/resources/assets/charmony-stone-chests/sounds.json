@@ -1,4 +1,13 @@
 {
+  "chest_break": {
+    "sounds": [
+      {
+        "name": "charmony-stone-chests:chest_break",
+        "volume": 1.0
+      }
+    ],
+    "subtitle": "subtitles.charmony-stone-chests.block.chest_break"
+  },
   "chest_close": {
     "sounds": [
       {
@@ -32,5 +41,23 @@
       }
     ],
     "subtitle": "subtitles.charmony-stone-chests.block.chest_open"
+  },
+  "chest_unlock": {
+    "sounds": [
+      {
+        "name": "charmony-stone-chests:chest_unlock",
+        "volume": 1.0
+      }
+    ],
+    "subtitle": "subtitles.charmony-stone-chests.block.chest_unlock"
+  },
+  "chest_unlocking": {
+    "sounds": [
+      {
+        "name": "charmony-stone-chests:chest_unlocking",
+        "volume": 1.0
+      }
+    ],
+    "subtitle": "subtitles.charmony-stone-chests.block.chest_unlocking"
   }
 }

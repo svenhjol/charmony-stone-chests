@@ -171,7 +171,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
 
             @Override
             public StoneChestMaterial material() {
-                return StoneChestMaterial.Deepslate;
+                return StoneChestMaterial.Tuff;
             }
 
             @Override

@@ -1,13 +1,16 @@
 {
   "values": [
+    "minecraft:coarse_dirt",
     "minecraft:dirt",
     "minecraft:grass_block",
-    "minecraft:podzol",
+    "minecraft:gravel",
+    "minecraft:mud",
     "minecraft:mycelium",
-    "minecraft:coarse_dirt",
+    "minecraft:podzol",
+    "minecraft:powder_snow",
     "minecraft:rooted_dirt",
     "minecraft:sand",
-    "minecraft:gravel",
+    "minecraft:snow",
     "#minecraft:terracotta"
   ]
 }

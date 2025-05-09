@@ -5,6 +5,9 @@
     "minecraft:podzol",
     "minecraft:mycelium",
     "minecraft:coarse_dirt",
-    "minecraft:rooted_dirt"
+    "minecraft:rooted_dirt",
+    "minecraft:sand",
+    "minecraft:gravel",
+    "#minecraft:terracotta"
   ]
 }

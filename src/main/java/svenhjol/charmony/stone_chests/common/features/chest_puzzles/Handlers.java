@@ -117,12 +117,6 @@ public class Handlers extends Setup<ChestPuzzles> {
         }
     }
 
-    public void doFailOpen(Container container, Player player, ChestBlockEntity chest) {
-
-
-
-    }
-
     public boolean doSideEffects(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {
         var amplifier = chest.getDifficultyAmplifier();
         var sideEffect = chest.getSideEffects();

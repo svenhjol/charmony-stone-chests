@@ -156,7 +156,7 @@ public class SecretChestPiece extends StructurePiece {
             log().debug("Bounding box is incorrect");
             return false;
         }
-        return SecretChestApi.instance().createChest(definition, level, random, pos, waterlogged);
+        return SecretChestApi.instance().createChest(definition, level, random, pos, waterlogged, null);
     }
 
     protected Log log() {

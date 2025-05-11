@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- API supports optional chest facing argument.
+
 ## 1.0.2
 
 - Move chest creation into API.

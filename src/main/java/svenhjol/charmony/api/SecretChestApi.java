@@ -1,8 +1,11 @@
 package svenhjol.charmony.api;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
+
+import javax.annotation.Nullable;
 
 public class SecretChestApi {
     private static SecretChestApi instance;
@@ -16,7 +19,7 @@ public class SecretChestApi {
     }
 
     private SecretChestApi() {
-        this.creator = (definition, level, random, pos, waterlogged) -> false;
+        this.creator = (definition, level, random, pos, waterlogged, facing) -> false;
     }
 
     public boolean createChest(
@@ -24,9 +27,10 @@ public class SecretChestApi {
         ServerLevelAccessor level,
         RandomSource random,
         BlockPos pos,
-        boolean waterlogged
+        boolean waterlogged,
+        @Nullable Direction facing
     ) {
-        return creator.create(definition, level, random, pos, waterlogged);
+        return creator.create(definition, level, random, pos, waterlogged, facing);
     }
 
     public void setChestCreator(ChestCreator creator) {
@@ -40,7 +44,8 @@ public class SecretChestApi {
             ServerLevelAccessor level,
             RandomSource random,
             BlockPos pos,
-            boolean waterlogged
+            boolean waterlogged,
+            @Nullable Direction facing
         );
     }
 }

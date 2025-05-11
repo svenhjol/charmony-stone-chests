@@ -54,7 +54,7 @@ public class Registers extends Setup<SecretChests> {
 
     @Override
     public Runnable boot() {
-        return () -> SecretChestApi.instance().setChestCreator((definition, level, random, pos, waterlogged) -> {
+        return () -> SecretChestApi.instance().setChestCreator((definition, level, random, pos, waterlogged, facing) -> {
             var material = definition.material();
             var block = StoneChests.feature().registers.chestBlocks.get(material).get();
 
@@ -74,7 +74,9 @@ public class Registers extends Setup<SecretChests> {
             if (waterlogged) {
                 state = state.setValue(ChestBlock.WATERLOGGED, true);
             }
-
+            if (facing != null) {
+                state = state.setValue(ChestBlock.FACING, facing);
+            }
 
             level.setBlock(pos, state, 2);
             if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {

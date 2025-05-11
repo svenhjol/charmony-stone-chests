@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Fix loot table random sequence paths.
+
 ## 1.1.0
 
 - Update for API 1.20

@@ -185,11 +185,7 @@ public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
             }
 
             if (level instanceof ServerLevel serverLevel && serverLevel.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-                if (validItems == numItems) {
-                    feature().handlers.doSuccessOpen(container, player, chest);
-                } else {
-                    feature().handlers.doFailOpen(player, chest);
-                }
+                feature().handlers.solve(container, player, chest, validItems == numItems);
             }
         });
         return true;

@@ -63,12 +63,7 @@ public class ClockPuzzleMenu extends ContainerMenu implements PuzzleMenu {
 
                 var valid = clockTime >= reqTime && clockTime < reqTime + tolerance;
                 feature().log().debug("clockTime: " + clockTime + ", reqTime: " + reqTime + ", valid: " + valid);
-
-                if (valid) {
-                    feature().handlers.doSuccessOpen(container, player, chest);
-                } else {
-                    feature().handlers.doFailOpen(player, chest);
-                }
+                feature().handlers.solve(container, player, chest, valid);
             }
         });
         return true;

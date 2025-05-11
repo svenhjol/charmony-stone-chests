@@ -43,11 +43,7 @@ public class MoonPuzzleMenu extends ContainerMenu implements PuzzleMenu {
     public boolean clickMenuButton(Player player, int id) {
         access.execute((level, pos) -> {
             if (level instanceof ServerLevel serverLevel && serverLevel.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-                if (level.getMoonPhase() == getMoonPhase()) {
-                    feature().handlers.doSuccessOpen(container, player, chest);
-                } else {
-                    feature().handlers.doFailOpen(player, chest);
-                }
+                feature().handlers.solve(container, player, chest, level.getMoonPhase() == getMoonPhase());
             }
         });
         return true;

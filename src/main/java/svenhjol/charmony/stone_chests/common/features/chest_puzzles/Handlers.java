@@ -84,35 +84,43 @@ public class Handlers extends Setup<ChestPuzzles> {
         return Optional.empty();
     }
 
-    public void doSuccessOpen(Container container, Player player, ChestBlockEntity chest) {
-        // Consume any items held in the container.
-        container.clearContent();
+    public void solve(Container container, Player player, ChestBlockEntity chest, boolean valid) {
+        if (valid || player.getAbilities().instabuild) {
+            // Consume any items held in the container.
+            container.clearContent();
 
-        // If it was a difficult challenge then give the player luck to modify the loot rolls.
-        var difficultyAmplifier = chest.getDifficultyAmplifier();
-        if (difficultyAmplifier > 1) {
-            setPlayerLuck(player, difficultyAmplifier - 2);
+            // If it was a difficult challenge then give the player luck to modify the loot rolls.
+            var difficultyAmplifier = chest.getDifficultyAmplifier();
+            if (difficultyAmplifier > 1) {
+                setPlayerLuck(player, difficultyAmplifier - 2);
+            }
+
+            // Get the stored "unlocked" loot table from the chest and set it as the primary loot table.
+            // When the chest is next opened the loot will be generated.
+            chest.setLootTable(chest.getUnlockedLootTable());
+
+            chest.unlock();
+            player.openMenu(chest);
+
+        } else {
+            // Let the container decide what to do with the container items.
+            player.containerMenu.removed(player);
+
+            // Unlock the chest and execute side-effects.
+            chest.setLootTable(Tags.LOOT_TRASH);
+            chest.unlock();
+            var result = doSideEffects(player, player.level(), chest.getBlockPos(), chest);
+
+            if (!result) {
+                player.openMenu(chest);
+            }
         }
-
-        // Get the stored "unlocked" loot table from the chest and set it as the primary loot table.
-        // When the chest is next opened the loot will be generated.
-        chest.setLootTable(chest.getUnlockedLootTable());
-        chest.unlock();
-        player.openMenu(chest);
     }
 
-    public void doFailOpen(Player player, ChestBlockEntity chest) {
-        // Let the container decide what to do with the container items.
-        player.containerMenu.removed(player);
+    public void doFailOpen(Container container, Player player, ChestBlockEntity chest) {
 
-        // Unlock the chest and execute side-effects.
-        chest.setLootTable(Tags.LOOT_TRASH);
-        chest.unlock();
-        var result = doSideEffects(player, player.level(), chest.getBlockPos(), chest);
 
-        if (!result) {
-            player.openMenu(chest);
-        }
+
     }
 
     public boolean doSideEffects(Player player, Level level, BlockPos pos, ChestBlockEntity chest) {

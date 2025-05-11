@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- Creative mode players now bypass puzzle.
+
 ## 1.1.1
 
 - Fix loot table random sequence paths.

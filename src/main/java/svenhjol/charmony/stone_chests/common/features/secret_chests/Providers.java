@@ -10,6 +10,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.*;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
+import svenhjol.charmony.api.secret_chests.SecretChestDefinition;
+import svenhjol.charmony.api.secret_chests.SecretChestDefinitionProvider;
+import svenhjol.charmony.api.secret_chests.SecretChestPlacement;
+import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
 

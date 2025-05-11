@@ -1,4 +1,4 @@
-package svenhjol.charmony.api;
+package svenhjol.charmony.api.chest_puzzles;
 
 import java.util.List;
 

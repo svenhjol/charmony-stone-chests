@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import svenhjol.charmony.api.SecretChestDefinition;
+import svenhjol.charmony.api.secret_chests.SecretChestDefinition;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
 
 import java.util.List;

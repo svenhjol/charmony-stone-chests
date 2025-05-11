@@ -1,4 +1,4 @@
-package svenhjol.charmony.api;
+package svenhjol.charmony.api.secret_chests;
 
 public enum SecretChestPlacement {
     Surface,

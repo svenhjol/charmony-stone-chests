@@ -1,7 +1,7 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
 import svenhjol.charmony.api.Api;
-import svenhjol.charmony.api.StoneChestLockMenuProvider;
+import svenhjol.charmony.api.stone_chests.StoneChestLockMenuProvider;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.EnderItemPuzzleProvider;

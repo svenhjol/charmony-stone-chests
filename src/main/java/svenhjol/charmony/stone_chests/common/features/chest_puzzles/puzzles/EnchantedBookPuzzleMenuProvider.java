@@ -4,8 +4,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import svenhjol.charmony.api.StoneChestLockMenuData;
-import svenhjol.charmony.api.StoneChestLockMenuProvider;
+import svenhjol.charmony.api.stone_chests.StoneChestLockMenuData;
+import svenhjol.charmony.api.stone_chests.StoneChestLockMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemPuzzleMenu;
 

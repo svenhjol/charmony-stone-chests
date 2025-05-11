@@ -1,4 +1,4 @@
-package svenhjol.charmony.api;
+package svenhjol.charmony.api.secret_chests;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
@@ -7,6 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.storage.loot.LootTable;
+import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 
 import java.util.List;

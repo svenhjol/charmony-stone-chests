@@ -1,8 +1,8 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
 import svenhjol.charmony.api.Api;
-import svenhjol.charmony.api.ItemPuzzleRequirement;
-import svenhjol.charmony.api.ItemPuzzleRequirementProvider;
+import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirement;
+import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirementProvider;
 import svenhjol.charmony.core.base.Setup;
 
 import java.util.List;

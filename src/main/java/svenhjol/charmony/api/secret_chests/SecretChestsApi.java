@@ -1,4 +1,4 @@
-package svenhjol.charmony.api;
+package svenhjol.charmony.api.secret_chests;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -7,18 +7,18 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nullable;
 
-public class SecretChestApi {
-    private static SecretChestApi instance;
+public class SecretChestsApi {
+    private static SecretChestsApi instance;
     private ChestCreator creator;
 
-    public static SecretChestApi instance() {
+    public static SecretChestsApi instance() {
         if (instance == null) {
-            instance = new SecretChestApi();
+            instance = new SecretChestsApi();
         }
         return instance;
     }
 
-    private SecretChestApi() {
+    private SecretChestsApi() {
         this.creator = (definition, level, random, pos, waterlogged, facing) -> false;
     }
 

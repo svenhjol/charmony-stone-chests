@@ -6,9 +6,9 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
-import svenhjol.charmony.api.SecretChestApi;
-import svenhjol.charmony.api.SecretChestDefinition;
-import svenhjol.charmony.api.SecretChestDefinitionProvider;
+import svenhjol.charmony.api.secret_chests.SecretChestsApi;
+import svenhjol.charmony.api.secret_chests.SecretChestDefinition;
+import svenhjol.charmony.api.secret_chests.SecretChestDefinitionProvider;
 import svenhjol.charmony.core.Api;
 import svenhjol.charmony.core.base.Mod;
 import svenhjol.charmony.core.base.Setup;
@@ -54,7 +54,7 @@ public class Registers extends Setup<SecretChests> {
 
     @Override
     public Runnable boot() {
-        return () -> SecretChestApi.instance().setChestCreator((definition, level, random, pos, waterlogged, facing) -> {
+        return () -> SecretChestsApi.instance().setChestCreator((definition, level, random, pos, waterlogged, facing) -> {
             var material = definition.material();
             var block = StoneChests.feature().registers.chestBlocks.get(material).get();
 

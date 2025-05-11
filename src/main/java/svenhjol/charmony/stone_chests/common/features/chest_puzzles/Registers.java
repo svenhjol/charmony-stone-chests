@@ -2,9 +2,9 @@ package svenhjol.charmony.stone_chests.common.features.chest_puzzles;
 
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
-import svenhjol.charmony.api.ItemPuzzleRequirement;
-import svenhjol.charmony.api.ItemPuzzleRequirementProvider;
-import svenhjol.charmony.api.StoneChestLockMenuProvider;
+import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirement;
+import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirementProvider;
+import svenhjol.charmony.api.stone_chests.StoneChestLockMenuProvider;
 import svenhjol.charmony.core.Api;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.common.CommonRegistry;

@@ -2,9 +2,9 @@ package svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles;
 
 import net.minecraft.Util;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import svenhjol.charmony.api.ItemPuzzleRequirement;
-import svenhjol.charmony.api.StoneChestLockMenuData;
-import svenhjol.charmony.api.StoneChestLockMenuProvider;
+import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirement;
+import svenhjol.charmony.api.stone_chests.StoneChestLockMenuData;
+import svenhjol.charmony.api.stone_chests.StoneChestLockMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemPuzzleMenu;
 
 import java.util.ArrayList;

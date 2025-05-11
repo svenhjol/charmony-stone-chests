@@ -1,4 +1,4 @@
-package svenhjol.charmony.api;
+package svenhjol.charmony.api.stone_chests;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 

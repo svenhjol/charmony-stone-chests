@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- Move API functions into their own packages.
+
 ## 1.0.3
 
 - API supports optional chest facing argument.

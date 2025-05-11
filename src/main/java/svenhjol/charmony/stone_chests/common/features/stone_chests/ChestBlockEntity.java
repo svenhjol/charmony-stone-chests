@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
-import svenhjol.charmony.api.StoneChestSideEffects;
+import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
 import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 

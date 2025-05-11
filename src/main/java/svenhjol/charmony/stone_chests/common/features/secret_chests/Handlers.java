@@ -13,9 +13,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.structures.NetherFortressPieces;
-import svenhjol.charmony.api.SecretChestApi;
-import svenhjol.charmony.api.SecretChestDefinition;
-import svenhjol.charmony.api.SecretChestPlacement;
+import svenhjol.charmony.api.secret_chests.SecretChestsApi;
+import svenhjol.charmony.api.secret_chests.SecretChestDefinition;
+import svenhjol.charmony.api.secret_chests.SecretChestPlacement;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.helpers.TagHelper;
 
@@ -52,7 +52,7 @@ public class Handlers extends Setup<SecretChests> {
 
             var stateBelow = level.getBlockState(pos.below());
             if (stateBelow.is(Tags.GENERATES_FORTRESS_CHESTS)) {
-                SecretChestApi.instance().createChest(definition, level, random, pos, false, null);
+                SecretChestsApi.instance().createChest(definition, level, random, pos, false, null);
             }
         }
     }
@@ -62,7 +62,7 @@ public class Handlers extends Setup<SecretChests> {
             if (level.getRandom().nextInt(1000) < feature().endCityChance()) {
                 var definition = definitionForPlacement(SecretChestPlacement.EndCity, level.getRandom()).orElse(null);
                 if (definition == null) return false;
-                return SecretChestApi.instance().createChest(definition, level, level.getRandom(), pos, false, null);
+                return SecretChestsApi.instance().createChest(definition, level, level.getRandom(), pos, false, null);
             }
         }
         return false;
@@ -73,7 +73,7 @@ public class Handlers extends Setup<SecretChests> {
             if (level.getRandom().nextInt(1000) < feature().bastionChance()) {
                 var definition = definitionForPlacement(SecretChestPlacement.Bastion, level.getRandom()).orElse(null);
                 if (definition == null) return false;
-                return SecretChestApi.instance().createChest(definition, level, level.getRandom(), pos, false, null);
+                return SecretChestsApi.instance().createChest(definition, level, level.getRandom(), pos, false, null);
             }
         }
         return false;

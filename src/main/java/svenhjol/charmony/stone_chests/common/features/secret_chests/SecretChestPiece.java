@@ -12,9 +12,9 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.Fluids;
-import svenhjol.charmony.api.SecretChestApi;
-import svenhjol.charmony.api.SecretChestDefinition;
-import svenhjol.charmony.api.SecretChestPlacement;
+import svenhjol.charmony.api.secret_chests.SecretChestsApi;
+import svenhjol.charmony.api.secret_chests.SecretChestDefinition;
+import svenhjol.charmony.api.secret_chests.SecretChestPlacement;
 import svenhjol.charmony.core.base.Log;
 
 public class SecretChestPiece extends StructurePiece {
@@ -156,7 +156,7 @@ public class SecretChestPiece extends StructurePiece {
             log().debug("Bounding box is incorrect");
             return false;
         }
-        return SecretChestApi.instance().createChest(definition, level, random, pos, waterlogged, null);
+        return SecretChestsApi.instance().createChest(definition, level, random, pos, waterlogged, null);
     }
 
     protected Log log() {

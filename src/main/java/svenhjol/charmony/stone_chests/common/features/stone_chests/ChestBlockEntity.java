@@ -21,8 +21,8 @@ import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 
 public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
@@ -193,6 +193,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         }
     }
 
+    @SuppressWarnings("unused")
     public static void lidAnimateTick(Level level, BlockPos pos, BlockState state, ChestBlockEntity chest) {
         chest.chestLidController.tickLid();
     }

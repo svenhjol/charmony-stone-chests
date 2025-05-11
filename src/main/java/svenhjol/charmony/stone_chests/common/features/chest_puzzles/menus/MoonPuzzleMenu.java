@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.PuzzleMenu;

@@ -27,14 +27,16 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.phys.Vec3;
 import svenhjol.charmony.api.stone_chests.StoneChestLockMenuData;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.helpers.TagHelper;
 import svenhjol.charmony.core.helpers.WorldHelper;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class Handlers extends Setup<ChestPuzzles> {
     public static final int MOB_SPAWN_RANGE = 2;
@@ -136,10 +138,6 @@ public class Handlers extends Setup<ChestPuzzles> {
         player.addEffect(new MobEffectInstance(MobEffects.LUCK, 30, amplifier));
     }
 
-    public void setPlayerBadLuck(Player player) {
-        player.addEffect(new MobEffectInstance(MobEffects.UNLUCK, 30, 3));
-    }
-
     public void spawnMonsters(TagKey<EntityType<?>> tag, Player player, Level level, BlockPos pos, double amplifier) {
         if (!(level instanceof ServerLevel serverLevel)) return;
 
@@ -179,7 +177,7 @@ public class Handlers extends Setup<ChestPuzzles> {
             if (entity == null) {
                 log().debug("Could not create entity");
                 continue;
-            };
+            }
 
             entity.snapTo(spawnVec.x(), spawnVec.y(), spawnVec.z(), entity.getYRot(), entity.getXRot());
 

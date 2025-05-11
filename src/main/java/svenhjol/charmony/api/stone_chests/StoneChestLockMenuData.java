@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
 
 /**
  * Data holder passed to the lock menu provider.

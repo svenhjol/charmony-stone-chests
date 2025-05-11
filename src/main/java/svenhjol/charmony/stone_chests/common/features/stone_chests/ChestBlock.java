@@ -32,9 +32,9 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements SimpleWaterloggedBlock {
@@ -146,7 +146,7 @@ public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements 
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level instanceof ServerLevel serverLevel) {
+        if (level instanceof ServerLevel) {
             if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
                 player.openMenu(chest);
             }

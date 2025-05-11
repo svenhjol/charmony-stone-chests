@@ -7,8 +7,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.storage.loot.LootTable;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
 
 import java.util.List;
 

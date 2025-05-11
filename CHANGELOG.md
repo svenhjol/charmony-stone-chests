@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- Update for API 1.20
+
 ## 1.0.4
 
 - Move API functions into their own packages.

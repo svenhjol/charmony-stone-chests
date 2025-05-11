@@ -4,10 +4,10 @@ import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
 
 import java.util.HashMap;
 import java.util.Map;

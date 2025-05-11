@@ -16,7 +16,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirement;
 import svenhjol.charmony.api.stone_chests.StoneChestLockMenuData;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Constants;

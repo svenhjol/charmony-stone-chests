@@ -4,7 +4,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import svenhjol.charmony.api.materials.StoneChestMaterial;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.common.CommonRegistry;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock.ChestBlockItem;

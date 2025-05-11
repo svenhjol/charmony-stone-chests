@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Move chest creation into API.
+
 ## 1.0.1
 
 - Build for test

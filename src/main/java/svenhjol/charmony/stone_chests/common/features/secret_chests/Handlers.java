@@ -13,15 +13,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.structures.NetherFortressPieces;
+import svenhjol.charmony.api.SecretChestApi;
 import svenhjol.charmony.api.SecretChestDefinition;
 import svenhjol.charmony.api.SecretChestPlacement;
-import svenhjol.charmony.core.base.Mod;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.helpers.TagHelper;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
-import svenhjol.charmony.stone_chests.common.features.stone_chests.StoneChests;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -56,7 +52,7 @@ public class Handlers extends Setup<SecretChests> {
 
             var stateBelow = level.getBlockState(pos.below());
             if (stateBelow.is(Tags.GENERATES_FORTRESS_CHESTS)) {
-                createChest(definition, level, random, pos, false);
+                SecretChestApi.instance().createChest(definition, level, random, pos, false);
             }
         }
     }
@@ -66,7 +62,7 @@ public class Handlers extends Setup<SecretChests> {
             if (level.getRandom().nextInt(1000) < feature().endCityChance()) {
                 var definition = definitionForPlacement(SecretChestPlacement.EndCity, level.getRandom()).orElse(null);
                 if (definition == null) return false;
-                return createChest(definition, level, level.getRandom(), pos, false);
+                return SecretChestApi.instance().createChest(definition, level, level.getRandom(), pos, false);
             }
         }
         return false;
@@ -77,80 +73,10 @@ public class Handlers extends Setup<SecretChests> {
             if (level.getRandom().nextInt(1000) < feature().bastionChance()) {
                 var definition = definitionForPlacement(SecretChestPlacement.Bastion, level.getRandom()).orElse(null);
                 if (definition == null) return false;
-                return createChest(definition, level, level.getRandom(), pos, false);
+                return SecretChestApi.instance().createChest(definition, level, level.getRandom(), pos, false);
             }
         }
         return false;
-    }
-
-    public boolean createChest(
-        SecretChestDefinition definition,
-        ServerLevelAccessor level,
-        RandomSource random,
-        BlockPos pos,
-        boolean waterlogged
-    ) {
-        var material = definition.material();
-        var block = StoneChests.feature().registers.chestBlocks.get(material).get();
-
-        var lootTables = new ArrayList<>(definition.lootTables());
-        var menus = new ArrayList<>(definition.lockMenus());
-        var sideEffects = new ArrayList<>(definition.sideEffects());
-
-        if (lootTables.isEmpty()) {
-            log().debug("No loot tables for secret chest");
-            return false;
-        }
-
-        Util.shuffle(lootTables, random);
-        var lootTable = lootTables.getFirst();
-
-        var state = StructurePiece.reorient(level, pos, block.defaultBlockState());
-        if (waterlogged) {
-            state = state.setValue(ChestBlock.WATERLOGGED, true);
-        }
-
-        level.setBlock(pos, state, 2);
-        if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-
-            // If the puzzles feature is enabled then add a puzzle to the chest entity.
-            // Add the loot table to the "unlocked loot table" property so that
-            // if the chest is broken it won't drop anything.
-            if (Mod.getSidedFeature(ChestPuzzles.class).enabled()) {
-                String menu = "";
-                if (!menus.isEmpty()) {
-                    // Add a random lock menu to the chest.
-                    Util.shuffle(menus, random);
-                    menu = menus.getFirst();
-                }
-
-                var providers = ChestPuzzles.feature().registers.lockMenuProviders;
-
-                if (!menu.isEmpty() && providers.containsKey(menu)) {
-                    chest.lock(menu);
-                    chest.setUnlockedLootTable(lootTable);
-                    chest.setDifficultyAmplifier(definition.difficultyAmplifier());
-
-                    if (!sideEffects.isEmpty()) {
-                        // Add a random side-effect to the chest.
-                        Util.shuffle(sideEffects, random);
-                        chest.setSideEffect(sideEffects.getFirst());
-                    }
-                } else {
-                    log().warn("No provider matching menu: " + menu);
-                }
-            }
-
-            // If the puzzles feature isn't enabled or has failed then the chest
-            // will not be locked. Set the custom loot table directly.
-            if (!chest.isLocked()) {
-                chest.setLootTable(lootTable, random.nextLong());
-                chest.setChanged();
-            }
-        }
-
-        log().debug("Generated " + material.getSerializedName() + " chest at " + pos);
-        return true;
     }
 
     public void createFlowerRing(WorldGenLevel level, BlockPos pos, RandomSource random, TagKey<Block> flowers) {

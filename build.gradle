@@ -10,3 +10,6 @@ def buildUrl = "https://charmony.dev/files/main/build.gradle"
 apply from: buildFile.exists() ? buildFile : buildUrl
 
 // Add local dependencies here.
+dependencies {
+    copyMod "charmony-tweaks", "tweaks"
+}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- Add stone chest screen to tweaks item tidying whitelist.
+
 ## 1.1.2
 
 - Creative mode players now bypass puzzle.

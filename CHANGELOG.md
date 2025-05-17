@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- Update to API 1.22.0
+
 ## 1.2.0
 
 - Add advancements.

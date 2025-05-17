@@ -17,13 +17,15 @@ public final class ChestPuzzles extends SidedFeature {
 
     @Configurable(
         name = "Bad effect duration",
-        description = "Minimum duration (in seconds) of any bad effects given to the player as a result of failing the puzzle."
+        description = "Minimum duration (in seconds) of any bad effects given to the player as a result of failing the puzzle.",
+        requireRestart = false
     )
     private static int badEffectDuration = 60;
 
     @Configurable(
         name = "Number of mobs spawned",
-        description = "Minimum number of mobs spawned as a result of failing the puzzle."
+        description = "Minimum number of mobs spawned as a result of failing the puzzle.",
+        requireRestart = false
     )
     private static int numberOfMobsSpawned = 2;
 

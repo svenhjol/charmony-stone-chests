@@ -1,12 +1,12 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles;
 
 import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirement;
-import svenhjol.charmony.api.stone_chests.StoneChestLockMenuProvider;
+import svenhjol.charmony.api.secret_chests.SecretChestPuzzleMenuProvider;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 
 import java.util.List;
 
-public class GenericItemPuzzleProvider extends BaseItemPuzzleMenuProvider implements StoneChestLockMenuProvider {
+public class GenericItemPuzzleProvider extends BaseItemPuzzleMenuProvider implements SecretChestPuzzleMenuProvider {
     public static final String ID = "item_puzzle";
 
     @Override

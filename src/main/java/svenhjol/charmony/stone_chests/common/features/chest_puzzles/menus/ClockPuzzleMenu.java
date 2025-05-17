@@ -9,13 +9,14 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleType;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.PuzzleMenu;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
-public class ClockPuzzleMenu extends ContainerMenu implements PuzzleMenu {
+public class ClockPuzzleMenu extends ContainerMenu implements ChestPuzzleMenu {
     private final ContainerLevelAccess access;
     private final ContainerData data;
 
@@ -69,9 +70,15 @@ public class ClockPuzzleMenu extends ContainerMenu implements PuzzleMenu {
         return true;
     }
 
+    @Override
     public StoneChestMaterial getMaterial() {
         var id = this.data.get(0);
         return StoneChestMaterial.byId(id);
+    }
+
+    @Override
+    public ChestPuzzleType puzzleType() {
+        return ChestPuzzleType.Time;
     }
 
     public int getTime() {

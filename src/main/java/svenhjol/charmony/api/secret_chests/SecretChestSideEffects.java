@@ -1,8 +1,8 @@
-package svenhjol.charmony.api.stone_chests;
+package svenhjol.charmony.api.secret_chests;
 
 import net.minecraft.util.StringRepresentable;
 
-public enum StoneChestSideEffects implements StringRepresentable {
+public enum SecretChestSideEffects implements StringRepresentable {
     Nothing("nothing"),
     SpawnOverworldMonsters("spawn_overworld_monsters"),
     SpawnNetherMonsters("spawn_nether_monsters"),
@@ -12,14 +12,14 @@ public enum StoneChestSideEffects implements StringRepresentable {
 
     private final String name;
 
-    StoneChestSideEffects(String name) {
+    SecretChestSideEffects(String name) {
         this.name = name;
     }
 
-    public static StoneChestSideEffects getOrDefault(String name) {
-        StoneChestSideEffects sideEffect;
+    public static SecretChestSideEffects getOrDefault(String name) {
+        SecretChestSideEffects sideEffect;
         try {
-            sideEffect = StoneChestSideEffects.valueOf(name);
+            sideEffect = SecretChestSideEffects.valueOf(name);
         } catch (IllegalArgumentException e) {
             sideEffect = Nothing;
         }

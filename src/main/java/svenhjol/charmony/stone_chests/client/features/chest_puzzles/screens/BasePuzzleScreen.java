@@ -13,9 +13,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import svenhjol.charmony.core.client.TintedGuiGraphics;
 import svenhjol.charmony.core.helpers.ColorHelper;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.PuzzleMenu;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleMenu;
 
-public abstract class BasePuzzleScreen<T extends AbstractContainerMenu & PuzzleMenu> extends AbstractContainerScreen<T> {
+public abstract class BasePuzzleScreen<T extends AbstractContainerMenu & ChestPuzzleMenu> extends AbstractContainerScreen<T> {
     public static final ResourceLocation BACKGROUND = StoneChestsMod.id("textures/gui/container/generic_puzzle.png");
     protected ColorHelper.Color tintedBg;
     protected int tintedFg;

@@ -1,15 +1,15 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles;
 
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import svenhjol.charmony.api.stone_chests.StoneChestLockMenuData;
-import svenhjol.charmony.api.stone_chests.StoneChestLockMenuProvider;
+import svenhjol.charmony.api.secret_chests.SecretChestPuzzleMenuData;
+import svenhjol.charmony.api.secret_chests.SecretChestPuzzleMenuProvider;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.MoonPuzzleMenu;
 
 import java.util.Optional;
 
-public class MoonPuzzleMenuProvider implements StoneChestLockMenuProvider {
+public class MoonPuzzleMenuProvider implements SecretChestPuzzleMenuProvider {
     public static final String ID = "moon_puzzle";
 
     @Override
@@ -18,7 +18,7 @@ public class MoonPuzzleMenuProvider implements StoneChestLockMenuProvider {
     }
 
     @Override
-    public Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData) {
+    public Optional<ChestPuzzleMenu> getMenuProvider(SecretChestPuzzleMenuData menuData) {
         var serverLevel = menuData.level;
         var pos = menuData.pos;
         var random = menuData.random;

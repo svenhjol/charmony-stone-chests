@@ -22,13 +22,13 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
-import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
+import svenhjol.charmony.api.secret_chests.SecretChestSideEffects;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 
 public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
     public static final String MATERIAL_TAG = "material";
     public static final String LOCKED_TAG = "locked";
-    public static final String LOCK_MENU_TAG = "lock_menu";
+    public static final String PUZZLE_MENU_ID_TAG = "puzzle_menu_id";
     public static final String UNLOCKED_LOOT_TABLE_TAG = "unlocked_loot_table";
     public static final String SIDE_EFFECT_TAG = "side_effect";
     public static final String DIFFICULTY_AMPLIFIER_TAG = "difficulty_amplifier";
@@ -42,9 +42,9 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     private StoneChestMaterial material;
     private NonNullList<ItemStack> items;
     private boolean locked;
-    private String lockMenu;
+    private String puzzleMenuId;
     private String unlockedLootTable;
-    private StoneChestSideEffects sideEffect;
+    private SecretChestSideEffects sideEffect;
     private int difficultyAmplifier;
 
     public ChestBlockEntity(BlockPos pos, BlockState state) {
@@ -53,10 +53,10 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.material = block.getMaterial();
         this.items = NonNullList.withSize(SLOTS, ItemStack.EMPTY);
         this.locked = false;
-        this.lockMenu = "";
+        this.puzzleMenuId = "";
         this.unlockedLootTable = "";
         this.difficultyAmplifier = 1;
-        this.sideEffect = StoneChestSideEffects.Nothing;
+        this.sideEffect = SecretChestSideEffects.Nothing;
 
         this.openersCounter = new ContainerOpenersCounter() {
             @Override
@@ -109,7 +109,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         super.saveAdditional(tag, provider);
         tag.putInt(MATERIAL_TAG, material.getId());
         tag.putBoolean(LOCKED_TAG, locked);
-        tag.putString(LOCK_MENU_TAG, lockMenu);
+        tag.putString(PUZZLE_MENU_ID_TAG, puzzleMenuId);
         tag.putString(UNLOCKED_LOOT_TABLE_TAG, unlockedLootTable);
         tag.putInt(DIFFICULTY_AMPLIFIER_TAG, difficultyAmplifier);
 
@@ -127,11 +127,11 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         super.loadAdditional(tag, provider);
         this.locked = tag.getBooleanOr(LOCKED_TAG, false);
         this.material = StoneChestMaterial.byId(tag.getIntOr(MATERIAL_TAG, 0));
-        this.lockMenu = tag.getStringOr(LOCK_MENU_TAG, "");
+        this.puzzleMenuId = tag.getStringOr(PUZZLE_MENU_ID_TAG, "");
         this.unlockedLootTable = tag.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
         this.difficultyAmplifier = tag.getIntOr(DIFFICULTY_AMPLIFIER_TAG, 1);
 
-        tag.getString(LOCK_MENU_TAG).ifPresent(str -> this.sideEffect = StoneChestSideEffects.getOrDefault(str));
+        tag.getString(PUZZLE_MENU_ID_TAG).ifPresent(str -> this.sideEffect = SecretChestSideEffects.getOrDefault(str));
 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
@@ -211,8 +211,8 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
 
         if (isLocked() && puzzles().enabled()) {
             var opt = puzzles().handlers.getMenuProvider(serverLevel, this, syncId, inventory, material);
-            if (opt.isPresent()) {
-                return opt.get();
+            if (opt.isPresent() && opt.get() instanceof AbstractContainerMenu containerMenu) {
+                return containerMenu;
             }
         }
 
@@ -224,11 +224,11 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         return material;
     }
 
-    public String lockMenu() {
-        return lockMenu;
+    public String puzzleMenuId() {
+        return puzzleMenuId;
     }
 
-    public StoneChestSideEffects getSideEffects() {
+    public SecretChestSideEffects getSideEffects() {
         return sideEffect;
     }
 
@@ -254,9 +254,9 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
 
     }
 
-    public void lock(String lockMenu) {
+    public void lock(String puzzleMenuId) {
         this.locked = true;
-        this.lockMenu = lockMenu;
+        this.puzzleMenuId = puzzleMenuId;
         setChanged();
     }
 
@@ -270,7 +270,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         setChanged();
     }
 
-    public void setSideEffect(StoneChestSideEffects sideEffect) {
+    public void setSideEffect(SecretChestSideEffects sideEffect) {
         this.sideEffect = sideEffect;
         setChanged();
     }

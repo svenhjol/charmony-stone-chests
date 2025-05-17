@@ -8,7 +8,6 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
-import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
 
 import java.util.List;
 
@@ -68,15 +67,15 @@ public interface SecretChestDefinition extends StringRepresentable {
      * Behavior when the chest is broken.
      * If more than one is specified, one is randomly chosen from the list.
      */
-    default List<StoneChestSideEffects> sideEffects() {
-        return List.of(StoneChestSideEffects.Nothing);
+    default List<SecretChestSideEffects> sideEffects() {
+        return List.of(SecretChestSideEffects.Nothing);
     }
 
     /**
-     * IDs of the lock menus to use.
-     * If empty the lock menu will not be used and the chest will not be locked.
+     * IDs of the puzzle menus to use.
+     * If empty the puzzle menu will not be used and the chest will not be locked.
      */
-    default List<String> lockMenus() {
+    default List<String> puzzleMenus() {
         return List.of();
     }
 

@@ -13,7 +13,7 @@ import svenhjol.charmony.api.secret_chests.SecretChestDefinition;
 import svenhjol.charmony.api.secret_chests.SecretChestDefinitionProvider;
 import svenhjol.charmony.api.secret_chests.SecretChestPlacement;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
-import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
+import svenhjol.charmony.api.secret_chests.SecretChestSideEffects;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles.*;
 
@@ -63,16 +63,16 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
                     GenericItemPuzzleProvider.ID
                 );
             }
 
             @Override
-            public List<StoneChestSideEffects> sideEffects() {
+            public List<SecretChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.GiveBadEffect
+                    SecretChestSideEffects.GiveBadEffect
                 );
             }
 
@@ -134,15 +134,15 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> sideEffects() {
+            public List<SecretChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.GiveBadEffect,
-                    StoneChestSideEffects.SpawnOverworldMonsters
+                    SecretChestSideEffects.GiveBadEffect,
+                    SecretChestSideEffects.SpawnOverworldMonsters
                 );
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
                     GenericItemPuzzleProvider.ID,
                     EnchantedItemPuzzleMenuProvider.ID
@@ -203,15 +203,15 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> sideEffects() {
+            public List<SecretChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.Explode,
-                    StoneChestSideEffects.SpawnOverworldMonsters
+                    SecretChestSideEffects.Explode,
+                    SecretChestSideEffects.SpawnOverworldMonsters
                 );
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
                     ClockPuzzleMenuProvider.ID,
                     MoonPuzzleMenuProvider.ID,
@@ -271,10 +271,10 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> sideEffects() {
+            public List<SecretChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.GiveBadEffect,
-                    StoneChestSideEffects.SpawnOverworldMonsters
+                    SecretChestSideEffects.GiveBadEffect,
+                    SecretChestSideEffects.SpawnOverworldMonsters
                 );
             }
 
@@ -284,9 +284,8 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
-                    ClockPuzzleMenuProvider.ID,
                     MoonPuzzleMenuProvider.ID,
                     GenericItemPuzzleProvider.ID
                 );
@@ -342,7 +341,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
                     GenericItemPuzzleProvider.ID,
                     EnchantedItemPuzzleMenuProvider.ID
@@ -398,18 +397,18 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
                     EnderItemPuzzleProvider.ID
                 );
             }
 
             @Override
-            public List<StoneChestSideEffects> sideEffects() {
+            public List<SecretChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.SpawnEndMonsters,
-                    StoneChestSideEffects.Explode,
-                    StoneChestSideEffects.GiveBadEffect
+                    SecretChestSideEffects.SpawnEndMonsters,
+                    SecretChestSideEffects.Explode,
+                    SecretChestSideEffects.GiveBadEffect
                 );
             }
 
@@ -456,7 +455,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
                     NetherItemPuzzleProvider.ID
                 );
@@ -476,11 +475,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> sideEffects() {
+            public List<SecretChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.SpawnNetherMonsters,
-                    StoneChestSideEffects.Explode,
-                    StoneChestSideEffects.GiveBadEffect
+                    SecretChestSideEffects.SpawnNetherMonsters,
+                    SecretChestSideEffects.Explode,
+                    SecretChestSideEffects.GiveBadEffect
                 );
             }
         };
@@ -509,7 +508,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
                     EnderItemPuzzleProvider.ID
                 );
@@ -525,11 +524,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> sideEffects() {
+            public List<SecretChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.SpawnEndMonsters,
-                    StoneChestSideEffects.Explode,
-                    StoneChestSideEffects.GiveBadEffect
+                    SecretChestSideEffects.SpawnEndMonsters,
+                    SecretChestSideEffects.Explode,
+                    SecretChestSideEffects.GiveBadEffect
                 );
             }
         };
@@ -553,7 +552,7 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<String> lockMenus() {
+            public List<String> puzzleMenus() {
                 return List.of(
                     NetherItemPuzzleProvider.ID
                 );
@@ -573,11 +572,11 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             }
 
             @Override
-            public List<StoneChestSideEffects> sideEffects() {
+            public List<SecretChestSideEffects> sideEffects() {
                 return List.of(
-                    StoneChestSideEffects.SpawnNetherMonsters,
-                    StoneChestSideEffects.Explode,
-                    StoneChestSideEffects.GiveBadEffect
+                    SecretChestSideEffects.SpawnNetherMonsters,
+                    SecretChestSideEffects.Explode,
+                    SecretChestSideEffects.GiveBadEffect
                 );
             }
         };

@@ -15,18 +15,19 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirement;
-import svenhjol.charmony.api.stone_chests.StoneChestLockMenuData;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleType;
+import svenhjol.charmony.api.secret_chests.SecretChestPuzzleMenuData;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.core.common.ContainerMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Constants;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ItemPuzzleSlot;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.PuzzleMenu;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
 import java.util.*;
 
-public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
+public class ItemPuzzleMenu extends ContainerMenu implements ChestPuzzleMenu {
     private final Container container;
     private final ContainerData data;
     private final ContainerLevelAccess access;
@@ -68,7 +69,7 @@ public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
         this.addDataSlots(data);
     }
 
-    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, ItemPuzzleRequirement requirement) {
+    public static Optional<ChestPuzzleMenu> getMenuProvider(SecretChestPuzzleMenuData menuData, ItemPuzzleRequirement requirement) {
         var serverLevel = menuData.level;
         var amplifier = menuData.difficultyAmplifier;
         var seed = menuData.seed;
@@ -91,7 +92,7 @@ public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
         return getMenuProvider(menuData, puzzleItems);
     }
 
-    public static Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData, List<ItemStack> items) {
+    public static Optional<ChestPuzzleMenu> getMenuProvider(SecretChestPuzzleMenuData menuData, List<ItemStack> items) {
         var serverLevel = menuData.level;
         var syncId = menuData.syncId;
         var inventory = menuData.playerInventory;
@@ -212,9 +213,15 @@ public class ItemPuzzleMenu extends ContainerMenu implements PuzzleMenu {
         return numItems;
     }
 
+    @Override
     public StoneChestMaterial getMaterial() {
         var id = this.data.get(0);
         return StoneChestMaterial.byId(id);
+    }
+
+    @Override
+    public ChestPuzzleType puzzleType() {
+        return ChestPuzzleType.Item;
     }
 
     private static ChestPuzzles feature() {

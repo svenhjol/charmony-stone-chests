@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+- Add advancements.
+- Add PuzzleType and PuzzleMenu to API.
+- Update menu providers to return a PuzzleMenu.
+
 ## 1.1.3
 
 - Add stone chest screen to tweaks item tidying whitelist.

@@ -59,7 +59,7 @@ public class Registers extends Setup<SecretChests> {
             var block = StoneChests.feature().registers.chestBlocks.get(material).get();
 
             var lootTables = new ArrayList<>(definition.lootTables());
-            var menus = new ArrayList<>(definition.lockMenus());
+            var menus = new ArrayList<>(definition.puzzleMenus());
             var sideEffects = new ArrayList<>(definition.sideEffects());
 
             if (lootTables.isEmpty()) {
@@ -87,12 +87,12 @@ public class Registers extends Setup<SecretChests> {
                 if (Mod.getSidedFeature(ChestPuzzles.class).enabled()) {
                     String menu = "";
                     if (!menus.isEmpty()) {
-                        // Add a random lock menu to the chest.
+                        // Add a random puzzle menu to the chest.
                         Util.shuffle(menus, random);
                         menu = menus.getFirst();
                     }
 
-                    var providers = ChestPuzzles.feature().registers.lockMenuProviders;
+                    var providers = ChestPuzzles.feature().registers.puzzleMenuProviders;
 
                     if (!menu.isEmpty() && providers.containsKey(menu)) {
                         chest.lock(menu);

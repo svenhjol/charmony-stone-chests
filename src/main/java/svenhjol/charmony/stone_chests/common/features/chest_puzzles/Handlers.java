@@ -18,7 +18,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -26,9 +25,10 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.phys.Vec3;
-import svenhjol.charmony.api.stone_chests.StoneChestLockMenuData;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleMenu;
+import svenhjol.charmony.api.secret_chests.SecretChestPuzzleMenuData;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
-import svenhjol.charmony.api.stone_chests.StoneChestSideEffects;
+import svenhjol.charmony.api.secret_chests.SecretChestSideEffects;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.helpers.TagHelper;
 import svenhjol.charmony.core.helpers.WorldHelper;
@@ -46,22 +46,22 @@ public class Handlers extends Setup<ChestPuzzles> {
         super(feature);
     }
 
-    public Optional<AbstractContainerMenu> getMenuProvider(ServerLevel level, ChestBlockEntity chest, int syncId, Inventory inventory, StoneChestMaterial material) {
-        var lockMenu = chest.lockMenu();
+    public Optional<ChestPuzzleMenu> getMenuProvider(ServerLevel level, ChestBlockEntity chest, int syncId, Inventory inventory, StoneChestMaterial material) {
+        var puzzleMenuId = chest.puzzleMenuId();
         var pos = chest.getBlockPos();
 
-        var providers = feature().registers.lockMenuProviders;
-        if (!providers.containsKey(lockMenu)) {
-            // No lock menu provider, just unlock the chest.
-            feature().log().warn("Provider " + lockMenu + " not found, unlocking chest");
+        var providers = feature().registers.puzzleMenuProviders;
+        if (!providers.containsKey(puzzleMenuId)) {
+            // No puzzle menu provider, just unlock the chest.
+            feature().log().warn("Provider " + puzzleMenuId + " not found, unlocking chest");
             chest.unlock();
         }
 
         if (chest.isLocked()) {
             // Generate a seed based on this position.
             var seed = WorldHelper.seedFromBlockPos(pos);
-            var provider = providers.get(lockMenu);
-            var menuData = new StoneChestLockMenuData();
+            var provider = providers.get(puzzleMenuId);
+            var menuData = new SecretChestPuzzleMenuData();
 
             menuData.syncId = syncId;
             menuData.playerInventory = inventory;
@@ -76,7 +76,7 @@ public class Handlers extends Setup<ChestPuzzles> {
             if (menu.isPresent()) {
                 return menu;
             } else {
-                feature().log().warn("Menu " + lockMenu + " not found, unlocking");
+                feature().log().warn("Menu " + puzzleMenuId + " not found, unlocking");
                 chest.unlock();
             }
         }
@@ -98,8 +98,13 @@ public class Handlers extends Setup<ChestPuzzles> {
             // Get the stored "unlocked" loot table from the chest and set it as the primary loot table.
             // When the chest is next opened the loot will be generated.
             chest.setLootTable(chest.getUnlockedLootTable());
-
             chest.unlock();
+
+            // Do advancements.
+            if (player.containerMenu instanceof ChestPuzzleMenu puzzleMenu) {
+                feature().advancements.unlockedPuzzleChest(puzzleMenu.puzzleType(), player);
+            }
+
             player.openMenu(chest);
 
         } else {
@@ -121,7 +126,7 @@ public class Handlers extends Setup<ChestPuzzles> {
         var amplifier = chest.getDifficultyAmplifier();
         var sideEffect = chest.getSideEffects();
 
-        if (sideEffect == StoneChestSideEffects.Nothing) {
+        if (sideEffect == SecretChestSideEffects.Nothing) {
             return false;
         }
 

@@ -1,4 +1,10 @@
 {
+  "advancements.charmony-stone-chests.stone_chests.title": "Stone Chests",
+  "advancements.charmony-stone-chests.stone_chests.description": "Decorative chests made from different types of stone",
+  "advancements.charmony-stone-chests.unlocked_item_chest.title": "Chest Test",
+  "advancements.charmony-stone-chests.unlocked_item_chest.description": "Successfully unlock a stone chest using items",
+  "advancements.charmony-stone-chests.unlocked_timed_chest.title": "Patience",
+  "advancements.charmony-stone-chests.unlocked_timed_chest.description": "Successfully unlock a stone chest at the correct time",
   "block.charmony-stone-chests.blackstone_chest": "Blackstone Chest",
   "block.charmony-stone-chests.calcite_chest": "Calcite Chest",
   "block.charmony-stone-chests.deepslate_chest": "Deepslate Chest",

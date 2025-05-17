@@ -12,6 +12,7 @@ import svenhjol.charmony.core.enums.Side;
 public final class ChestPuzzles extends SidedFeature {
     public final Registers registers;
     public final Handlers handlers;
+    public final Advancements advancements;
     public final MenuProviders menuProviders;
     public final ItemRequirementProviders itemRequirementProviders;
 
@@ -33,6 +34,7 @@ public final class ChestPuzzles extends SidedFeature {
         super(mod);
         registers = new Registers(this);
         handlers = new Handlers(this);
+        advancements = new Advancements(this);
         menuProviders = new MenuProviders(this);
         itemRequirementProviders = new ItemRequirementProviders(this);
     }

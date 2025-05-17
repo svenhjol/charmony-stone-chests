@@ -1,18 +1,18 @@
 package svenhjol.charmony.stone_chests.common.features.chest_puzzles.puzzles;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import svenhjol.charmony.api.stone_chests.StoneChestLockMenuData;
-import svenhjol.charmony.api.stone_chests.StoneChestLockMenuProvider;
+import svenhjol.charmony.api.secret_chests.SecretChestPuzzleMenuData;
+import svenhjol.charmony.api.secret_chests.SecretChestPuzzleMenuProvider;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleMenu;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.Tags;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemPuzzleMenu;
 
 import java.util.List;
 import java.util.Optional;
 
-public class EnchantedItemPuzzleMenuProvider implements StoneChestLockMenuProvider {
+public class EnchantedItemPuzzleMenuProvider implements SecretChestPuzzleMenuProvider {
     public static final String ID = "enchanted_item_puzzle";
 
     @Override
@@ -21,7 +21,7 @@ public class EnchantedItemPuzzleMenuProvider implements StoneChestLockMenuProvid
     }
 
     @Override
-    public Optional<AbstractContainerMenu> getMenuProvider(StoneChestLockMenuData menuData) {
+    public Optional<ChestPuzzleMenu> getMenuProvider(SecretChestPuzzleMenuData menuData) {
         var amplifier = menuData.difficultyAmplifier;
         var random = menuData.random;
         var enchantmentRegistry = menuData.level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);

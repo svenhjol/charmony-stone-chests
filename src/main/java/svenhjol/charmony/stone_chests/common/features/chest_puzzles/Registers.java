@@ -4,7 +4,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirement;
 import svenhjol.charmony.api.chest_puzzles.ItemPuzzleRequirementProvider;
-import svenhjol.charmony.api.stone_chests.StoneChestLockMenuProvider;
+import svenhjol.charmony.api.secret_chests.SecretChestPuzzleMenuProvider;
 import svenhjol.charmony.core.Api;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.common.CommonRegistry;
@@ -22,7 +22,7 @@ public class Registers extends Setup<ChestPuzzles> {
     public final Supplier<MenuType<MoonPuzzleMenu>> moonPuzzleMenu;
     public final Supplier<MenuType<ClockPuzzleMenu>> clockPuzzleMenu;
     public final Map<Integer, Supplier<MenuType<ItemPuzzleMenu>>> itemPuzzleMenus = new HashMap<>();
-    public final Map<String, StoneChestLockMenuProvider> lockMenuProviders = new HashMap<>();
+    public final Map<String, SecretChestPuzzleMenuProvider> puzzleMenuProviders = new HashMap<>();
     public final List<ItemPuzzleRequirement> itemPuzzleRequirements = new ArrayList<>();
 
     public Registers(ChestPuzzles feature) {
@@ -45,8 +45,8 @@ public class Registers extends Setup<ChestPuzzles> {
     @Override
     public Runnable boot() {
         return () -> {
-            Api.consume(StoneChestLockMenuProvider.class,
-                provider -> lockMenuProviders.put(provider.getMenuProviderId(), provider));
+            Api.consume(SecretChestPuzzleMenuProvider.class,
+                provider -> puzzleMenuProviders.put(provider.getMenuProviderId(), provider));
 
             Api.consume(ItemPuzzleRequirementProvider.class,
                 provider -> itemPuzzleRequirements.addAll(provider.getItemPuzzleTags()));

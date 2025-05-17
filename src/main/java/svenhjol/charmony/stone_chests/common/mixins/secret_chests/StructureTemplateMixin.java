@@ -1,5 +1,7 @@
 package svenhjol.charmony.stone_chests.common.mixins.secret_chests;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -7,7 +9,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import svenhjol.charmony.stone_chests.common.features.secret_chests.SecretChests;
 
 @Mixin(StructureTemplate.class)
@@ -15,7 +16,7 @@ public abstract class StructureTemplateMixin {
     @Unique
     private SecretChests feature;
 
-    @Redirect(
+    @WrapOperation(
         method = "placeInWorld",
         at = @At(
             value = "INVOKE",
@@ -23,7 +24,7 @@ public abstract class StructureTemplateMixin {
             ordinal = 1
         )
     )
-    public boolean hookPlaceInWorld(ServerLevelAccessor level, BlockPos pos, BlockState state, int i) {
+    public boolean hookPlaceInWorld(ServerLevelAccessor level, BlockPos pos, BlockState state, int i, Operation<Boolean> original) {
         if (feature == null) {
             feature = SecretChests.feature(); // Simple cache.
         }
@@ -37,6 +38,6 @@ public abstract class StructureTemplateMixin {
                 return true;
             }
         }
-        return level.setBlock(pos, state, i);
+        return original.call(level, pos, state, i);
     }
 }

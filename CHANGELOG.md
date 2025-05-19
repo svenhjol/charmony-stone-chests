@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- Update for Charmony and API.
+
 ## 1.2.2
 
 - Use WrapOperation rather than Redirect in mixin.

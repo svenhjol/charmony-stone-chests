@@ -1,7 +1,7 @@
 package svenhjol.charmony.stone_chests.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import svenhjol.charmony.core.enums.Side;
+import svenhjol.charmony.api.core.Side;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
 import svenhjol.charmony.stone_chests.client.features.chest_puzzles.ChestPuzzles;
 import svenhjol.charmony.stone_chests.client.features.stone_chests.StoneChests;

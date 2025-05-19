@@ -95,11 +95,7 @@
       ]
     },
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 1,
-        "max": 2
-      },
+      "rolls": 1,
       "bonus_rolls": 1,
       "entries": [
         {
@@ -118,8 +114,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 25,
-                "max": 35
+                "min": 10,
+                "max": 15
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -147,8 +143,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 25,
-                "max": 35
+                "min": 10,
+                "max": 15
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -173,8 +169,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 25,
-                "max": 35
+                "min": 10,
+                "max": 15
               },
               "options": "#minecraft:on_random_loot"
             }
@@ -199,8 +195,8 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "min": 25,
-                "max": 35
+                "min": 10,
+                "max": 15
               },
               "options": "#minecraft:on_random_loot"
             }

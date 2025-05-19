@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2
+
+- Weaken fortress loot and difficulty.
+
 ## 1.3.1
 
 - Update for Charmony and API.

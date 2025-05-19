@@ -463,14 +463,15 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
 
             @Override
             public int difficultyAmplifier() {
-                return 2;
+                return 1;
             }
 
             @Override
             public List<ResourceKey<LootTable>> lootTables() {
                 return List.of(
                     Tags.LOOT_NETHER1,
-                    Tags.LOOT_NETHER2
+                    Tags.LOOT_NETHER2,
+                    Tags.LOOT_DIAMONDS
                 );
             }
 

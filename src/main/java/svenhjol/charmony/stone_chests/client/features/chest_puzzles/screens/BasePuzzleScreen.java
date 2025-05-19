@@ -10,14 +10,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import svenhjol.charmony.core.client.TintedGuiGraphics;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzleMenu;
+import svenhjol.charmony.api.core.Color;
+import svenhjol.charmony.api.tint_background.TintedGuiGraphics;
 import svenhjol.charmony.core.helpers.ColorHelper;
 import svenhjol.charmony.stone_chests.StoneChestsMod;
-import svenhjol.charmony.api.chest_puzzles.ChestPuzzleMenu;
 
 public abstract class BasePuzzleScreen<T extends AbstractContainerMenu & ChestPuzzleMenu> extends AbstractContainerScreen<T> {
     public static final ResourceLocation BACKGROUND = StoneChestsMod.id("textures/gui/container/generic_puzzle.png");
-    protected ColorHelper.Color tintedBg;
+    protected Color tintedBg;
     protected int tintedFg;
 
     public BasePuzzleScreen(T menu, Inventory inventory, Component component) {

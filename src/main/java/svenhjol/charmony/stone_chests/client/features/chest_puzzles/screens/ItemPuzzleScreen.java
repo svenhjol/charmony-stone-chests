@@ -4,8 +4,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import svenhjol.charmony.api.tint_background.TintedGuiGraphics;
 import svenhjol.charmony.core.client.SlotSprite;
-import svenhjol.charmony.core.client.TintedGuiGraphics;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemPuzzleMenu;
 
 public class ItemPuzzleScreen extends BasePuzzleScreen<ItemPuzzleMenu> {

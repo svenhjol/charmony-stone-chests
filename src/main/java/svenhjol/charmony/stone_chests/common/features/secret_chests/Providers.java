@@ -286,8 +286,9 @@ public class Providers extends Setup<SecretChests> implements SecretChestDefinit
             @Override
             public List<String> puzzleMenus() {
                 return List.of(
-                    MoonPuzzleMenuProvider.ID,
-                    GenericItemPuzzleProvider.ID
+                    ClockPuzzleMenuProvider.ID
+//                    MoonPuzzleMenuProvider.ID,
+//                    GenericItemPuzzleProvider.ID
                 );
             }
         };

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1
+
+- Update clock scaling and translation.
+
 ## 1.4.0
 
 - Update for 1.21.6.

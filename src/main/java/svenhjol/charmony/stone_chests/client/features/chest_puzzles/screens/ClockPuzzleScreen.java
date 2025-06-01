@@ -1,6 +1,5 @@
 package svenhjol.charmony.stone_chests.client.features.chest_puzzles.screens;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -29,14 +28,13 @@ public class ClockPuzzleScreen extends BasePuzzleScreen<ClockPuzzleMenu> {
         var time = getMenu().getTime();
         var image = getClockImage(time);
 
-        var pose = new PoseStack();
-        pose.pushPose();
-        var x = -9; // This is scaled by pose.scale()
-        var y = -42; // This is scaled by pose.scale()
-        pose.translate(((float) width / 2), ((float)height / 2), 1.0f);
-        pose.scale(1.24f, 1.24f, 1.24f);
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, image, x, y, 0.0f, 0.0f, 16, 16, 16, 16);
-        pose.popPose();
+        var scale = 1.24f;
+        var pose = guiGraphics.pose();
+        pose.pushMatrix();
+        pose.translate(((float) width / 2), ((float)height / 2));
+        pose.scale(scale, scale);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, image, -8, -42, 0.0f, 0.0f, 16, 16, 16, 16);
+        pose.popMatrix();
     }
 
     protected ResourceLocation getClockImage(int time) {

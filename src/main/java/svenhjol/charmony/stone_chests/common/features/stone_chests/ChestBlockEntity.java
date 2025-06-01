@@ -1,10 +1,8 @@
 package svenhjol.charmony.stone_chests.common.features.stone_chests;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -20,9 +18,11 @@ import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
-import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.api.secret_chests.SecretChestSideEffects;
+import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 
 public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
@@ -105,43 +105,43 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        tag.putInt(MATERIAL_TAG, material.getId());
-        tag.putBoolean(LOCKED_TAG, locked);
-        tag.putString(PUZZLE_MENU_ID_TAG, puzzleMenuId);
-        tag.putString(UNLOCKED_LOOT_TABLE_TAG, unlockedLootTable);
-        tag.putInt(DIFFICULTY_AMPLIFIER_TAG, difficultyAmplifier);
+    protected void saveAdditional(ValueOutput valueOutput) {
+        super.saveAdditional(valueOutput);
+        valueOutput.putInt(MATERIAL_TAG, material.getId());
+        valueOutput.putBoolean(LOCKED_TAG, locked);
+        valueOutput.putString(PUZZLE_MENU_ID_TAG, puzzleMenuId);
+        valueOutput.putString(UNLOCKED_LOOT_TABLE_TAG, unlockedLootTable);
+        valueOutput.putInt(DIFFICULTY_AMPLIFIER_TAG, difficultyAmplifier);
 
         if (sideEffect != null) {
-            tag.putString(SIDE_EFFECT_TAG, sideEffect.getSerializedName());
+            valueOutput.putString(SIDE_EFFECT_TAG, sideEffect.getSerializedName());
         }
 
-        if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.items, provider);
+        if (!this.trySaveLootTable(valueOutput)) {
+            ContainerHelper.saveAllItems(valueOutput, this.items);
         }
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        this.locked = tag.getBooleanOr(LOCKED_TAG, false);
-        this.material = StoneChestMaterial.byId(tag.getIntOr(MATERIAL_TAG, 0));
-        this.puzzleMenuId = tag.getStringOr(PUZZLE_MENU_ID_TAG, "");
-        this.unlockedLootTable = tag.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
-        this.difficultyAmplifier = tag.getIntOr(DIFFICULTY_AMPLIFIER_TAG, 1);
+    protected void loadAdditional(ValueInput valueInput) {
+        super.loadAdditional(valueInput);
+        this.locked = valueInput.getBooleanOr(LOCKED_TAG, false);
+        this.material = StoneChestMaterial.byId(valueInput.getIntOr(MATERIAL_TAG, 0));
+        this.puzzleMenuId = valueInput.getStringOr(PUZZLE_MENU_ID_TAG, "");
+        this.unlockedLootTable = valueInput.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
+        this.difficultyAmplifier = valueInput.getIntOr(DIFFICULTY_AMPLIFIER_TAG, 1);
 
-        tag.getString(PUZZLE_MENU_ID_TAG).ifPresent(str -> this.sideEffect = SecretChestSideEffects.getOrDefault(str));
+        valueInput.getString(PUZZLE_MENU_ID_TAG).ifPresent(str -> this.sideEffect = SecretChestSideEffects.getOrDefault(str));
 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        if (!this.tryLoadLootTable(tag)) {
-            ContainerHelper.loadAllItems(tag, this.items, provider);
+        if (!this.tryLoadLootTable(valueInput)) {
+            ContainerHelper.loadAllItems(valueInput, this.items);
         }
     }
 
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("block.charmony-stone-chests." + material.getSerializedName() + "_chest");
+        return Component.translatable("block.charmony." + material.getSerializedName() + "_chest");
     }
 
     @Override

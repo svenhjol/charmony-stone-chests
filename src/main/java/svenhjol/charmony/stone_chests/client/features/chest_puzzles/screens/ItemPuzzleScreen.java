@@ -1,11 +1,11 @@
 package svenhjol.charmony.stone_chests.client.features.chest_puzzles.screens;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import svenhjol.charmony.api.tint_background.TintedGuiGraphics;
 import svenhjol.charmony.core.client.SlotSprite;
+import svenhjol.charmony.core.client.features.tint_background.TintedGuiGraphics;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.ItemPuzzleMenu;
 
 public class ItemPuzzleScreen extends BasePuzzleScreen<ItemPuzzleMenu> {
@@ -33,7 +33,7 @@ public class ItemPuzzleScreen extends BasePuzzleScreen<ItemPuzzleMenu> {
             var ox = bx + x;
 
             var texture = SlotSprite.Slot;
-            ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blitSprite(RenderType::guiTextured, texture.sprite(), ox, oy, texture.width(), texture.height());
+            ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blitSprite(RenderPipelines.GUI_TEXTURED, texture.sprite(), ox, oy, texture.width(), texture.height());
         }
     }
 }

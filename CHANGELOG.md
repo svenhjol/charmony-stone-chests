@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+- Update for 1.21.6.
+
 ## 1.3.2
 
 - Weaken fortress loot and difficulty.

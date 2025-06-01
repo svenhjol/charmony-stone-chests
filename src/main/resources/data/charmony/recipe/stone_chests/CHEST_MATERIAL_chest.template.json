@@ -1,0 +1,19 @@
+{
+  "template": {
+    "type": "minecraft:crafting_shaped",
+    "key": {
+      "#": "#charmony:crafts_CHEST_MATERIAL_chests",
+      "O": "#c:chests/wooden"
+    },
+    "pattern": [
+      "###",
+      "#O#",
+      "###"
+    ],
+    "result": {
+      "count": 1,
+      "id": "charmony:CHEST_MATERIAL_chest"
+    }
+  },
+  "variants": "chest_material"
+}

@@ -1,12 +1,12 @@
 package svenhjol.charmony.stone_chests.client.features.chest_puzzles.screens;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import svenhjol.charmony.api.tint_background.TintedGuiGraphics;
-import svenhjol.charmony.stone_chests.StoneChestsMod;
+import svenhjol.charmony.core.Charmony;
+import svenhjol.charmony.core.client.features.tint_background.TintedGuiGraphics;
 import svenhjol.charmony.stone_chests.common.features.chest_puzzles.menus.MoonPuzzleMenu;
 
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class MoonPuzzleScreen extends BasePuzzleScreen<MoonPuzzleMenu> {
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         super.renderLabels(guiGraphics, mouseX, mouseY);
-        drawCenteredString(guiGraphics, font, getMoonTitle(), imageWidth / 2, 32, tintedFg, false);
+        drawCenteredString(guiGraphics, font, getMoonTitle(), imageWidth / 2, 32, tintedFg.getArgbColor(), false);
     }
 
     protected void renderMoonPhase(GuiGraphics guiGraphics) {
@@ -38,32 +38,32 @@ public class MoonPuzzleScreen extends BasePuzzleScreen<MoonPuzzleMenu> {
         var oy = by + 46;
 
         var phase = MOON_PHASES.get(getMenu().getMoonPhase());
-        ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blitSprite(RenderType::guiTextured, phase, ox, oy, 16, 16);
+        ((TintedGuiGraphics)guiGraphics).tint(tintedBg).blitSprite(RenderPipelines.GUI_TEXTURED, phase, ox, oy, 16, 16);
     }
 
     protected Component getMoonTitle() {
         Component moonTitle;
         var phase = getMenu().getMoonPhase();
         if (phase == 0) {
-            moonTitle = Component.translatable("gui.charmony-stone-chests.moon.full");
+            moonTitle = Component.translatable("gui.charmony.moon.full");
         } else if (phase > 0 && phase < 4) {
-            moonTitle = Component.translatable("gui.charmony-stone-chests.moon.waning");
+            moonTitle = Component.translatable("gui.charmony.moon.waning");
         } else if (phase == 4) {
-            moonTitle = Component.translatable("gui.charmony-stone-chests.moon.new");
+            moonTitle = Component.translatable("gui.charmony.moon.new");
         } else {
-            moonTitle = Component.translatable("gui.charmony-stone-chests.moon.waxing");
+            moonTitle = Component.translatable("gui.charmony.moon.waxing");
         }
         return moonTitle;
     }
 
     static {
-        MOON_PHASES.put(0, StoneChestsMod.id("moon/full"));
-        MOON_PHASES.put(1, StoneChestsMod.id("moon/waning_gibbous"));
-        MOON_PHASES.put(2, StoneChestsMod.id("moon/waning_half"));
-        MOON_PHASES.put(3, StoneChestsMod.id("moon/waning_crescent"));
-        MOON_PHASES.put(4, StoneChestsMod.id("moon/new"));
-        MOON_PHASES.put(5, StoneChestsMod.id("moon/waxing_crescent"));
-        MOON_PHASES.put(6, StoneChestsMod.id("moon/waxing_half"));
-        MOON_PHASES.put(7, StoneChestsMod.id("moon/waxing_gibbous"));
+        MOON_PHASES.put(0, Charmony.id("moon/full"));
+        MOON_PHASES.put(1, Charmony.id("moon/waning_gibbous"));
+        MOON_PHASES.put(2, Charmony.id("moon/waning_half"));
+        MOON_PHASES.put(3, Charmony.id("moon/waning_crescent"));
+        MOON_PHASES.put(4, Charmony.id("moon/new"));
+        MOON_PHASES.put(5, Charmony.id("moon/waxing_crescent"));
+        MOON_PHASES.put(6, Charmony.id("moon/waxing_half"));
+        MOON_PHASES.put(7, Charmony.id("moon/waxing_gibbous"));
     }
 }

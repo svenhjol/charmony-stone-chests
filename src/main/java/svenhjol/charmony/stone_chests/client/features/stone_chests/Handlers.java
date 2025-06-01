@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
+import svenhjol.charmony.core.Charmony;
 import svenhjol.charmony.core.base.Setup;
-import svenhjol.charmony.stone_chests.StoneChestsMod;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlockEntity;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class Handlers extends Setup<StoneChests> {
         for (var coreMaterial : StoneChestMaterial.values()) {
             var name = coreMaterial.getSerializedName();
             var mapper = new MaterialMapper(Sheets.CHEST_SHEET, "entity/chest");
-            var sheetMaterial = mapper.apply(StoneChestsMod.id(name));
+            var sheetMaterial = mapper.apply(Charmony.id(name));
             CHEST_MATERIALS.put(coreMaterial, sheetMaterial);
         }
     }

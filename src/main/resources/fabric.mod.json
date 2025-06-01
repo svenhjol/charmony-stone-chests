@@ -8,7 +8,7 @@
   "authors": [
     "svenhjol"
   ],
-  "icon": "assets/charmony-stone-chests/textures/gui/sprites/icon.png",
+  "icon": "assets/charmony/textures/gui/sprites/charmony-stone-chests.png",
   "license": "MIT",
   "environment": "*",
   "mixins": [
@@ -23,9 +23,6 @@
     ],
     "client": [
       "svenhjol.charmony.stone_chests.client.ClientInitializer"
-    ],
-    "modmenu": [
-      "svenhjol.charmony.stone_chests.integration.ModMenuPlugin"
     ]
   },
 

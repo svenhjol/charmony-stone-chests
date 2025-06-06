@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.2
+
+- Update prismarine, stone and calcite chest textures.
+
 ## 1.4.1
 
 - Update clock scaling and translation.

@@ -45,10 +45,10 @@ public class Registers extends Setup<StoneChests> {
 
         chestBlockEntity = registry.blockEntity(CHEST_ID, () -> ChestBlockEntity::new, chestBlocks.values().stream().toList());
 
-        chestOpenSound = registry.sound("chest_open");
-        chestCloseSound = registry.sound("chest_close");
-        chestBreakSound = registry.sound("chest_break");
-        chestUnlockSound = registry.sound("chest_unlock");
+        chestOpenSound = registry.sound("stone_chest_open");
+        chestCloseSound = registry.sound("stone_chest_close");
+        chestBreakSound = registry.sound("stone_chest_break");
+        chestUnlockSound = registry.sound("stone_chest_unlock");
 
         unlockedMenu = registry.menuType(UNLOCKED_ID, () -> new MenuType<>(UnlockedMenu::new, FeatureFlags.VANILLA_SET));
     }

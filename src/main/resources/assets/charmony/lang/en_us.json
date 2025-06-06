@@ -27,8 +27,8 @@
   "item.charmony.purpur_chest": "Purpur Chest",
   "item.charmony.stone_chest": "Stone Chest",
   "item.charmony.tuff_chest": "Tuff Chest",
-  "subtitles.charmony.block.chest_break": "Stone Chest breaks",
-  "subtitles.charmony.block.chest_close": "Stone Chest closes",
-  "subtitles.charmony.block.chest_open": "Stone Chest opens",
-  "subtitles.charmony.block.chest_unlock": "Stone Chest unlocks"
+  "subtitles.charmony.block.stone_chest_break": "Stone Chest breaks",
+  "subtitles.charmony.block.stone_chest_close": "Stone Chest closes",
+  "subtitles.charmony.block.stone_chest_open": "Stone Chest opens",
+  "subtitles.charmony.block.stone_chest_unlock": "Stone Chest unlocks"
 }

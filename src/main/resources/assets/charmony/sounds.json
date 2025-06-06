@@ -1,14 +1,14 @@
 {
-  "chest_break": {
+  "stone_chest_break": {
     "sounds": [
       {
         "name": "charmony:chest_break",
         "volume": 1.0
       }
     ],
-    "subtitle": "subtitles.charmony.block.chest_break"
+    "subtitle": "subtitles.charmony.block.stone_chest_break"
   },
-  "chest_close": {
+  "stone_chest_close": {
     "sounds": [
       {
         "name": "charmony:chest_close1",
@@ -23,9 +23,9 @@
         "volume": 1.0
       }
     ],
-    "subtitle": "subtitles.charmony.block.chest_close"
+    "subtitle": "subtitles.charmony.block.stone_chest_close"
   },
-  "chest_open": {
+  "stone_chest_open": {
     "sounds": [
       {
         "name": "charmony:chest_open1",
@@ -40,9 +40,9 @@
         "volume": 1.0
       }
     ],
-    "subtitle": "subtitles.charmony.block.chest_open"
+    "subtitle": "subtitles.charmony.block.stone_chest_open"
   },
-  "chest_unlock": {
+  "stone_chest_unlock": {
     "sounds": [
       {
         "name": "charmony:chest_unlock1",
@@ -53,6 +53,6 @@
         "volume": 1.0
       }
     ],
-    "subtitle": "subtitles.charmony.block.chest_unlock"
+    "subtitle": "subtitles.charmony.block.stone_chest_unlock"
   }
 }

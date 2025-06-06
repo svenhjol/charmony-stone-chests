@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.3
+
+- Fix registry clash.
+
 ## 1.4.2
 
 - Update prismarine, stone and calcite chest textures.

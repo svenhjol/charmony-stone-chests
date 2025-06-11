@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.5
+
+- Remove all that.
+
 ## 1.5.4
 
 - Implement all inherited methods for interface to work properly.

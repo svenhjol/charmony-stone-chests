@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2
+
+- Update mod description.
+
 ## 1.5.1
 
 - Move puzzles and secret chests to separate mod.

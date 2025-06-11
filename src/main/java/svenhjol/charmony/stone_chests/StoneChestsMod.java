@@ -9,8 +9,7 @@ import svenhjol.charmony.core.base.Mod;
     sides = {Side.Client, Side.Common},
     name = "Stone Chests",
     description = """
-        Adds craftable stone chests and secret chests found around the world.
-        Secret chests can be looted after solving a puzzle.""")
+        Adds craftable stone chests.""")
 public final class StoneChestsMod extends Mod {
     public static final String ID = "charmony-stone-chests";
     private static StoneChestsMod instance;

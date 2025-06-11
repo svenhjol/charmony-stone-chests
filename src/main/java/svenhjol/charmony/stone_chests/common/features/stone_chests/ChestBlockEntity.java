@@ -26,6 +26,8 @@ import svenhjol.charmony.api.secret_chests.SecretChestSideEffects;
 import svenhjol.charmony.api.stone_chests.StoneChestBlockEntity;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 
+import javax.annotation.Nullable;
+
 public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, StoneChestBlockEntity {
     public static final String MATERIAL_TAG = "material";
     public static final String LOCKED_TAG = "locked";
@@ -285,6 +287,21 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     public void setSideEffect(SecretChestSideEffects sideEffect) {
         this.sideEffect = sideEffect;
         setChanged();
+    }
+
+    @Override
+    public BlockPos getBlockPos() {
+        return super.getBlockPos();
+    }
+
+    @Override
+    public void setLootTable(@Nullable ResourceKey<LootTable> resourceKey) {
+        super.setLootTable(resourceKey);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
     }
 
     private StoneChests feature() {

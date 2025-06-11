@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.4
+
+- Implement all inherited methods for interface to work properly.
+
 ## 1.5.3
 
 - Cast to block.

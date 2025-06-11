@@ -3,6 +3,7 @@ package svenhjol.charmony.stone_chests.common.features.stone_chests;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 import svenhjol.charmony.api.stone_chests.StoneChestsApi;
@@ -57,6 +58,9 @@ public class Registers extends Setup<StoneChests> {
 
     @Override
     public Runnable boot() {
-        return () -> StoneChestsApi.Impl.getBlock(material -> Optional.ofNullable(chestBlocks.get(material).get()));
+        return () -> StoneChestsApi.Impl.getBlock(material -> {
+            var chestBlock = (Block) chestBlocks.get(material).get();
+            return Optional.of(chestBlock);
+        });
     }
 }

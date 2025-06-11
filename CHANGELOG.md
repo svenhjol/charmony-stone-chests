@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.3
+
+- Cast to block.
+
 ## 1.5.2
 
 - Update mod description.

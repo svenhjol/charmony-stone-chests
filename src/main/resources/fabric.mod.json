@@ -6,7 +6,8 @@
   "name": "Charmony Stone Chests",
   "description": "Adds craftable stone chests and secret chests found within structures and caves. Secret chests can be looted after solving a puzzle.",
   "authors": [
-    "svenhjol"
+    "svenhjol",
+    "Coranthes"
   ],
   "icon": "assets/charmony/textures/gui/sprites/charmony-stone-chests.png",
   "license": "MIT",

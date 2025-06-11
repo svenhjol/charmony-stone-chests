@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.4
+
+- Updated stone, calcite and tuff chest textures.
+
 ## 1.4.3
 
 - Fix registry clash.

@@ -21,11 +21,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
+import svenhjol.charmony.api.chest_puzzles.ChestPuzzlesApi;
 import svenhjol.charmony.api.secret_chests.SecretChestSideEffects;
+import svenhjol.charmony.api.stone_chests.StoneChestBlockEntity;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
-import svenhjol.charmony.stone_chests.common.features.chest_puzzles.ChestPuzzles;
 
-public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
+public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, StoneChestBlockEntity {
     public static final String MATERIAL_TAG = "material";
     public static final String LOCKED_TAG = "locked";
     public static final String PUZZLE_MENU_ID_TAG = "puzzle_menu_id";
@@ -209,10 +210,10 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
             throw new RuntimeException("Can't even");
         }
 
-        if (isLocked() && puzzles().enabled()) {
-            var opt = puzzles().handlers.getMenuProvider(serverLevel, this, syncId, inventory, material);
-            if (opt.isPresent() && opt.get() instanceof AbstractContainerMenu containerMenu) {
-                return containerMenu;
+        if (isLocked()) {
+            var opt = ChestPuzzlesApi.instance().getMenuProvider(serverLevel, this, syncId, inventory, material);
+            if (opt.isPresent()) {
+                return opt.get();
             }
         }
 
@@ -220,30 +221,37 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         return new UnlockedMenu(syncId, inventory, this, material);
     }
 
+    @Override
     public StoneChestMaterial getMaterial() {
         return material;
     }
 
+    @Override
     public String puzzleMenuId() {
         return puzzleMenuId;
     }
 
+    @Override
     public SecretChestSideEffects getSideEffects() {
         return sideEffect;
     }
 
+    @Override
     public int getDifficultyAmplifier() {
         return difficultyAmplifier;
     }
 
+    @Override
     public ResourceKey<LootTable> getUnlockedLootTable() {
         return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(unlockedLootTable));
     }
 
+    @Override
     public boolean isLocked() {
         return locked;
     }
 
+    @Override
     public void unlock() {
         if (isLocked() && level instanceof ServerLevel serverLevel) {
             serverLevel.playSound(null, getBlockPos(), feature().registers.chestUnlockSound.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
@@ -254,29 +262,29 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
 
     }
 
+    @Override
     public void lock(String puzzleMenuId) {
         this.locked = true;
         this.puzzleMenuId = puzzleMenuId;
         setChanged();
     }
 
+    @Override
     public void setDifficultyAmplifier(int amplifier) {
         this.difficultyAmplifier = amplifier;
         setChanged();
     }
 
+    @Override
     public void setUnlockedLootTable(ResourceKey<LootTable> lootTable) {
         this.unlockedLootTable = lootTable.location().toString();
         setChanged();
     }
 
+    @Override
     public void setSideEffect(SecretChestSideEffects sideEffect) {
         this.sideEffect = sideEffect;
         setChanged();
-    }
-
-    private ChestPuzzles puzzles() {
-        return ChestPuzzles.feature();
     }
 
     private StoneChests feature() {

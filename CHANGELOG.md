@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.1
+
+- Move puzzles and secret chests to separate mod.
+
 ## 1.4.4
 
 - Updated stone, calcite and tuff chest textures.

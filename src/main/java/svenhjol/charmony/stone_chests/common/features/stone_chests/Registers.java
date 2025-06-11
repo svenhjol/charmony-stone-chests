@@ -5,12 +5,14 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
+import svenhjol.charmony.api.stone_chests.StoneChestsApi;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.common.CommonRegistry;
 import svenhjol.charmony.stone_chests.common.features.stone_chests.ChestBlock.ChestBlockItem;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class Registers extends Setup<StoneChests> {
@@ -51,5 +53,10 @@ public class Registers extends Setup<StoneChests> {
         chestUnlockSound = registry.sound("stone_chest_unlock");
 
         unlockedMenu = registry.menuType(UNLOCKED_ID, () -> new MenuType<>(UnlockedMenu::new, FeatureFlags.VANILLA_SET));
+    }
+
+    @Override
+    public Runnable boot() {
+        return () -> StoneChestsApi.Impl.getBlock(material -> Optional.ofNullable(chestBlocks.get(material).get()));
     }
 }

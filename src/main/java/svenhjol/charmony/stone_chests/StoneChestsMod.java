@@ -1,9 +1,8 @@
 package svenhjol.charmony.stone_chests;
 
-import net.minecraft.resources.ResourceLocation;
 import svenhjol.charmony.api.core.ModDefinition;
-import svenhjol.charmony.core.base.Mod;
 import svenhjol.charmony.api.core.Side;
+import svenhjol.charmony.core.base.Mod;
 
 @ModDefinition(
     id = StoneChestsMod.ID,
@@ -23,9 +22,5 @@ public final class StoneChestsMod extends Mod {
             instance = new StoneChestsMod();
         }
         return instance;
-    }
-
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(ID, path);
     }
 }

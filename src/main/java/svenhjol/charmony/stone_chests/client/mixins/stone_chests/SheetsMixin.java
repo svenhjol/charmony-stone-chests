@@ -1,4 +1,4 @@
-package svenhjol.charmony.stone_chests.client.mixins;
+package svenhjol.charmony.stone_chests.client.mixins.stone_chests;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

@@ -32,12 +32,13 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import svenhjol.charmony.api.stone_chests.StoneChestBlock;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements SimpleWaterloggedBlock {
+public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements SimpleWaterloggedBlock, StoneChestBlock {
     public static final MapCodec<ChestBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
         StoneChestMaterial.CODEC.fieldOf("material").forGetter(ChestBlock::getMaterial),
         propertiesCodec()

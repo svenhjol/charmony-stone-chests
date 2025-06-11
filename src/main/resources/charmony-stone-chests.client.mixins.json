@@ -10,6 +10,6 @@
   "mixins": [
   ],
   "client": [
-    "SheetsMixin"
+    "stone_chests.SheetsMixin"
   ]
 }

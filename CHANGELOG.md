@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.6
+
+- Simplify API for loot.
+
 ## 1.5.5
 
 - Remove all that.

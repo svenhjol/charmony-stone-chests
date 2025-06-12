@@ -2,10 +2,7 @@ package svenhjol.charmony.stone_chests.common.features.stone_chests;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.ContainerHelper;
@@ -20,19 +17,14 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.storage.loot.LootTable;
 import svenhjol.charmony.api.chest_puzzles.ChestPuzzlesApi;
-import svenhjol.charmony.api.secret_chests.SecretChestSideEffects;
 import svenhjol.charmony.api.stone_chests.StoneChestBlockEntity;
 import svenhjol.charmony.api.stone_chests.StoneChestMaterial;
 
 public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, StoneChestBlockEntity {
     public static final String MATERIAL_TAG = "material";
     public static final String LOCKED_TAG = "locked";
-    public static final String PUZZLE_MENU_ID_TAG = "puzzle_menu_id";
-    public static final String UNLOCKED_LOOT_TABLE_TAG = "unlocked_loot_table";
-    public static final String SIDE_EFFECT_TAG = "side_effect";
-    public static final String DIFFICULTY_AMPLIFIER_TAG = "difficulty_amplifier";
+    public static final String CUSTOM_DEFINITION_TAG = "custom_definition";
 
     public static final int ROWS = 3;
     public static final int COLUMNS = 9;
@@ -43,10 +35,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     private StoneChestMaterial material;
     private NonNullList<ItemStack> items;
     private boolean locked;
-    private String puzzleMenuId;
-    private String unlockedLootTable;
-    private SecretChestSideEffects sideEffect;
-    private int difficultyAmplifier;
+    private String customDefinition;
 
     public ChestBlockEntity(BlockPos pos, BlockState state) {
         super(StoneChests.feature().registers.chestBlockEntity.get(), pos, state);
@@ -54,10 +43,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.material = block.getMaterial();
         this.items = NonNullList.withSize(SLOTS, ItemStack.EMPTY);
         this.locked = false;
-        this.puzzleMenuId = "";
-        this.unlockedLootTable = "";
-        this.difficultyAmplifier = 1;
-        this.sideEffect = SecretChestSideEffects.Nothing;
+        this.customDefinition = "";
 
         this.openersCounter = new ContainerOpenersCounter() {
             @Override
@@ -110,13 +96,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         super.saveAdditional(valueOutput);
         valueOutput.putInt(MATERIAL_TAG, material.getId());
         valueOutput.putBoolean(LOCKED_TAG, locked);
-        valueOutput.putString(PUZZLE_MENU_ID_TAG, puzzleMenuId);
-        valueOutput.putString(UNLOCKED_LOOT_TABLE_TAG, unlockedLootTable);
-        valueOutput.putInt(DIFFICULTY_AMPLIFIER_TAG, difficultyAmplifier);
-
-        if (sideEffect != null) {
-            valueOutput.putString(SIDE_EFFECT_TAG, sideEffect.getSerializedName());
-        }
+        valueOutput.putString(CUSTOM_DEFINITION_TAG, customDefinition);
 
         if (!this.trySaveLootTable(valueOutput)) {
             ContainerHelper.saveAllItems(valueOutput, this.items);
@@ -128,11 +108,7 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         super.loadAdditional(valueInput);
         this.locked = valueInput.getBooleanOr(LOCKED_TAG, false);
         this.material = StoneChestMaterial.byId(valueInput.getIntOr(MATERIAL_TAG, 0));
-        this.puzzleMenuId = valueInput.getStringOr(PUZZLE_MENU_ID_TAG, "");
-        this.unlockedLootTable = valueInput.getStringOr(UNLOCKED_LOOT_TABLE_TAG, "");
-        this.difficultyAmplifier = valueInput.getIntOr(DIFFICULTY_AMPLIFIER_TAG, 1);
-
-        valueInput.getString(PUZZLE_MENU_ID_TAG).ifPresent(str -> this.sideEffect = SecretChestSideEffects.getOrDefault(str));
+        this.customDefinition = valueInput.getStringOr(CUSTOM_DEFINITION_TAG, "");
 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(valueInput)) {
@@ -222,28 +198,25 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
     }
 
     @Override
+    public void lock() {
+        this.locked = true;
+        setChanged();
+    }
+
+    @Override
+    public void setCustomDefinition(String customDefinition) {
+        this.customDefinition = customDefinition;
+        setChanged();
+    }
+
+    @Override
+    public String getCustomDefinition() {
+        return this.customDefinition;
+    }
+
+    @Override
     public StoneChestMaterial getMaterial() {
         return material;
-    }
-
-    @Override
-    public String puzzleMenuId() {
-        return puzzleMenuId;
-    }
-
-    @Override
-    public SecretChestSideEffects getSideEffects() {
-        return sideEffect;
-    }
-
-    @Override
-    public int getDifficultyAmplifier() {
-        return difficultyAmplifier;
-    }
-
-    @Override
-    public ResourceKey<LootTable> getUnlockedLootTable() {
-        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(unlockedLootTable));
     }
 
     @Override
@@ -260,31 +233,6 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
         this.locked = false;
         setChanged();
 
-    }
-
-    @Override
-    public void lock(String puzzleMenuId) {
-        this.locked = true;
-        this.puzzleMenuId = puzzleMenuId;
-        setChanged();
-    }
-
-    @Override
-    public void setDifficultyAmplifier(int amplifier) {
-        this.difficultyAmplifier = amplifier;
-        setChanged();
-    }
-
-    @Override
-    public void setUnlockedLootTable(ResourceKey<LootTable> lootTable) {
-        this.unlockedLootTable = lootTable.location().toString();
-        setChanged();
-    }
-
-    @Override
-    public void setSideEffect(SecretChestSideEffects sideEffect) {
-        this.sideEffect = sideEffect;
-        setChanged();
     }
 
     private StoneChests feature() {
